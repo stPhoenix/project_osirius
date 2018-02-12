@@ -5,12 +5,13 @@ verify_ssl = true
 name = "pypi"
 
 
-[packages]
-
-"psycopg2" = "*"
-pytest = "*"
-django = "*"
-
-
 [dev-packages]
 
+
+
+[packages]
+
+python-decouple = "*"
+django = "*"
+"psycopg2" = "*"
+dj-database-url = "*"
