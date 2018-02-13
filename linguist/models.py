@@ -6,6 +6,7 @@ from users.models import Student
 class Language(models.Model):
     slug = models.CharField(max_length=10)
     name = models.CharField(max_length=50)
+    students = models.ManyToManyField(Student)
 
 
 class GlobalWord(models.Model):
