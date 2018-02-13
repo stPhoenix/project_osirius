@@ -1,16 +1,19 @@
 from linguist.models import Word, GlobalWord, Category
+from users.models import Student
 from random import randint
 
 
 class LinguistHQ:
-    def __init__(self, student=None):
-        self.student = student
-        if student is None:
+    def __init__(self, student_id=None):
+        self.student = Student.objects.get(pk=student_id)
+        if self.student is None:
             raise ValueError("Student can't be None")
 
-    def add_global_word(self, word_id=None, alternative_translation=None):
+    def add_from_global_word(self, word_id=None, alternative_translation=None):
+        error = None
         if word_id is None:
-            raise ValueError("Word id can not be None")
+            error = 'Please choose word'
+            return error
         global_word = GlobalWord.objects.get(pk=int(word_id))
         word = Word(
             name=global_word.name,
@@ -21,18 +24,17 @@ class LinguistHQ:
         )
         word.save()
 
-    def search_word(self, word_name=None):
-        word = GlobalWord.objects.all().filter(name=word_name)
-        translation = None
+    def search_word(self, word_name=None, language=None):
+        words = GlobalWord.objects.filter(name=word_name, language=language)
         global_word_search = False
         google_translate = False
-        word_id = None
-        if word is None:
+        if words is None:
             pass    # TODO Implement google translate
         else:
+            global_word_search = True
 
             return {'global_word_search': global_word_search, 'google_translate': google_translate,
-                    'translation': translation, 'word_id':word_id}
+                    'words': words}
 
     def add_custom_word(self, word_name=None, translation=None, category_id=None):
         if word_name is None or translation is None or category_id is None:
