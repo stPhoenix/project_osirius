@@ -1,14 +1,28 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 import logging
 from decouple import config
 from users.models import Student
 from django.db.models import ObjectDoesNotExist
 from linguist.core import LinguistHQ
+from linguist.models import Language
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+                    level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
+
+
+def build_menu(buttons,
+               n_cols,
+               header_buttons=None,
+               footer_buttons=None):
+    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+    if header_buttons:
+        menu.insert(0, header_buttons)
+    if footer_buttons:
+        menu.append(footer_buttons)
+    return menu
 
 
 class Bot:
@@ -21,7 +35,7 @@ class Bot:
         self.HQ = None
         self.destination = None
         self.student = None
-
+        self.for_register = {}
         """Start the bot."""
         updater = Updater(config('TELEGRAM_TOKEN'))
 
@@ -31,6 +45,8 @@ class Bot:
         dp.add_handler(CommandHandler("help", self.help))
 
         dp.add_handler(MessageHandler(Filters.text, self.echo))
+        # TODO: make callback handler
+        dp.add_handler(CallbackQueryHandler("", self.callback_handler))
 
         dp.add_error_handler(self.error)
 
@@ -81,4 +97,14 @@ class Bot:
             '9. Help' )
 
     def register(self, bot, update):
-        pass
+        text = None
+        if self.for_register == {}:
+            self.for_register = {'username': update.message.from_user.id, 'first_name': update.message.text}
+            text = 'Okay %s. Now choose your home language' % update.message.text
+            button_list = [InlineKeyboardButton(l.name, callback_data=l.name) for l in Language.objects.all()]
+            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+            bot.send_message(chat_id=update.message.chat.id, text="A column menu", reply_markup=reply_markup)
+        elif len(self.for_register) == 2:
+            update.message.reply_text('GOTCHA!')
+
+        #update.message.reply_text(text)
