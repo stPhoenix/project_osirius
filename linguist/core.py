@@ -14,15 +14,15 @@ class LinguistHQ:
         if word_id is None:
             error = 'Please choose word'
             return error
-        global_word = GlobalWord.objects.get(pk=int(word_id))
+        global_word = GlobalWord.objects.get(pk=word_id)
         word = Word(
             name=global_word.name,
             translation=alternative_translation if alternative_translation is not None else global_word.translation,
-            language=self.student.current_language,
-            student=self.student,
-            category=global_word.category
+            language=Language.objects.get(name=self.student.current_language),
+            student=self.student
         )
         word.save()
+        word.category_set.set(global_word.category_set.all())
 
     def search_word(self, word_name=None, language=None):
         words = GlobalWord.objects.filter(name=word_name, language=language)
@@ -46,7 +46,7 @@ class LinguistHQ:
         word = Word(
             name=word_name,
             translation=translation,
-            language=Language.objeects.get(name=self.student.current_language),
+            language=Language.objects.get(name=self.student.current_language),
             student=self.student
         )
         word.save()
@@ -64,14 +64,22 @@ class LinguistHQ:
 
     def play_matching(self, reverse=False):
         words = self.student.word_set.filter(language=Language.objects.get(name=self.student.current_language))
-        words = words.filter(played_match=False) if reverse is False else words.filter(played_reversed_match=True)
-        word = words[randint(1, words.count())]
-        fake_words = map(words[randint(1, words.count())] in range(0, 3))
-        fake_words.append(word.name)
-        return {'words': fake_words, 'answer': word}
+        words = words.filter(played_match=False) if reverse is False else words.filter(played_reversed_match=False)
+        count = words.count()
+        if count == 0:
+            return 'No words to play matching'
+        else:
+            word = words[randint(1, count-1)]
+            fake_words = [words[randint(1, count-1)] for i in range(0, 3)]
+            fake_words.append(word.name)
+            return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):
         words = self.student.word_set.filter(language=Language.objects.get(name=self.student.current_language))
-        words = words.filter(played_typing=False) if reverse is False else words.filter(played_reversed_typing=True)
-        word = words[randint(1, words.count())]
+        words = words.filter(played_typing=False) if reverse is False else words.filter(played_reversed_typing=False)
+        count = words.count()
+        if count == 0:
+            word = 'No word to play typing'
+        else:
+            word = words[randint(1, count-1)]
         return word
