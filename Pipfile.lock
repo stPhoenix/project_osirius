@@ -1,18 +1,18 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "af948a695b001bd162181cc3893075ef31945fd764935f77a472704062e0d596"
+            "sha256": "9a58224d3f9a19f2625861f354a4c587c66ce5ab7ee5c7ed5561e64256bc7285"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.3",
+            "implementation_version": "3.6.4",
             "os_name": "nt",
-            "platform_machine": "AMD64",
+            "platform_machine": "x86",
             "platform_python_implementation": "CPython",
             "platform_release": "10",
             "platform_system": "Windows",
             "platform_version": "10.0.16299",
-            "python_full_version": "3.6.3",
+            "python_full_version": "3.6.4",
             "python_version": "3.6",
             "sys_platform": "win32"
         },
@@ -54,6 +54,12 @@
                 "sha256:dc3b61d054f1bced64628c62025d480f655303aea9f408e5996c339a543b45f0"
             ],
             "version": "==2.0.2"
+        },
+        "future": {
+            "hashes": [
+                "sha256:e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb"
+            ],
+            "version": "==0.16.0"
         },
         "googletrans": {
             "hashes": [
@@ -105,6 +111,13 @@
                 "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"
             ],
             "version": "==3.1"
+        },
+        "python-telegram-bot": {
+            "hashes": [
+                "sha256:ca5e1d257702d194ad5a5a0e6ccffb31203f1f783bf1c5da60c128f083032c44",
+                "sha256:f5c3233bea7c7adf165e31225bbe9f28717e9f1f5070ebe99a4757c31c27ab28"
+            ],
+            "version": "==9.0.0"
         },
         "pytz": {
             "hashes": [

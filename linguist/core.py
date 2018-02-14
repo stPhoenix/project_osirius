@@ -1,11 +1,10 @@
 from linguist.models import Word, GlobalWord, Language, Category
-from users.models import Student
 from random import randint
 
 
 class LinguistHQ:
-    def __init__(self, student_id=None):
-        self.student = Student.objects.get(pk=student_id)
+    def __init__(self, student=None):
+        self.student = student
         if self.student is None:
             raise ValueError("Student can't be None")
 
