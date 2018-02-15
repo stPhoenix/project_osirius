@@ -48,7 +48,8 @@ class Bot:
         'Menu_action': 'self.callback_handler',
         'Add_words': 'self.add_words',
         'Add_custom_word':'self.add_custom_word',
-        'Add_from_global_word': 'self.add_from_global_word'
+        'Add_from_global_word': 'self.add_from_global_word',
+        'Search_word': 'self.search_word'
     }
 
     def __init__(self):
@@ -224,4 +225,14 @@ class Bot:
         self.callback_data = []
 
     def add_custom_word(self, bot, update):
-        pass
+        if self.destination == 'Add_custom_word':
+            pass
+        else:
+            self.destination = 'Search_word'
+            update.message.reply_text('Enter foreign word')
+
+    def search_word(self, bot, update):
+        search_language = self.langs.get(name=self.student.current_language)
+        result = self.HQ.search_word(word_name=update.message.text.strip(), language=search_language)
+        if result['global_word_search'] is False and result['google_translate_search'] is False:
+            pass
