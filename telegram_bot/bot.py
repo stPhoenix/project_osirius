@@ -14,16 +14,18 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def build_menu(buttons,
-               n_cols,
-               header_buttons=None,
-               footer_buttons=None):
+def build_menu(buttons, n_cols, header_buttons=None, footer_buttons=None):
     menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
         menu.insert(0, header_buttons)
     if footer_buttons:
         menu.append(footer_buttons)
     return menu
+
+
+def make_button_list(self, update):
+    return [InlineKeyboardButton(l, callback_data=self.students[str(update.effective_user.id)].callback_data.index(l))
+            for l in self.students[str(update.effective_user.id)].callback_data]
 
 
 def restricted(func):
@@ -153,10 +155,7 @@ class Bot:
             self.students[str(update.effective_user.id)].for_register = {'username': update.effective_user.id,
                                                                          'first_name': update.message.text}
             self.students[str(update.effective_user.id)].callback_data = [l.name for l in self.langs]
-            button_list = [InlineKeyboardButton(l,
-                           callback_data=self.students[str(update.effective_user.id)].callback_data.index(l)) for l
-                           in self.students[str(update.effective_user.id)].callback_data]
-            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
             update.message.reply_text(text='Okay %s. Now choose your home language' % update.message.text,
                                       reply_markup=reply_markup)
         elif len(self.students[str(update.effective_user.id)].for_register) == 4:
@@ -180,25 +179,21 @@ class Bot:
 
     @restricted
     def callback_handler(self, bot, update):
-        if self.students[str(update.effective_user.id)].destination == 'Register'\
-                and len(self.students[str(update.effective_user.id)].for_register) == 3:
-            self.students[str(update.effective_user.id)].for_register['current_language'] =\
-                self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
+        data = self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
+        destination = self.students[str(update.effective_user.id)].destination
+        for_register = self.students[str(update.effective_user.id)].for_register
+        if destination == 'Register' and len(for_register) == 3:
+            for_register['current_language'] = data
             update.message = update.callback_query.message
             self.register(bot, update)
-        if self.students[str(update.effective_user.id)].destination == 'Register'\
-                and len(self.students[str(update.effective_user.id)].for_register) == 2:
-            self.students[str(update.effective_user.id)].for_register['home_language'] =\
-                self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
-            button_list = [InlineKeyboardButton(l,
-                           callback_data=self.students[str(update.effective_user.id)].callback_data.index(l))
-                           for l in self.students[str(update.effective_user.id)].callback_data]
-            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+        if destination == 'Register' and len(for_register) == 2:
+            for_register['home_language'] = data
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
             update.callback_query.message.edit_text(text='Great!')
             update.callback_query.message.reply_text(text='Now choose your learn language', reply_markup=reply_markup)
-        if self.students[str(update.effective_user.id)].destination == 'Menu_action':
+        if destination == 'Menu_action':
             self.menu_action(bot, update)
-        if self.students[str(update.effective_user.id)].destination == 'Add_words':
+        if destination == 'Add_words':
             self.add_words(bot, update)
 
     @restricted
@@ -247,10 +242,7 @@ class Bot:
             self.students[str(update.effective_user.id)].destination = 'Menu'
         else:
             self.students[str(update.effective_user.id)].callback_data = ['Add word by typing', 'Choose word from presets']
-            button_list = [InlineKeyboardButton(l,
-                           callback_data=self.students[str(update.effective_user.id)].callback_data.index(l))
-                           for l in self.students[str(update.effective_user.id)].callback_data]
-            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
             self.students[str(update.effective_user.id)].destination = 'Add_words'
             update.message.edit_text(text='How do you want to add word?', reply_markup=reply_markup)
         self.students[str(update.effective_user.id)].callback_data = []
