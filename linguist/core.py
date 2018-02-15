@@ -27,7 +27,7 @@ class LinguistHQ:
         words = GlobalWord.objects.filter(name=word_name, language=language)
         global_word_search = False
         google_translate = False
-        if words is None:
+        if words.count() == 0:
             pass    # TODO Implement google translate
         else:
             global_word_search = True
