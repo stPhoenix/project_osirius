@@ -23,21 +23,21 @@ def build_menu(buttons, n_cols, header_buttons=None, footer_buttons=None):
     return menu
 
 
-def make_button_list(self, update):
-    return [InlineKeyboardButton(l, callback_data=self.students[str(update.effective_user.id)].callback_data.index(l))
-            for l in self.students[str(update.effective_user.id)].callback_data]
+def make_button_list(self, update, student):
+    callback_data = student.callback_data
+    return [InlineKeyboardButton(l, callback_data=callback_data.index(l)) for l in callback_data]
 
 
 def restricted(func):
     @wraps(func)
-    def wrapped(self, bot, update, *arg, **kwargs):
+    def wrapped(self, bot, update, student, *arg, **kwargs):
         try:
-            student = Student.objects.get(username=update.effective_user.id)
+            student = self.users.get(username=update.effective_user.id)
             try:
                 s = self.students[str(update.effective_user.id)]
             except KeyError:
                 self.start(bot, update, *arg, **kwargs)
-            return func(self, bot, update, *arg, **kwargs)
+            return func(self, bot, update, s, *arg, **kwargs)
         except ObjectDoesNotExist:
             update.message.reply_text('Sorry! To access this command you need to be registered.'
                                       'Print /start')
@@ -56,23 +56,14 @@ class BotUserHandler:
 
 
 class Bot:
-    # Define a few command handlers. These usually take the two arguments bot and
-    # update. Error handlers also receive the raised TelegramError object in error.
-    DESTINATIONS = {
-        'Register': 'self.register',
-        'Menu': 'self.menu',
-        'Menu_action': 'self.callback_handler',
-        'Add_words': 'self.add_words',
-        'Add_custom_word':'self.add_custom_word',
-        'Add_from_global_word': 'self.add_from_global_word',
-        'Search_word': 'self.search_word'
-    }
-
     def __init__(self):
 
         """Set LinguistHQ and destinations vars for message forwarding."""
+        self.users = Student.objects.all()
         self.students = {}
         self.langs = Language.objects.all()
+
+        self.setup_destinations()
         # Helper for unregistered users
         """Start the bot."""
         updater = Updater(config('TELEGRAM_TOKEN'))
@@ -94,11 +85,31 @@ class Bot:
 
         updater.idle()
 
+    def setup_destinations(self):
+        self.DESTINATIONS = {
+            'Register': self.register,
+            'Menu': self.menu,
+            'Menu_action': self.menu_action,
+            'Add words': self.add_words,
+            'Add words option': self.add_words,
+            'Look all your words': 'self.look_all_student_words',
+            'Learn words': 'self.lean_words',
+            'Play matching': 'self.play_matching',
+            'Play reversed matching': 'self.play_reversed_matching',
+            'Play typing': 'self.play_typing',
+            'Play reversed typing': 'self.play_reversed_typing',
+            'Help': self.help,
+            'Settings': 'self.settings',
+            'Add word by typing': self.add_custom_word,
+            'Choose word from presets': 'self.choose_from_presets',
+            'Search word': self.search_word
+        }
+
     def start(self, bot, update):
         """Send a message when the command /start is issued."""
         text = None
         try:
-            student = Student.objects.get(username=update.effective_user.id)
+            student = self.users.get(username=update.effective_user.id)
             try:
                 self.students[student.username].destination
             except KeyError:
@@ -119,11 +130,10 @@ class Bot:
 
     def echo(self, bot, update):
         """Forward the user message."""
-        if self.students[str(update.effective_user.id)].destination == 'Register':
-            self.register(bot, update)
-        elif self.students[str(update.effective_user.id)].destination == 'Menu':
-            self.menu(bot, update)
-        else:
+        student = self.students[str(update.effective_user.id)]
+        try:
+            self.DESTINATIONS[student.destination](bot, update, student)
+        except KeyError:
             update.message.reply_text('Sorry! I can not understand you.')
             self.menu(bot, update)
 
@@ -132,133 +142,105 @@ class Bot:
         logger.warning('Update "%s" caused error "%s"', update, error)
 
     @restricted
-    def menu(self, bot, update):
+    def menu(self, bot, update, student):
         menu_list =[
-            '1. Add words',
-            '2. Look all your words',
-            '3. Learn words',
-            '4. Play matching',
-            '5. Play reversed matching',
-            '6. Play typing',
-            '7. Play revers typing',
-            '8. Help',
-            '9. Settings' ]
-        self.students[str(update.effective_user.id)].callback_data = menu_list
-        button_list = [InlineKeyboardButton(l, callback_data=self.students[str(update.effective_user.id)].callback_data.index(l)) for l
-                       in self.students[str(update.effective_user.id)].callback_data]
-        reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-        self.students[str(update.effective_user.id)].destination ='Menu_action'
+            'Add words',
+            'Look all your words',
+            'Learn words',
+            'Play matching',
+            'Play reversed matching',
+            'Play typing',
+            'Play reversed typing',
+            'Help',
+            'Settings' ]
+        student.callback_data = menu_list
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
+        student.destination ='Menu_action'
         update.message.reply_text(text='Menu', reply_markup=reply_markup)
 
     def register(self, bot, update):
-        if self.students[str(update.effective_user.id)].for_register == {}:
-            self.students[str(update.effective_user.id)].for_register = {'username': update.effective_user.id,
-                                                                         'first_name': update.message.text}
-            self.students[str(update.effective_user.id)].callback_data = [l.name for l in self.langs]
-            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
+        student = self.students[str(update.effective_user.id)]
+        if student.for_register == {}:
+            student.for_register = {'username': update.effective_user.id, 'first_name': update.message.text}
+            student.callback_data = [l.name for l in self.langs]
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
             update.message.reply_text(text='Okay %s. Now choose your home language' % update.message.text,
                                       reply_markup=reply_markup)
-        elif len(self.students[str(update.effective_user.id)].for_register) == 4:
+        if len(student.for_register) == 4:
             update.message.edit_text('Alright!')
             password = Student.objects.make_random_password()
-            student = Student.objects.create_user(username=str(self.students[str(update.effective_user.id)].for_register['username']),
+            user = Student.objects.create_user(username=str(student.for_register['username']),
                                                   password=password,
-                                                  first_name=self.students[str(update.effective_user.id)].for_register['first_name'],
-                                                  home_language=self.students[str(update.effective_user.id)].for_register['home_language'],
-                                                  current_language=self.students[str(update.effective_user.id)].for_register['current_language'])
-            learn_language = self.langs.get(name=self.students[str(update.effective_user.id)].for_register['current_language'])
-            learn_language.students.add(student)
-            self.students[str(update.effective_user.id)] = BotUserHandler(student=student, destination='Menu')
+                                                  first_name=student.for_register['first_name'],
+                                                  home_language=student.for_register['home_language'],
+                                                  current_language=student.for_register['current_language'])
+            learn_language = self.langs.get(name=student.for_register['current_language'])
+            learn_language.students.add(user)
+            student = BotUserHandler(student=user, destination='Menu')
             update.message.reply_text('Your username: %s \n'
                                       'Your password: %s \n'
                                       'You will need it in future web version. So write it somewhere in safe place. \n'
                                       'And DELETE this message for security purposes.'
-                                      % (self.students[str(update.effective_user.id)].student.username, password))
+                                      % student.student.username, password)
             self.menu(bot, update)
-        #update.message.reply_text(text
-
-    @restricted
-    def callback_handler(self, bot, update):
-        data = self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
-        destination = self.students[str(update.effective_user.id)].destination
-        for_register = self.students[str(update.effective_user.id)].for_register
-        if destination == 'Register' and len(for_register) == 3:
-            for_register['current_language'] = data
-            update.message = update.callback_query.message
+        if len(student.for_register) == 3:
+            student.for_register['current_language'] = student.callback_data
             self.register(bot, update)
-        if destination == 'Register' and len(for_register) == 2:
-            for_register['home_language'] = data
-            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
+        if len(student.for_register) == 2:
+            student.for_register['home_language'] = student.callback_data
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
             update.callback_query.message.edit_text(text='Great!')
             update.callback_query.message.reply_text(text='Now choose your learn language', reply_markup=reply_markup)
-        if destination == 'Menu_action':
-            self.menu_action(bot, update)
-        if destination == 'Add_words':
-            self.add_words(bot, update)
 
     @restricted
-    def delete(self, bot, update):
-        self.students[str(update.effective_user.id)].student.delete()
-        update.message.reply_text('User deleted')
-    @restricted
-    def menu_action(self, bot, update):
-        choice = self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
+    def callback_handler(self, bot, update, student):
         update.message = update.callback_query.message
-        if choice == '1. Add words':
-            self.add_words(bot, update)
-        elif choice == '2. Look all your words':
-            pass
-            #self.look_all_student_words(bot, update)
-        elif choice == '3. Learn words':
-            pass
-            #self.learn_words(bot, update)
-        elif choice == '4. Play matching':
-            pass
-            #self.play_matching(bot, update)
-        elif choice == '5. Play reversed matching':
-            pass
-        elif choice == '6. Play typing':
-            pass
-            #self.play_typing(bot, update)
-        elif choice == '7. Play revers typing':
-            pass
-        elif choice == '8. Help':
-            self.help(bot, update)
-        elif choice == '9. Settings':
-            pass
-            #self.settings(bot, update)
-        self.students[str(update.effective_user.id)].callback_data = []
-        self.students[str(update.effective_user.id)].destination = 'Menu'
+        try:
+            self.DESTINATIONS[student.destination](bot, update, student)
+        except KeyError:
+            update.message.reply_text('Sorry! Something went wrong.')
+            self.menu(bot, update)
 
     @restricted
-    def add_words(self, bot, update):
-        if self.students[str(update.effective_user.id)].destination == 'Add_words':
-            choice = self.students[str(update.effective_user.id)].callback_data[int(update.callback_query.data)]
-            if choice == 'Add word by typing':
-                self.add_custom_word(bot, update)
-            elif choice == 'Choose word from presets':
-                pass
-                #self.add_from_global_word(bot, update)
-            self.students[str(update.effective_user.id)].destination = 'Menu'
-        else:
-            self.students[str(update.effective_user.id)].callback_data = ['Add word by typing', 'Choose word from presets']
-            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update), n_cols=1))
-            self.students[str(update.effective_user.id)].destination = 'Add_words'
+    def delete(self, bot, update, student):
+        student.student.delete()
+        update.message.reply_text('User deleted')
+
+    @restricted
+    def menu_action(self, bot, update, student):
+        choice = student.callback_data[int(update.callback_query.data)]
+        try:
+            self.DESTINATIONS[choice](bot, update, student)
+        except KeyError:
+            update.message.reply_text('Sorry! Something went wrong.')
+            self.menu(bot, update)
+        student.destination = 'Menu'
+        student.callback_data = []
+
+    @restricted
+    def add_words(self, bot, update, student):
+        if student.destination == 'Add words option':
+            choice = student.callback_data[int(update.callback_query.data)]
+            self.DESTINATIONS[choice](bot, update, student)
+        elif student.destination == 'Add words':
+            student.callback_data = ['Add word by typing', 'Choose word from presets']
+            reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+            student.destination = 'Add words'
             update.message.edit_text(text='How do you want to add word?', reply_markup=reply_markup)
-        self.students[str(update.effective_user.id)].callback_data = []
 
     @restricted
-    def add_custom_word(self, bot, update):
-        if self.students[str(update.effective_user.id)].destination == 'Add_custom_word':
+    def add_custom_word(self, bot, update, student):
+        if student.destination == 'Add custom word':
             pass
-        else:
-            self.students[str(update.effective_user.id)].destination = 'Search_word'
+        elif student.destination == 'Add word by typing':
+            student.destination = 'Search word'
             update.message.reply_text('Enter foreign word')
 
     @restricted
-    def search_word(self, bot, update):
-        search_language = self.langs.get(name=self.students[str(update.effective_user.id)].student.current_language)
-        result = self.students[str(update.effective_user.id)].HQ.search_word(word_name=update.message.text.strip(),
-                                                                             language=search_language)
-        if result['global_word_search'] is False and result['google_translate_search'] is False:
-            pass
+    def search_word(self, bot, update, student):
+        if student.destination == 'Search word':
+            search_language = self.langs.get(name=student.student.current_language)
+            result = student.HQ.search_word(word_name=update.message.text.strip(), language=search_language)
+            if result['global_word_search'] is False and result['google_translate_search'] is False:
+                # TODO: Word_add_category func
+                update.message.edit_text(text='Sorry. Could not find any translation. Enter your translation:')
