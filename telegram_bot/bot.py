@@ -30,14 +30,14 @@ def make_button_list(self, update, student):
 
 def restricted(func):
     @wraps(func)
-    def wrapped(self, bot, update, student, *arg, **kwargs):
+    def wrapped(self, bot, update, student=None, *arg, **kwargs):
         try:
-            student = self.users.get(username=update.effective_user.id)
+            s = self.users.get(username=update.effective_user.id)
             try:
-                s = self.students[str(update.effective_user.id)]
+                student = self.students[str(update.effective_user.id)]
+                return func(self, bot, update, student, *arg, **kwargs)
             except KeyError:
                 self.start(bot, update, *arg, **kwargs)
-            return func(self, bot, update, s, *arg, **kwargs)
         except ObjectDoesNotExist:
             update.message.reply_text('Sorry! To access this command you need to be registered.'
                                       'Print /start')
