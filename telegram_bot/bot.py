@@ -177,10 +177,10 @@ class Bot:
             update.message.edit_text('Alright!')
             password = Student.objects.make_random_password()
             user = Student.objects.create_user(username=str(student.temp_data['username']),
-                                                  password=password,
-                                                  first_name=student.temp_data['first_name'],
-                                                  home_language=student.temp_data['home_language'],
-                                                  current_language=student.temp_data['current_language'])
+                                               password=password,
+                                               first_name=student.temp_data['first_name'],
+                                               home_language=student.temp_data['home_language'],
+                                               current_language=student.temp_data['current_language'])
             learn_language = self.langs.get(name=student.temp_data['current_language'])
             learn_language.students.add(user)
             student = BotUserHandler(student=user)
