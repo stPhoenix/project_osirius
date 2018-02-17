@@ -26,14 +26,14 @@ class LinguistHQ:
     def search_word(self, word_name=None, language=None):
         words = GlobalWord.objects.filter(name=word_name, language=language)
         global_word_search = False
-        google_translate = False
+        google_translate_search = False
         if words.count() == 0:
             pass    # TODO Implement google translate
         else:
             global_word_search = True
 
-            return {'global_word_search': global_word_search, 'google_translate': google_translate,
-                    'words': words}
+        return {'global_word_search': global_word_search, 'google_translate_search': google_translate_search,
+                'words': words}
 
     def add_custom_word(self, word_name=None, translation=None, category=None):
         error = None
