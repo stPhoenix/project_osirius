@@ -41,9 +41,9 @@ class LinguistHQ:
         return {'global_word_search': global_word_search, 'google_translate_search': google_translate_search,
                 'words': words}
 
-    def add_custom_word(self, word_name=None, translation=None, category=None):
+    def add_custom_word(self, word_name=None, translation=None, category=None, pronunciation=None):
         error = None
-        if word_name is None or translation is None:
+        if word_name is None or translation is None or pronunciation is None:
             error = 'You did not choose word or translation or category'
             return error
         if category is None:
@@ -52,7 +52,8 @@ class LinguistHQ:
             name=word_name,
             translation=translation,
             language=self.langs.get(name=self.student.current_language),
-            student=self.student
+            student=self.student,
+            pronunciation = pronunciation
         )
         word.save()
         word.category_set.add(category)
