@@ -8,8 +8,7 @@ from django.db.models import ObjectDoesNotExist
 
 class TestLinguistHQ(TestCase):
     def setUp(self):
-        self.user = Student.objects.create_user(
-            username='jacob', email='jacob@mail.com', password='top_secret')
+        self.user = Student.objects.create_user(username='jacob', email='jacob@mail.com', password='top_secret')
         self.user.current_language = 'Japanese'
         self.user.save()
         self.client.login(username='jacob', password='top_secret')
@@ -23,6 +22,9 @@ class TestLinguistHQ(TestCase):
         self.global_word.save()
         self.category = Category.objects.create(name='Default')
         self.category.save()
+        self.setup_words()
+
+    def setup_words(self):
         words = [
             ('おはよう', 'hello'),
             ('すみません', 'excuse me'),
