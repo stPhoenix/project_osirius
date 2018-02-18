@@ -107,6 +107,7 @@ class Bot:
             'Search word': self.search_word,
             'Add word translation': self.add_custom_word,
             'Add custom word': self.add_custom_word,
+            'Translation option': self.search_word,
         }
 
     def start(self, bot, update):
@@ -180,7 +181,7 @@ class Bot:
                                                password=password,
                                                first_name=student.temp_data['first_name'],
                                                home_language=student.temp_data['home_language'],
-                                               current_language=student.temp_data['current_language'])
+                                                current_language=student.temp_data['current_language'])
             learn_language = self.langs.get(name=student.temp_data['current_language'])
             learn_language.students.add(user)
             student = BotUserHandler(student=user)
@@ -246,8 +247,10 @@ class Bot:
         if student.destination == 'Add custom word':
             word_name = student.temp_data['word_name']
             translation = student.temp_data['translation']
+            pronunciation = student.temp_data['pronunciation']
             category = self.categories.get(name=student.callback_data[int(update.callback_query.data)])
-            result = student.HQ.add_custom_word(word_name=word_name, translation=translation, category=category)
+            result = student.HQ.add_custom_word(word_name=word_name, translation=translation,
+                                                category=category, pronunciation=pronunciation)
             answer = None
             if result is None:
                 answer = 'Word has been added'
@@ -274,3 +277,15 @@ class Bot:
                 student.temp_data['word_name'] = update.message.text.strip()
                 student.destination = 'Add word translation'
                 update.message.reply_text(text='Sorry. Could not find any translation. Enter your translation:')
+            elif result['google_translate_search'] is True:
+                student.temp_data['word_name'] = result['words'].origin
+                student.temp_data['translation'] = result['words'].text
+                student.temp_data['pronunciation'] = result['words'].pronunciation
+                student.callback_data = ['Yes', 'No']
+                reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
+                student.destination = 'Translation option'
+                update.message.reply_text(text='Add custom word translation?', reply_markup=reply_markup)
+        if student.destination == 'Translation option':
+            choice = student.callback_data[int(update.callback_query.data)]
+            student.destination = 'Add word translation' if choice == 'Yes' else 'Add custom word'
+            self.add_custom_word(bot, update, student)
