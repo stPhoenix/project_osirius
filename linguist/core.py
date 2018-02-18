@@ -1,10 +1,12 @@
 from linguist.models import Word, GlobalWord, Language, Category
 from random import randint
+from linguist.utils import LinguistTranslator
 
 
 class LinguistHQ:
     def __init__(self, student=None):
         self.student = student
+        self.langs = Language.objects.all()
         if self.student is None:
             raise ValueError("Student can't be None")
 
@@ -27,8 +29,11 @@ class LinguistHQ:
         words = GlobalWord.objects.filter(name=word_name, language=language)
         global_word_search = False
         google_translate_search = False
+        home_language = self.langs.get(name=self.student.home_language)
         if words.count() == 0:
-            pass    # TODO Implement google translate
+            translator = LinguistTranslator()
+            words = translator.translate(text=word_name, src=language.slug, dest=home_language.slug)
+            google_translate_search = True if words.text is not None else False
         else:
             global_word_search = True
 
