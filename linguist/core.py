@@ -26,7 +26,8 @@ class LinguistHQ:
         word.save()
         word.category_set.set(global_word.category_set.all())
 
-    def search_word(self, word_name=None, language=None):
+    def search_word(self, word_name=None):
+        language = self.langs.get(name=self.student.current_language)
         words = self.global_words.filter(name=word_name, language=language)
         global_word_search = False
         google_translate_search = False
@@ -35,6 +36,7 @@ class LinguistHQ:
             translator = LinguistTranslator()
             words = translator.translate(text=word_name, src=language.slug, dest=home_language.slug)
             google_translate_search = True if words.text is not None else False
+            print('WORDS: %s' % words)
         else:
             global_word_search = True
 
