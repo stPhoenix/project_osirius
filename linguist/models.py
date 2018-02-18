@@ -12,14 +12,14 @@ class Language(models.Model):
 class GlobalWord(models.Model):
     name = models.CharField(max_length=100)
     translation = models.CharField(max_length=100)
-    pronunciation = models.CharField(max_length=100)
+    pronunciation = models.CharField(max_length=100, default='No pronunciation')
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
 
 class Word(models.Model):
     name = models.CharField(max_length=100)
     translation = models.CharField(max_length=100)
-    pronunciation = models.CharField(max_length=100)
+    pronunciation = models.CharField(max_length=100, default='No pronunciation')
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     viewed = models.BooleanField(default=False)
