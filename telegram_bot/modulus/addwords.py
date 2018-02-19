@@ -20,6 +20,8 @@ class AddWords(BaseModule):
             'Add custom word': self.add_custom_word,
             'Translation option': self.translation_option,
             'Add word category': self.add_word_category,
+            'Show category words': self.show_category_words,
+            'Add from global word': self.add_from_global_word,
         }
 
     @restricted
@@ -80,10 +82,18 @@ class AddWords(BaseModule):
             student.callback_data = ['Yes', 'No']
             reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
             student.destination = 'Translation option'
-            update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s]' %
+            update.message.reply_text(text='Found with internet search \n'
+                                           'Word [%s] \n Pronunciation [%s]\n Translation [%s]' %
                                            (result['words'].origin, result['words'].pronunciation,
                                             result['words'].text))
             update.message.reply_text(text='Add custom word translation?', reply_markup=reply_markup)
+        elif result['global_word_search'] is True:
+            student.temp_data['word'] = result['words']
+            update.message.reply_text(text='Found in data base search \n'
+                                           'Word [%s] \n Pronunciation [%s]\n Translation [%s] \n Category [%s]' %
+                                           (result['words'].name, result['words'].pronunciation,
+                                            result['words'], result['words'].category_set))
+            self.dispatch_destination(bot, update, student, 'Add from global word')
 
     @restricted
     def translation_option(self, bot, update, student):
@@ -123,3 +133,5 @@ class AddWords(BaseModule):
         else:
             word = student.temp_data['words'].get(name=word_name)
             student.HQ.add_from_global_word(global_word=word)
+        update.message.reply_text('Word(s) added')
+        self.dispatch_destination(bot, update, student, 'Menu')
