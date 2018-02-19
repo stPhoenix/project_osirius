@@ -8,6 +8,8 @@ class Command(BaseCommand):
     cats = [
         'Default',
         'Greetings',
+        'New friends',
+        'Countries',
             ]
 
     def add_arguments(self, parser):
@@ -15,7 +17,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for c in self.cats:
-            category = Category(name = c)
-            category.save()
-            print('Added %s' % c)
+            cat = Category.objects.filter(name=c)
+            if cat is not None:
+                category = Category(name=c)
+                category.save()
+                print('Added %s' % c)
         print('Done')

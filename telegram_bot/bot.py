@@ -64,7 +64,7 @@ class Bot:
         self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
         self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students,
-                                 kwargs={'categories': self.categories, 'global_words': self.global_words})
+                                 categories=self.categories, global_words=self.global_words)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
