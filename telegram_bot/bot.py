@@ -60,9 +60,9 @@ class Bot:
             'Settings': 'self.settings',
             'Update users': self.update_users,
         }
-        self.register = Register(self.langs, self.categories, self.dispatch_destination, self.users, self.students)
+        self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
-        self.addwords = AddWords(self.langs, self.categories, self.dispatch_destination, self.users, self.students)
+        self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students, kwargs={'categories': self.categories})
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):

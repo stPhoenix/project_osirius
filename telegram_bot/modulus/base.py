@@ -1,7 +1,6 @@
 class BaseModule:
-    def __init__(self, langs, categories, dispatch_destination, users, students):
+    def __init__(self, langs, dispatch_destination, users, students):
         self.langs = langs
-        self.categories = categories
         self.DESTINATIONS = None
         self.setup_destinations()
         self.dispatch_destination = dispatch_destination

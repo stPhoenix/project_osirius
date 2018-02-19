@@ -4,6 +4,10 @@ from telegram_bot.modulus.base import BaseModule
 
 
 class AddWords(BaseModule):
+    def __init__(self, langs, dispatch_destination, users, students, *args, **kwargs):
+        super(AddWords, self).__init__(langs, dispatch_destination, users, students, *args, **kwargs)
+        self.categories = kwargs['categories']
+
     def setup_destinations(self):
         self.DESTINATIONS = {
             'Add words': self.add_words,
