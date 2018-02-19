@@ -118,6 +118,8 @@ class AddWords(BaseModule):
     def add_from_global_word(self, bot, update, student):
         word_name = student.callback_data[int(update.callback_query.data)]
         if word_name == 'Add all':
-            pass
+            for word in student.temp_data['words']:
+                student.HQ.add_from_global_word(global_word=word)
         else:
-            pass
+            word = student.temp_data['words'].get(name=word_name)
+            student.HQ.add_from_global_word(global_word=word)
