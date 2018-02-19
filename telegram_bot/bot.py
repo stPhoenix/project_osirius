@@ -4,7 +4,7 @@ import logging
 from decouple import config
 from users.models import Student
 from django.db.models import ObjectDoesNotExist
-from linguist.models import Language, Category
+from linguist.models import Language, Category, GlobalWord
 from telegram_bot.utils import BotUserHandler, restricted, make_button_list, build_menu
 from telegram_bot.modulus.register import Register
 from telegram_bot.modulus.addwords import AddWords
@@ -23,6 +23,7 @@ class Bot:
         self.students = {}
         self.langs = Language.objects.all()
         self.categories = Category.objects.all()
+        self.global_words = GlobalWord.objects.all()
 
         self.setup_destinations()
         # Helper for unregistered users
@@ -62,7 +63,8 @@ class Bot:
         }
         self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
-        self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students, kwargs={'categories': self.categories})
+        self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students,
+                                 kwargs={'categories': self.categories, 'global_words': self.global_words})
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):

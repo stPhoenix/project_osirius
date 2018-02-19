@@ -5,15 +5,16 @@ from telegram_bot.modulus.base import BaseModule
 
 class AddWords(BaseModule):
     def __init__(self, langs, dispatch_destination, users, students, *args, **kwargs):
-        super(AddWords, self).__init__(langs, dispatch_destination, users, students, *args, **kwargs)
+        super(AddWords, self).__init__(langs, dispatch_destination, users, students)
         self.categories = kwargs['categories']
+        self.global_words = kwargs['global_words']
 
     def setup_destinations(self):
         self.DESTINATIONS = {
             'Add words': self.add_words,
             'Add words option': self.add_words_option,
             'Add word by typing': self.add_word_by_typing,
-            'Choose word from presets': 'self.choose_from_presets',
+            'Choose word from presets': self.choose_from_presets,
             'Search word': self.search_word,
             'Add word translation': self.add_word_translation,
             'Add custom word': self.add_custom_word,
@@ -79,7 +80,7 @@ class AddWords(BaseModule):
             student.callback_data = ['Yes', 'No']
             reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
             student.destination = 'Translation option'
-            update.message.reply_text(text='Word [%s] Pronunciation [%s] Translation [%s]' %
+            update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s]' %
                                            (result['words'].origin, result['words'].pronunciation,
                                             result['words'].text))
             update.message.reply_text(text='Add custom word translation?', reply_markup=reply_markup)
@@ -93,3 +94,30 @@ class AddWords(BaseModule):
         elif choice == 'No':
             update.message.delete()
             self.dispatch_destination(bot, update, student, 'Add word category')
+    @restricted
+    def choose_from_presets(self, bot, update, student):
+        student.callback_data = [c.name for c in self.categories]
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        student.destination = 'Show category words'
+        update.message.reply_text(text='Choose category', reply_markup=reply_markup)
+
+    @restricted
+    def show_category_words(self, bot, update, student):
+        category = student.callback_data[int(update.callback_query.data)]
+        category = self.categories.get(name=category)
+        category_language = self.langs.get(name=student.current_language)
+        category_words = self.global_words.filter(category=category, language=category_language)
+        student.callback_data = [w.name for w in category_words]
+        student.callback_data.insert(0, 'Add all')
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        student.destination = 'Add from global word'
+        student.temp_data = {'category': category, 'words':category_words}
+        update.message.reply_text(text='Choose word', reply_markup=reply_markup)
+
+    @restricted
+    def add_from_global_word(self, bot, update, student):
+        word_name = student.callback_data[int(update.callback_query.data)]
+        if word_name == 'Add all':
+            pass
+        else:
+            pass
