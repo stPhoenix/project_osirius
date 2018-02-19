@@ -12,10 +12,6 @@ class LinguistHQ:
             raise ValueError("Student can't be None")
 
     def add_from_global_word(self, global_word=None, alternative_translation=None):
-        error = None
-        if global_word is None:
-            error = 'Please choose word'
-            return error
         global_word = global_word
         word = Word(
             name=global_word.name,
