@@ -57,14 +57,28 @@ class LinguistHQ:
         word.category_set.add(category)
         word.save()
 
-    def get_all_words(self):
-        return self.student.word_set.all()
+    def get_all_words(self, category):
+        language = self.langs.get(name=self.student.current_language)
+        return self.student.word_set.filter(category=category, language=language)
 
-    def get_viewed_words(self):
-        return self.student.word_set.filter(viewed=True, language=self.get(name=self.student.current_language))
+    def get_viewed_words(self, category):
+        language = self.langs.get(name=self.student.current_language)
+        return self.student.word_set.filter(viewed=True, category=category, language=language)
 
-    def get_not_viewed_words(self):
-        return self.student.word_set.filter(viewed=False, language=self.get(name=self.student.current_language))
+    def get_not_viewed_words(self, category):
+        language = self.langs.get(name=self.student.current_language)
+        return self.student.word_set.filter(viewed=False, category=category, language=language)
+
+    def delete_word(self, word):
+        word.delete()
+
+    def update_word_translation(self, word, translation):
+        word.translation = translation
+        word.save()
+
+    def update_viewed_field(self, word, status=False):
+        word.viewed = status
+        word.save()
 
     def play_matching(self, reverse=False):
         words = self.student.word_set.filter(language=self.get(name=self.student.current_language))
