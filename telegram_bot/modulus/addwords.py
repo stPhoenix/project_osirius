@@ -82,7 +82,7 @@ class AddWords(BaseModule):
             student.temp_data['word_name'] = update.message.text.strip()
             student.destination = 'Add word translation'
             update.message.reply_text(text='Sorry. Could not find any translation. Enter your translation:')
-        elif result['google_translate_search'] is True:
+        if result['google_translate_search'] is True:
             student.temp_data['word_name'] = result['words'].origin
             student.temp_data['translation'] = result['words'].text
             student.temp_data['pronunciation'] = result['words'].pronunciation
@@ -94,14 +94,15 @@ class AddWords(BaseModule):
                                            (result['words'].origin, result['words'].pronunciation,
                                             result['words'].text))
             update.message.reply_text(text='Add custom word translation?', reply_markup=reply_markup)
-        elif result['global_word_search'] is True:
-            student.temp_data['word'] = result['words']
+        if result['global_word_search'] is True:
             # TODO: Add multiple search results
             update.message.reply_text(text='Found in data base search \n'
                                            'Word [%s] \n Pronunciation [%s]\n Translation [%s] \n Category [%s]' %
                                            (result['words'][0].name, result['words'][0].pronunciation,
                                             result['words'][0].translation, result['words'][0].category_set))
-            self.dispatch_destination(bot, update, student, 'Add from global word')
+            student.HQ.add_from_global_word(global_word=result['words'][0])
+            update.message.reply_text('Word(s) added')
+            self.dispatch_destination(bot, update, student, 'Menu')
 
     @restricted
     def translation_option(self, bot, update, student):
