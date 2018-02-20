@@ -51,7 +51,6 @@ class Bot:
         self.DESTINATIONS = {
             'Menu': self.menu,
             'Menu_action': self.menu_action,
-            'Look all your words': 'self.look_all_student_words',
             'Learn words': 'self.learn_words',
             'Play matching': 'self.play_matching',
             'Play reversed matching': 'self.play_reversed_matching',
