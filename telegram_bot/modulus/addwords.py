@@ -1,6 +1,7 @@
 from telegram_bot.utils import restricted, make_button_list, build_menu
-from telegram import InlineKeyboardMarkup
 from telegram_bot.modulus.base import BaseModule
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+
 
 import logging
 # Enable logging
@@ -126,21 +127,25 @@ class AddWords(BaseModule):
         category = self.categories.get(name=category)
         category_language = self.langs.get(name=student.student.current_language)
         category_words = self.global_words.filter(category=category, language=category_language)
-        student.callback_data = [w.name for w in category_words]
-        student.callback_data.insert(0, 'Add all')
-        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        student.callback_data = ['Add all']
         student.destination = 'Add from global word'
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        update.message.edit_text(text=category.name, reply_markup=reply_markup)
+        for word in category_words:
+            button_list = [InlineKeyboardButton(text='Add', callback_data=str(word.pk))]
+            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=3))
+            update.message.reply_text(text='Word [%s]\nPronunciation [%s]\nTranslation [%s]' %
+                                           (word.name, word.pronunciation, word.translation),
+                                      reply_markup=reply_markup)
         student.temp_data = {'category': category, 'words': category_words}
-        update.message.edit_text(text='Choose word', reply_markup=reply_markup)
 
     @restricted
     def add_from_global_word(self, bot, update, student):
-        word_name = student.callback_data[int(update.callback_query.data)]
-        if word_name == 'Add all':
+        word_name = int(update.callback_query.data)
+        if word_name == 0:
             for word in student.temp_data['words']:
                 student.HQ.add_from_global_word(global_word=word)
         else:
-            word = student.temp_data['words'].get(name=word_name)
+            word = student.temp_data['words'].get(pk=word_name)
             student.HQ.add_from_global_word(global_word=word)
         update.message.edit_text('Word(s) added')
-        self.dispatch_destination(bot, update, student, 'Menu')

@@ -59,7 +59,6 @@ class Bot:
             'Play reversed typing': 'self.play_reversed_typing',
             'Help': self.help,
             'Settings': 'self.settings',
-            'Update users': self.update_users,
         }
         self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
@@ -73,10 +72,6 @@ class Bot:
     def dispatch_destination(self, bot, update, student, destination):
         student.destination = destination
         self.echo(bot, update)
-
-    def update_users(self, bot, update, student):
-        self.users = Student.objects.all()
-        self.dispatch_destination(bot, update, student, 'Menu')
 
     def start(self, bot, update):
         """Send a message when the command /start is issued."""
@@ -151,7 +146,7 @@ class Bot:
     @restricted
     def delete(self, bot, update, student):
         student.student.delete()
-        update.message.reply_text(bot, update, student, 'User deleted')
+        update.message.reply_text('User deleted')
 
     @restricted
     def menu_action(self, bot, update, student):

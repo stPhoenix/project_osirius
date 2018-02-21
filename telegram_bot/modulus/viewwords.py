@@ -68,7 +68,7 @@ class ViewWords(BaseModule):
         for word in student.temp_data['words']:
             button_list = [InlineKeyboardButton(text='Change translation', callback_data='0,'+str(word.pk)),
                            InlineKeyboardButton(text='Delete', callback_data='2,'+str(word.pk))]
-            if word.viewed is False:
+            if word.viewed is True:
                 button_list.insert(1, InlineKeyboardButton(text='Learn again', callback_data='1,'+str(word.pk)))
             reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=3))
             update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s]' %

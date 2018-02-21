@@ -40,10 +40,11 @@ class Register(BaseModule):
                                            current_language=student.temp_data['current_language'])
         learn_language = self.langs.get(name=student.temp_data['current_language'])
         learn_language.students.add(user)
-        student = BotUserHandler(student=user)
+        self.users = Student.objects.all()
+        self.students[str(student.temp_data['username'])] = BotUserHandler(student=user)
         update.message.edit_text('Your username: %s \n'
                                  'Your password: %s \n'
                                  'You will need it in future web version. So write it somewhere in safe place. \n'
                                  'And DELETE this message for security purposes.'
-                                 % (student.student.username, password), reply_markup=None)
-        self.dispatch_destination(bot, update, student, 'Update users')
+                                 % (user.username, password), reply_markup=None)
+        self.dispatch_destination(bot, update, self.students[str(student.temp_data['username'])], 'Menu')
