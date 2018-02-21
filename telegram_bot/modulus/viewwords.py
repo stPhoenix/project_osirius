@@ -43,7 +43,7 @@ class ViewWords(BaseModule):
         student.destination = choice
         student.callback_data = [c.name for c in self.categories]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.reply_text(text='Now choose category.', reply_markup=reply_markup)
+        update.message.edit_text(text='Now choose category.', reply_markup=reply_markup)
 
     @restricted
     def look_all_student_words(self, bot, update, student):
@@ -64,13 +64,13 @@ class ViewWords(BaseModule):
     @restricted
     def view_category_words(self, bot, update, student):
         student.destination = 'Manage word'
-        student.callback_data = ['Change translation', 'Delete', 'Learn again']
-        for word in student.temp_data:
-            button_list = [InlineKeyboardButton(text='Change translation', callback_data='0,'+word.pk),
-                           InlineKeyboardButton(text='Delete', callback_data='2,'+word.pk)]
+        student.callback_data = ['Change translation', 'Learn again', 'Delete word']
+        for word in student.temp_data['words']:
+            button_list = [InlineKeyboardButton(text='Change translation', callback_data='0,'+str(word.pk)),
+                           InlineKeyboardButton(text='Delete', callback_data='2,'+str(word.pk))]
             if word.viewed is False:
-                button_list.insert(1, InlineKeyboardButton(text='Learn again', callback_data='1,'+word.pk))
-            reply_markup = InlineKeyboardMarkup(build_menu(button_list), n_cols=3)
+                button_list.insert(1, InlineKeyboardButton(text='Learn again', callback_data='1,'+str(word.pk)))
+            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=3))
             update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s]' %
                                            (word.name, word.pronunciation, word.translation),
                                       reply_markup=reply_markup)

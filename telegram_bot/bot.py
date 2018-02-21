@@ -8,6 +8,7 @@ from linguist.models import Language, Category, GlobalWord
 from telegram_bot.utils import BotUserHandler, restricted, make_button_list, build_menu
 from telegram_bot.modulus.register import Register
 from telegram_bot.modulus.addwords import AddWords
+from telegram_bot.modulus.viewwords import ViewWords
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.WARNING)
@@ -65,6 +66,9 @@ class Bot:
         self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students,
                                  categories=self.categories, global_words=self.global_words)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
+        self.viewwords = ViewWords(self.langs, self.dispatch_destination, self.users, self.students,
+                                 categories=self.categories)
+        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.viewwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
         student.destination = destination
@@ -120,7 +124,7 @@ class Bot:
     def menu(self, bot, update, student):
         menu_list =[
             'Add words',
-            'Look all your words',
+            'My words',
             'Learn words',
             'Play matching',
             'Play reversed matching',
