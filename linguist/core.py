@@ -85,7 +85,7 @@ class LinguistHQ:
         else:
             word = words[randint(1, count-1)]
             fake_words = [words[randint(1, count-1)] for i in range(0, 3)]
-            fake_words.append(word.name)
+            fake_words.insert(fake_words[randint[0, len(fake_words)-1]], word)
             return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):
