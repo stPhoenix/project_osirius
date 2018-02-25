@@ -24,15 +24,17 @@ class LearnWords(BaseModule):
             'Play matching result': self.play_matching_result,
             'Play reversed matching': self.play_reversed_matching,
             'Play reversed matching result': self.play_reversed_matching_result,
-            'Play typing': 'self.play_typing',
-            'Play reversed typing': 'self.play_reversed_typing',
+            'Play typing': self.play_typing,
+            'Play typing result': self.play_typing_result,
+            'Play reversed typing': self.play_reversed_typing,
+            'Play reversed typing result': self.play_reversed_matching_result,
         }
 
     @restricted
     def learn_words(self, bot, update, student):
         student.destination = 'Learn word status'
         words = student.HQ.get_words()
-        word = words[randint(0, words.count())]
+        word = words[randint(0, words.count()-1)]
         student.temp_data = {'word': word}
         button_list = [InlineKeyboardButton(text='Learned', callback_data='1'),
                        InlineKeyboardButton(text='Not learned', callback_data='0')]
@@ -72,11 +74,12 @@ class LearnWords(BaseModule):
     @restricted
     def play_matching_result(self, bot, update, student):
         answer = student.callback_data[int(update.callback_query.data)]
+        word = student.temp_data['answer']
         if student.destination == 'Play matching result':
-            text = 'Right' if answer == student.temp_data['answer'].translation else 'Wrong!'
+            text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
             student.destination = 'Play matching'
         else:
-            text = 'Right' if answer == student.temp_data['answer'].name else 'Wrong!'
+            text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
             student.destination = 'Play reversed matching'
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
@@ -84,24 +87,47 @@ class LearnWords(BaseModule):
 
     @restricted
     def play_reversed_matching(self, bot, update, student):
-        pass
+        self.play_matching(self, bot, update, student)
 
     @restricted
     def play_reversed_matching_result(self, bot, update, student):
-        pass
+        self.play_matching_result(self, bot, update, student)
 
     @restricted
     def play_typing(self, bot, update, student):
-        pass
+        reverse = False if student.destination == 'Play typing' else True
+        game = student.HQ.play_typing(reverse=reverse)
+        if game == 'No word to play typing':
+            update.message.edit_text(text='No word to play typing')
+            self.dispatch_destination(bot, update, student, 'Menu')
+        else:
+            student.temp_data = {'answer': game['answer']}
+            if reverse is False:
+                student.destination = 'Play typing result'
+                text = game['answer'].name
+            else:
+                student.destination = 'Play reversed typing result'
+                text = game['answer'].translation
+            update.message.edit_text(text=text)
 
     @restricted
     def play_typing_result(self, bot, update, student):
-        pass
+        answer = update.message.text.strip(' ')
+        word = student.temp_data['answer']
+        if student.destination == 'Play typing result':
+            text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
+            student.destination = 'Play typing'
+        else:
+            text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
+            student.destination = 'Play reversed typing'
+        student.callback_data = ['Next']
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        update.message.reply_text(text=text, reply_markup=reply_markup)
 
     @restricted
     def play_reversed_typing(self, bot, update, student):
-        pass
+        self.play_typing(self, bot, update, student)
 
     @restricted
     def play_reversed_typing_result(self, bot, update, student):
-        pass
+        self.play_typing_result(self, bot, update, student)

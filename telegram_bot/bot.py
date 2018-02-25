@@ -9,6 +9,7 @@ from telegram_bot.utils import BotUserHandler, restricted, make_button_list, bui
 from telegram_bot.modulus.register import Register
 from telegram_bot.modulus.addwords import AddWords
 from telegram_bot.modulus.viewwords import ViewWords
+from telegram_bot.modulus.learnwords import LearnWords
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.WARNING)
@@ -52,11 +53,6 @@ class Bot:
         self.DESTINATIONS = {
             'Menu': self.menu,
             'Menu_action': self.menu_action,
-            'Learn words': 'self.learn_words',
-            'Play matching': 'self.play_matching',
-            'Play reversed matching': 'self.play_reversed_matching',
-            'Play typing': 'self.play_typing',
-            'Play reversed typing': 'self.play_reversed_typing',
             'Help': self.help,
             'Settings': 'self.settings',
         }
@@ -66,8 +62,11 @@ class Bot:
                                  categories=self.categories, global_words=self.global_words)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
         self.viewwords = ViewWords(self.langs, self.dispatch_destination, self.users, self.students,
-                                 categories=self.categories)
+                                   categories=self.categories)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.viewwords.get_destinations())
+        self.learnwords = LearnWords(self.langs, self.dispatch_destination, self.users, self.students,
+                                     categories=self.categories)
+        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.learnwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
         student.destination = destination
