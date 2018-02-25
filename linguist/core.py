@@ -61,13 +61,9 @@ class LinguistHQ:
         language = self.langs.get(name=self.student.current_language)
         return self.student.word_set.filter(category=category, language=language)
 
-    def get_viewed_words(self, category):
+    def get_words(self, category, viewed=False):
         language = self.langs.get(name=self.student.current_language)
-        return self.student.word_set.filter(viewed=True, category=category, language=language)
-
-    def get_not_viewed_words(self, category):
-        language = self.langs.get(name=self.student.current_language)
-        return self.student.word_set.filter(viewed=False, category=category, language=language)
+        return self.student.word_set.filter(viewed=viewed, category=category, language=language)
 
     def delete_word(self, word):
         word.delete()
