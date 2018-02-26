@@ -75,12 +75,15 @@ class LearnWords(BaseModule):
     def play_matching_result(self, bot, update, student):
         answer = student.callback_data[int(update.callback_query.data)]
         word = student.temp_data['answer']
+        reverse = False
         if student.destination == 'Play matching result':
             text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
             student.destination = 'Play matching'
         else:
+            reverse = True
             text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
             student.destination = 'Play reversed matching'
+        student.HQ.update_match_field(word, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text=text, reply_markup=reply_markup)
@@ -114,12 +117,15 @@ class LearnWords(BaseModule):
     def play_typing_result(self, bot, update, student):
         answer = update.message.text.strip(' ')
         word = student.temp_data['answer']
+        reverse = False
         if student.destination == 'Play typing result':
             text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
             student.destination = 'Play typing'
         else:
+            reverse = True
             text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
             student.destination = 'Play reversed typing'
+        student.HQ.update_typing_field(word, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.reply_text(text=text, reply_markup=reply_markup)
