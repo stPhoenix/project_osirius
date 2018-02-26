@@ -76,6 +76,20 @@ class LinguistHQ:
         word.viewed = viewed
         word.save()
 
+    def update_match_field(self, word, played, reverse=False):
+       if reverse is False:
+           word.played_match = played
+       else:
+           word.played_reversed_match = played
+       word.save()
+
+    def update_typing_field(self, word, played, reverse=False):
+       if reverse is False:
+           word.played_typing = played
+       else:
+           word.played_reversed_typing = played
+       word.save()
+
     def play_matching(self, reverse=False):
         words = self.student.word_set.filter(language=self.langs.get(name=self.student.current_language))
         words = words.filter(played_match=False) if reverse is False else words.filter(played_reversed_match=False)
