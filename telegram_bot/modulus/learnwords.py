@@ -69,7 +69,8 @@ class LearnWords(BaseModule):
                 student.callback_data = [word.name for word in game['words']]
                 text = game['answer'].translation
             reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-            update.message.edit_text(text=text, reply_markup=reply_markup)
+            # Todo Improve button length
+            update.message.edit_text(text=text + '["_"]' * 10, reply_markup=reply_markup)
 
     @restricted
     def play_matching_result(self, bot, update, student):
@@ -83,7 +84,7 @@ class LearnWords(BaseModule):
             reverse = True
             text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
             student.destination = 'Play reversed matching'
-        student.HQ.update_match_field(word, reverse)
+        student.HQ.update_match_field(word, True, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text=text, reply_markup=reply_markup)
@@ -125,7 +126,7 @@ class LearnWords(BaseModule):
             reverse = True
             text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
             student.destination = 'Play reversed typing'
-        student.HQ.update_typing_field(word, reverse)
+        student.HQ.update_typing_field(word, True, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.reply_text(text=text, reply_markup=reply_markup)
