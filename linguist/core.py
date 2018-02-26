@@ -77,7 +77,7 @@ class LinguistHQ:
         word.save()
 
     def play_matching(self, reverse=False):
-        words = self.student.word_set.filter(language=self.get(name=self.student.current_language))
+        words = self.student.word_set.filter(language=self.langs.get(name=self.student.current_language))
         words = words.filter(played_match=False) if reverse is False else words.filter(played_reversed_match=False)
         count = words.count()
         if count == 0:
@@ -85,7 +85,7 @@ class LinguistHQ:
         else:
             word = words[randint(1, count-1)]
             fake_words = [words[randint(1, count-1)] for i in range(0, 3)]
-            fake_words.insert(fake_words[randint[0, len(fake_words)-1]], word)
+            fake_words.insert(randint(0, len(fake_words)-1), word)
             return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):

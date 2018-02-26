@@ -87,11 +87,11 @@ class LearnWords(BaseModule):
 
     @restricted
     def play_reversed_matching(self, bot, update, student):
-        self.play_matching(self, bot, update, student)
+        self.play_matching(bot, update, student)
 
     @restricted
     def play_reversed_matching_result(self, bot, update, student):
-        self.play_matching_result(self, bot, update, student)
+        self.play_matching_result(bot, update, student)
 
     @restricted
     def play_typing(self, bot, update, student):
@@ -126,8 +126,8 @@ class LearnWords(BaseModule):
 
     @restricted
     def play_reversed_typing(self, bot, update, student):
-        self.play_typing(self, bot, update, student)
+        self.play_typing(bot, update, student)
 
     @restricted
     def play_reversed_typing_result(self, bot, update, student):
-        self.play_typing_result(self, bot, update, student)
+        self.play_typing_result(bot, update, student)
