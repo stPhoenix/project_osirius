@@ -27,7 +27,7 @@ class LearnWords(BaseModule):
             'Play typing': self.play_typing,
             'Play typing result': self.play_typing_result,
             'Play reversed typing': self.play_reversed_typing,
-            'Play reversed typing result': self.play_reversed_matching_result,
+            'Play reversed typing result': self.play_reversed_typing_result,
         }
 
     @restricted
@@ -104,13 +104,13 @@ class LearnWords(BaseModule):
             update.message.edit_text(text='No word to play typing')
             self.dispatch_destination(bot, update, student, 'Menu')
         else:
-            student.temp_data = {'answer': game['answer']}
+            student.temp_data = {'answer': game}
             if reverse is False:
                 student.destination = 'Play typing result'
-                text = game['answer'].name
+                text = game.name
             else:
                 student.destination = 'Play reversed typing result'
-                text = game['answer'].translation
+                text = game.translation
             update.message.edit_text(text=text)
 
     @restricted
