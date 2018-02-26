@@ -57,7 +57,7 @@ class ViewWords(BaseModule):
     def look_learned_words(self, bot, update, student):
         category_name = student.callback_data[int(update.callback_query.data)]
         category = self.categories.get(name=category_name)
-        student.temp_data = {'words': student.HQ.get_words(category)}
+        student.temp_data = {'words': student.HQ.get_learned_words(category)}
         update.message.edit_text(text=category_name)
         self.dispatch_destination(bot, update, student, 'View category words')
 
