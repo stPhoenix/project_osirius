@@ -114,5 +114,5 @@ class LinguistHQ:
         if count == 0:
             word = 'No word to play typing'
         else:
-            word = words[randint(1, count-1)]
+            word = words[randint(0, count-1)]
         return word
