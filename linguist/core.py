@@ -103,8 +103,8 @@ class LinguistHQ:
                 w = choice(words)
                 if w not in fake_words and w != word:
                     fake_words.append(w)
-            lenght = len(fake_words) if len(fake_words) > 0 else 1
-            fake_words.insert(randint(0, lenght), word)
+            length = len(fake_words) if len(fake_words) > 0 else 1
+            fake_words.insert(randint(0, length), word)
             return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):
