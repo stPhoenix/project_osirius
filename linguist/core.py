@@ -1,5 +1,5 @@
 from linguist.models import Word, GlobalWord, Language, Category
-from random import randint
+from random import randint, choice
 from linguist.utils import LinguistTranslator
 
 
@@ -97,9 +97,14 @@ class LinguistHQ:
         if count == 0:
             return 'No words to play matching'
         else:
-            word = words[randint(1, count-1)]
-            fake_words = [words[randint(1, count-1)] for i in range(0, 3)]
-            fake_words.insert(randint(0, len(fake_words)-1), word)
+            word = choice(words)
+            fake_words = []
+            for i in range(0, 3):
+                w = choice(words)
+                if w not in fake_words and w != word:
+                    fake_words.append(w)
+            lenght = len(fake_words) if len(fake_words) > 0 else 1
+            fake_words.insert(randint(0, lenght), word)
             return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):
