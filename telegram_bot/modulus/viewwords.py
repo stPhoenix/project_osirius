@@ -57,7 +57,7 @@ class ViewWords(BaseModule):
     def look_learned_words(self, bot, update, student):
         category_name = student.callback_data[int(update.callback_query.data)]
         category = self.categories.get(name=category_name)
-        student.temp_data = {'words': student.HQ.get_words(category, viewed=True)}
+        student.temp_data = {'words': student.HQ.get_words(viewed=True)}
         update.message.edit_text(text=category_name)
         self.dispatch_destination(bot, update, student, 'View category words')
 
@@ -100,4 +100,8 @@ class ViewWords(BaseModule):
     @restricted
     def learn_again(self, bot, update, student):
         student.HQ.update_viewed_field(student.temp_data['word'], False)
+        student.HQ.update_match_field(student.temp_data['word'], False, False)
+        student.HQ.update_match_field(student.temp_data['word'], False, True)
+        student.HQ.update_typing_field(student.temp_data['word'], False, False)
+        student.HQ.update_typing_field(student.temp_data['word'], False, True)
         update.message.edit_text('Word changed state to learn')
