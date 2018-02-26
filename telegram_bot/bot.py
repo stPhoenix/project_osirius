@@ -136,7 +136,7 @@ class Bot:
         update.message = update.callback_query.message
         logger.warning('CALLBACK HANDLER DESTINATION: %s' % student.destination)
         try:
-            self.DESTINATIONS[student.destination](bot, update, student)
+            self.dispatch_destination(bot, update, student, student.destination)
         except KeyError:
             logger.warning('KEY ERROR in destinations: %s' % student.destination)
             update.message.reply_text('Sorry! Something went wrong.')
@@ -152,7 +152,7 @@ class Bot:
         choice = student.callback_data[int(update.callback_query.data)]
         logger.warning('MENU ACTION DESTINATION: %s' % student.destination)
         try:
-            self.DESTINATIONS[choice](bot, update, student)
+            self.dispatch_destination(bot, update, student, choice)
         except KeyError:
             update.message.reply_text('Sorry! Something went wrong.')
             student.callback_data = []
