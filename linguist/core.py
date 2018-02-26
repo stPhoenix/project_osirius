@@ -72,8 +72,8 @@ class LinguistHQ:
         word.translation = translation
         word.save()
 
-    def update_viewed_field(self, word, status=False):
-        word.viewed = status
+    def update_viewed_field(self, word, viewed=False):
+        word.viewed = viewed
         word.save()
 
     def play_matching(self, reverse=False):
