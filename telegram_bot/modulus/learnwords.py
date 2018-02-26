@@ -34,7 +34,10 @@ class LearnWords(BaseModule):
     def learn_words(self, bot, update, student):
         student.destination = 'Learn word status'
         words = student.HQ.get_words()
-        word = words[randint(0, words.count()-1)]
+        if words.count() == 1:
+            word = words[0]
+        else:
+            word = words[randint(0, words.count() - 1)]
         student.temp_data = {'word': word}
         button_list = [InlineKeyboardButton(text='Learned', callback_data='1'),
                        InlineKeyboardButton(text='Not learned', callback_data='0')]
