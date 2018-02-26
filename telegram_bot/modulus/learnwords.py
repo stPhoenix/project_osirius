@@ -45,7 +45,7 @@ class LearnWords(BaseModule):
 
     @restricted
     def learn_word_status(self, bot, update, student):
-        choice = int(student.destination)
+        choice = int(update.callback_query.data)
         word = student.temp_data['word']
         if choice == 1:
             student.HQ.update_viewed_field(word=word, viewed=True)
