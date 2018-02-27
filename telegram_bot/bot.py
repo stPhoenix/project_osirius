@@ -27,7 +27,7 @@ class Bot:
         self.categories = Category.objects.all()
         self.global_words = GlobalWord.objects.all()
 
-        self.menu_text = 'You can always go back to /menu'
+        self.menu_text = '[You can always go back to /menu]'
         self.setup_destinations()
         # Helper for unregistered users
         """Start the bot."""
@@ -59,16 +59,18 @@ class Bot:
             'Add more learn language': self.add_more_learn_language,
             'Change language': self.change_language,
         }
-        self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
+        self.register = Register(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
+                                 students=self.students, menu_text=self.menu_text)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
-        self.addwords = AddWords(self.langs, self.dispatch_destination, self.users, self.students,
-                                 categories=self.categories, global_words=self.global_words)
+        self.addwords = AddWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
+                                 students=self.students, menu_text=self.menu_text, categories=self.categories,
+                                 global_words=self.global_words)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
-        self.viewwords = ViewWords(self.langs, self.dispatch_destination, self.users, self.students,
-                                   categories=self.categories)
+        self.viewwords = ViewWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
+                                   students=self.students, menu_text=self.menu_text,categories=self.categories)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.viewwords.get_destinations())
-        self.learnwords = LearnWords(self.langs, self.dispatch_destination, self.users, self.students,
-                                     categories=self.categories)
+        self.learnwords = LearnWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
+                                     students=self.students, menu_text=self.menu_text, categories=self.categories)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.learnwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
@@ -134,7 +136,7 @@ class Bot:
         student.callback_data = menu_list
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
         student.destination = 'Menu_action'
-        update.message.reply_text(text='Menu', reply_markup=reply_markup)
+        update.message.reply_text(text='Menu'+self.menu_text, reply_markup=reply_markup)
 
     def callback_handler(self, bot, update):
         student = self.students[str(update.effective_user.id)]
@@ -159,7 +161,7 @@ class Bot:
         try:
             self.dispatch_destination(bot, update, student, choice)
         except KeyError:
-            update.message.reply_text('Sorry! Something went wrong.')
+            update.message.reply_text('Sorry! Something went wrong.'+self.menu_text)
             student.callback_data = []
             self.dispatch_destination(bot, update, student, 'Menu')
 
@@ -169,14 +171,15 @@ class Bot:
         cats = student.student.language_set.all()
         student.callback_data = [c.name for c in cats]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.callback_query.message.edit_text('Choose your learn language', reply_markup=reply_markup)
+        update.callback_query.message.edit_text('Choose your learn language'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def add_more_learn_language(self, bot, update, student):
         student.destination = 'Change language'
         student.callback_data = [l.name for l in self.langs]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.callback_query.message.edit_text('Choose your new learn language', reply_markup=reply_markup)
+        update.callback_query.message.edit_text('Choose your new learn language'+self.menu_text,
+                                                reply_markup=reply_markup)
 
     @restricted
     def change_language(self, bot, update, student):
@@ -185,4 +188,4 @@ class Bot:
         if language not in student.student.language_set.all():
             language.students.add(student.student)
         student.student.learn_language = choice
-        update.message.edit_text('Alright! Good luck!')
+        update.message.edit_text('Alright! Good luck!'+self.menu_text)

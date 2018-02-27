@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 class AddWords(BaseModule):
-    def __init__(self, langs, dispatch_destination, users, students, **kwargs):
-        super(AddWords, self).__init__(langs, dispatch_destination, users, students)
+    def __init__(self, **kwargs):
+        super(AddWords, self).__init__(**kwargs)
         self.categories = kwargs['categories']
         self.global_words = kwargs['global_words']
 
@@ -37,7 +37,7 @@ class AddWords(BaseModule):
         student.callback_data = ['Add word by typing', 'Choose word from presets']
         student.destination = 'Add words option'
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.edit_text(text='How do you want to add word?', reply_markup=reply_markup)
+        update.message.edit_text(text='How do you want to add word?'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def add_words_option(self, bot, update, student):
@@ -59,12 +59,12 @@ class AddWords(BaseModule):
             answer = 'Word has been added'
         else:
             answer = result
-        update.message.edit_text(text=answer)
+        update.message.edit_text(text=answer+self.menu_text)
 
     @restricted
     def add_word_by_typing(self, bot, update, student):
         student.destination = 'Search word'
-        update.message.edit_text('Enter foreign word')
+        update.message.edit_text('Enter foreign word'+self.menu_text)
 
     def add_word_translation(self, bot, update, student):
         student.temp_data['translation'] = update.message.text.strip()
@@ -74,7 +74,7 @@ class AddWords(BaseModule):
         student.destination = 'Add custom word'
         student.callback_data = [c.name for c in self.categories]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.reply_text(text='Now choose category.', reply_markup=reply_markup)
+        update.message.reply_text(text='Now choose category.'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def search_word(self, bot, update, student):
@@ -94,7 +94,7 @@ class AddWords(BaseModule):
                                            'Word [%s] \n Pronunciation [%s]\n Translation [%s]' %
                                            (result['words'].origin, result['words'].pronunciation,
                                             result['words'].text))
-            update.message.reply_text(text='Add custom word translation?', reply_markup=reply_markup)
+            update.message.reply_text(text='Add custom word translation?'+self.menu_text, reply_markup=reply_markup)
         if result['global_word_search'] is True:
             # TODO: Add multiple search results
             update.message.reply_text(text='Found in data base search \n'
@@ -110,7 +110,7 @@ class AddWords(BaseModule):
         choice = student.callback_data[int(update.callback_query.data)]
         if choice == 'Yes':
             student.destination = 'Add word translation'
-            update.message.edit_text(text='Enter your translation:')
+            update.message.edit_text(text='Enter your translation:'+self.menu_text)
         elif choice == 'No':
             update.message.delete()
             self.dispatch_destination(bot, update, student, 'Add word category')
@@ -119,7 +119,7 @@ class AddWords(BaseModule):
         student.callback_data = [c.name for c in self.categories]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         student.destination = 'Show category words'
-        update.message.edit_text(text='Choose category', reply_markup=reply_markup)
+        update.message.edit_text(text='Choose category'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def show_category_words(self, bot, update, student):
@@ -148,4 +148,4 @@ class AddWords(BaseModule):
         else:
             word = student.temp_data['words'].get(pk=word_name)
             student.HQ.add_from_global_word(global_word=word)
-        update.message.edit_text('Word(s) added')
+        update.message.edit_text('Word(s) added'+self.menu_text)

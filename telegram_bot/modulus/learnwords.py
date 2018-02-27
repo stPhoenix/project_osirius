@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 class LearnWords(BaseModule):
-    def __init__(self, langs, dispatch_destination, users, students, **kwargs):
-        super(LearnWords, self).__init__(langs, dispatch_destination, users, students)
+    def __init__(self, **kwargs):
+        super(LearnWords, self).__init__(**kwargs)
         self.categories = kwargs['categories']
 
     def setup_destinations(self):
@@ -42,7 +42,7 @@ class LearnWords(BaseModule):
         button_list = [InlineKeyboardButton(text='Learned', callback_data='1'),
                        InlineKeyboardButton(text='Not learned', callback_data='0')]
         reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-        update.message.edit_text(text='Word [%s]\nPronunciation [%s]\nTranslation [%s]' %
+        update.message.edit_text(text='Word [%s]\nPronunciation [%s]\nTranslation [%s]\n'+self.menu_text %
                                        (word.name, word.pronunciation, word.translation),
                                  reply_markup=reply_markup)
 
@@ -73,7 +73,7 @@ class LearnWords(BaseModule):
                 text = game['answer'].translation
             reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
             # Todo Improve button length
-            update.message.edit_text(text=text + '["_"]' * 10, reply_markup=reply_markup)
+            update.message.edit_text(text=text+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def play_matching_result(self, bot, update, student):
@@ -90,7 +90,7 @@ class LearnWords(BaseModule):
         student.HQ.update_match_field(word, True, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.edit_text(text=text, reply_markup=reply_markup)
+        update.message.edit_text(text=text+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def play_reversed_matching(self, bot, update, student):
@@ -115,7 +115,7 @@ class LearnWords(BaseModule):
             else:
                 student.destination = 'Play reversed typing result'
                 text = game.translation
-            update.message.edit_text(text=text)
+            update.message.edit_text(text=text+self.menu_text)
 
     @restricted
     def play_typing_result(self, bot, update, student):
@@ -132,7 +132,7 @@ class LearnWords(BaseModule):
         student.HQ.update_typing_field(word, True, reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.reply_text(text=text, reply_markup=reply_markup)
+        update.message.reply_text(text=text+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def play_reversed_typing(self, bot, update, student):
