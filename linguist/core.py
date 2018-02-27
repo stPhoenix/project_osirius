@@ -11,19 +11,22 @@ class LinguistHQ:
         if self.student is None:
             raise ValueError("Student can't be None")
 
+    def get_current_language(self):
+        return self.langs.get(name=self.student.current_language)
+
     def add_from_global_word(self, global_word=None, alternative_translation=None):
         global_word = global_word
         word = Word(
             name=global_word.name,
             translation=alternative_translation if alternative_translation is not None else global_word.translation,
-            language=self.langs.get(name=self.student.current_language),
+            language=self.get_current_language(),
             student=self.student
         )
         word.save()
         word.category_set.set(global_word.category_set.all())
 
     def search_word(self, word_name=None):
-        language = self.langs.get(name=self.student.current_language)
+        language = self.get_current_language()
         words = self.global_words.filter(name=word_name, language=language)
         global_word_search = False
         google_translate_search = False
@@ -32,43 +35,41 @@ class LinguistHQ:
             translator = LinguistTranslator()
             words = translator.translate(text=word_name, src=language.slug, dest=home_language.slug)
             google_translate_search = True if words.text is not None else False
-            print('WORDS: %s' % words)
         else:
             global_word_search = True
 
         return {'global_word_search': global_word_search, 'google_translate_search': google_translate_search,
                 'words': words}
 
-    def add_custom_word(self, word_name=None, translation=None, category=None, pronunciation=None):
+    def add_custom_word(self, **kwargs):
         error = None
-        if word_name is None or translation is None or pronunciation is None:
+        if kwargs['word_name'] is None or kwargs['translation'] is None or kwargs['pronunciation'] is None:
             error = 'You did not choose word or translation or category'
             return error
-        if category is None:
+        category = kwargs['category']
+        if kwargs['category'] is None:
             category = Category.objects.get(name="Default")
         word = Word(
-            name=word_name,
-            translation=translation,
-            language=self.langs.get(name=self.student.current_language),
+            name=kwargs['word_name'],
+            translation=kwargs['translation'],
+            language=self.get_current_language(),
             student=self.student,
-            pronunciation = pronunciation
+            pronunciation=kwargs['pronunciation']
         )
         word.save()
         word.category_set.add(category)
         word.save()
 
     def get_all_words(self, category):
-        language = self.langs.get(name=self.student.current_language)
-        return self.student.word_set.filter(category=category, language=language)
+        return self.student.word_set.filter(category=category, language=self.get_current_language())
 
     def get_words(self, viewed=False):
-        language = self.langs.get(name=self.student.current_language)
-        return self.student.word_set.filter(viewed=viewed, language=language)
+        return self.student.word_set.filter(viewed=viewed, language=self.get_current_language())
 
     def get_learned_words(self, category):
-        language = self.langs.get(name=self.student.current_language)
-        return self.student.word_set.filter(language=language, category=category, viewed=True, played_match=True,
-                                            played_reversed_match=True, played_typing=True, played_reversed_typing=True)
+        return self.student.word_set.filter(language=self.get_current_language(), category=category, viewed=True,
+                                            played_match=True, played_reversed_match=True, played_typing=True,
+                                            played_reversed_typing=True)
 
     def delete_word(self, word):
         word.delete()
@@ -96,24 +97,30 @@ class LinguistHQ:
        word.save()
 
     def play_matching(self, reverse=False):
-        words = self.student.word_set.filter(language=self.langs.get(name=self.student.current_language))
+        words = self.student.word_set.filter(language=self.get_current_language())
         words = words.filter(played_match=False) if reverse is False else words.filter(played_reversed_match=False)
         count = words.count()
         if count == 0:
             return 'No words to play matching'
         else:
-            word = choice(words)
-            fake_words = []
-            for i in range(0, 3):
-                w = choice(words)
-                if w not in fake_words and w != word:
-                    fake_words.append(w)
-            length = len(fake_words) if len(fake_words) > 0 else 1
+            return self.create_play_words(words)
+
+    def create_play_words(self, words):
+        word = choice(words)
+        fake_words = []
+        for i in range(0, 3):
+            w = choice(words)
+            if w not in fake_words and w != word:
+                fake_words.append(w)
+        length = len(fake_words)
+        if length == 0:
+           fake_words.append(word)
+        else:
             fake_words.insert(randint(0, length), word)
-            return {'words': fake_words, 'answer': word}
+        return {'words': fake_words, 'answer': word}
 
     def play_typing(self, reverse=False):
-        words = self.student.word_set.filter(language=self.langs.get(name=self.student.current_language))
+        words = self.student.word_set.filter(language=self.get_current_language())
         words = words.filter(played_typing=False) if reverse is False else words.filter(played_reversed_typing=False)
         count = words.count()
         if count == 0:
