@@ -100,7 +100,7 @@ class Bot:
 
     def help(self, bot, update, student):
         """Send a message when the command /help is issued."""
-        update.message.reply_text('Help!')
+        update.message.reply_text('Have any questions? Write it to saintdevs@gmail.com')
 
     def echo(self, bot, update):
         """Forward the user message."""
