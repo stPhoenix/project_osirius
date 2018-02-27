@@ -27,6 +27,7 @@ class Bot:
         self.categories = Category.objects.all()
         self.global_words = GlobalWord.objects.all()
 
+        self.menu_text = 'You can always go back to /menu'
         self.setup_destinations()
         # Helper for unregistered users
         """Start the bot."""
@@ -54,8 +55,9 @@ class Bot:
             'Menu': self.menu,
             'Menu_action': self.menu_action,
             'Help': self.help,
-            'Change learn language': 'self.change_learn_language',
-            'Add more learn language': 'self.add_more_learn_language',
+            'Change learn language': self.change_learn_language,
+            'Add more learn language': self.add_more_learn_language,
+            'Change language': self.change_language,
         }
         self.register = Register(self.langs, self.dispatch_destination, self.users, self.students)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
@@ -164,13 +166,14 @@ class Bot:
     @restricted
     def change_learn_language(self, bot, update, student):
         student.destination = 'Change language'
-        cats = student.language_set.all()
+        cats = student.student.language_set.all()
         student.callback_data = [c.name for c in cats]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.callback_query.message.edit_text('Choose your learn language', reply_markup=reply_markup)
 
     @restricted
-    def add_new_learn_language(self, bot, update, student):
+    def add_more_learn_language(self, bot, update, student):
+        student.destination = 'Change language'
         student.callback_data = [l.name for l in self.langs]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.callback_query.message.edit_text('Choose your new learn language', reply_markup=reply_markup)
@@ -179,7 +182,7 @@ class Bot:
     def change_language(self, bot, update, student):
         choice = student.callback_data[int(update.callback_query.data)]
         language = self.langs.get(name=choice)
-        if language not in student.language_set.all():
-            language.add(student)
+        if language not in student.student.language_set.all():
+            language.students.add(student.student)
         student.student.learn_language = choice
         update.message.edit_text('Alright! Good luck!')
