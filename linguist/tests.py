@@ -55,47 +55,48 @@ class TestLinguistHQ(TestCase):
 
     def test_add_global_word(self):
         l_hq = LinguistHQ(student=self.user)
-        l_hq.add_from_global_word(word_id=self.global_word.pk, alternative_translation=None)
+        l_hq.add_from_global_word(global_word=self.global_word, alternative_translation=None)
         word = self.user.word_set.filter(name=self.global_word.name, language=self.current_language)
         self.assertEqual(self.global_word.name, word[0].name)
         word[0].delete()
         # Let's test alternative arg
-        l_hq.add_from_global_word(word_id=self.global_word.pk, alternative_translation='Alternative')
+        l_hq.add_from_global_word(global_word=self.global_word, alternative_translation='Alternative')
         word2 = self.user.word_set.filter(name=self.global_word.name, language=self.current_language)
         self.assertEqual('Alternative', word2[0].translation)
-        # Let's check if returning error
-        error = l_hq.add_from_global_word()
-        self.assertEqual(error, 'Please choose word')
 
     def test_search_word(self):
         l_hq = LinguistHQ(student=self.user)
-        words = l_hq.search_word('ありがとう', self.current_language)
+        words = l_hq.search_word('ありがとう')
         self.assertEqual(words['words'][0].translation, 'thank you')
 
     def test_add_custom_word(self):
         l_hq = LinguistHQ(student=self.user)
-        l_hq.add_custom_word( word_name='あいさつ', translation='Greetings')
-        word = self.user.word_set.filter(name='あいさつ', language=Language.objects.get(name=self.user.current_language))
+        l_hq.add_custom_word(word_name='あいさつ',
+                             translation='Greetings',
+                             pronunciation='arigato',
+                             category=self.category)
+        word = self.user.word_set.filter(name='あいさつ',
+                                         language=Language.objects.get(name=self.user.current_language))
         self.assertEqual(word[0].name, 'あいさつ')
         # Let's test error
-        error = l_hq.add_custom_word()
+        error = l_hq.add_custom_word(word_name=None,
+                             translation=None,
+                             pronunciation=None,
+                             category=None)
         self.assertEqual(error, 'You did not choose word or translation or category')
 
     def test_get_all_words(self):
         l_hq = LinguistHQ(student=self.user)
-        self.assertEqual(l_hq.get_all_words()[1], self.user.word_set.all()[1])
+        self.assertEqual(l_hq.get_all_words(self.category)[1], self.user.word_set.filter(category=self.category)[1])
 
-    def test_get_viewed_words(self):
-        l_hq = LinguistHQ(student=self.user)
-        words = self.user.word_set.filter(viewed=True,
-                                          language=Language.objects.get(name=self.user.current_language))
-        self.assertEqual(l_hq.get_viewed_words()[1], words[1])
-
-    def test_get_not_viewed_words(self):
+    def test_get_learned_words(self):
         l_hq = LinguistHQ(student=self.user)
         words = self.user.word_set.filter(viewed=False,
-                                          language=Language.objects.get(name=self.user.current_language))
-        self.assertEqual(l_hq.get_not_viewed_words()[1], words[1])
+                                          language=Language.objects.get(name=self.user.current_language),
+                                          played_match=True, played_reversed_match=True, played_typing=True,
+                                          played_reversed_typing=True, category=self.category
+                                          )
+        self.assertEqual(l_hq.get_learned_words(self.category)[0], words[0])
 
     def test_play_matching(self):
         l_hq = LinguistHQ(student=self.user)
