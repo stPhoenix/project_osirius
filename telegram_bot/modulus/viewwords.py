@@ -71,7 +71,7 @@ class ViewWords(BaseModule):
             if word.viewed is True:
                 button_list.insert(1, InlineKeyboardButton(text='Learn again', callback_data='1,'+str(word.pk)))
             reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=3))
-            update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s] \n'+self.menu_text %
+            update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s] \n' %
                                            (word.name, word.pronunciation, word.translation),
                                       reply_markup=reply_markup)
 
