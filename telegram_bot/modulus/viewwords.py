@@ -42,21 +42,20 @@ class ViewWords(BaseModule):
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text='Now choose category.'+self.menu_text, reply_markup=reply_markup)
 
-    @restricted
-    def look_all_student_words(self, bot, update, student):
+    def look_words(self, bot, update, student, func):
         category_name = student.callback_data[int(update.callback_query.data)]
-        category = self.categories.get(name=category_name)
-        student.temp_data = {'words': student.HQ.get_all_words(category)}
-        update.message.edit_text(text=category_name+self.menu_text)
+        category =  self.categories.get(name=category_name)
+        student.temp_data = {'words': func(category)}
+        update.message.edit_text(text=category.name + self.menu_text)
         self.dispatch_destination(bot, update, student, 'View category words')
 
     @restricted
+    def look_all_student_words(self, bot, update, student):
+        self.look_words(bot, update, student, student.HQ.get_all_words)
+
+    @restricted
     def look_learned_words(self, bot, update, student):
-        category_name = student.callback_data[int(update.callback_query.data)]
-        category = self.categories.get(name=category_name)
-        student.temp_data = {'words': student.HQ.get_learned_words(category)}
-        update.message.edit_text(text=category_name+self.menu_text)
-        self.dispatch_destination(bot, update, student, 'View category words')
+        self.look_words(bot, update, student, student.HQ.get_learned_words)
 
     @restricted
     def view_category_words(self, bot, update, student):
@@ -65,7 +64,8 @@ class ViewWords(BaseModule):
         for word in student.temp_data['words']:
             button_list = [InlineKeyboardButton(text='Change translation', callback_data='0,'+str(word.pk)),
                            InlineKeyboardButton(text='Delete', callback_data='2,'+str(word.pk))]
-            if word.viewed is True:
+            if word.viewed and word.played_match and word.played_reversed_match and word.played_typing\
+                    and word.played_reversed_typing is True:
                 button_list.insert(1, InlineKeyboardButton(text='Learn again', callback_data='1,'+str(word.pk)))
             reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=3))
             update.message.reply_text(text='Word [%s] \n Pronunciation [%s]\n Translation [%s] \n' %
