@@ -80,17 +80,24 @@ class LearnWords(BaseModule):
         answer = student.callback_data[int(update.callback_query.data)]
         word = student.temp_data['answer']
         reverse = False
+        learned = False
         if student.destination == 'Play matching result':
-            text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
+            learned = self.check_answer(word.translation, answer)
             student.destination = 'Play matching'
         else:
             reverse = True
-            text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
+            learned = self.check_answer(word.name, answer)
             student.destination = 'Play reversed matching'
-        student.HQ.update_match_field(word, True, reverse)
+        student.HQ.update_match_field(word, learned['update'], reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.edit_text(text=text+self.menu_text, reply_markup=reply_markup)
+        update.message.edit_text(text=learned['text']+self.menu_text, reply_markup=reply_markup)
+
+    def check_answer(self, word, answer):
+        if word == answer:
+            return {'text': 'Right', 'update': True}
+        else:
+            return {'text': 'Wrong: %s' % word, 'update': False}
 
     @restricted
     def play_reversed_matching(self, bot, update, student):
@@ -122,17 +129,18 @@ class LearnWords(BaseModule):
         answer = update.message.text.strip(' ')
         word = student.temp_data['answer']
         reverse = False
+        learned = False
         if student.destination == 'Play typing result':
-            text = 'Right' if answer == word.translation else 'Wrong: %s' % word.translation
+            learned = self.check_answer(word.translation, answer)
             student.destination = 'Play typing'
         else:
             reverse = True
-            text = 'Right' if answer == word.name else 'Wrong: %s' % word.name
+            learned = self.check_answer(word.name, answer)
             student.destination = 'Play reversed typing'
-        student.HQ.update_typing_field(word, True, reverse)
+        student.HQ.update_typing_field(word, learned['update'], reverse)
         student.callback_data = ['Next']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.message.reply_text(text=text+self.menu_text, reply_markup=reply_markup)
+        update.message.reply_text(text=learned['text']+self.menu_text, reply_markup=reply_markup)
 
     @restricted
     def play_reversed_typing(self, bot, update, student):
