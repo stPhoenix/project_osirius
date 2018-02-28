@@ -11,9 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 class ViewWords(BaseModule):
-    def __init__(self, **kwargs):
-        super(ViewWords, self).__init__(**kwargs)
-        self.categories = kwargs['categories']
 
     def setup_destinations(self):
         self.DESTINATIONS = {

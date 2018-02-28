@@ -60,7 +60,7 @@ class Bot:
             'Change language': self.change_language,
         }
         self.register = Register(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
-                                 students=self.students, menu_text=self.menu_text)
+                                 students=self.students, menu_text=self.menu_text, categories=self.categories)
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
         self.addwords = AddWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
                                  students=self.students, menu_text=self.menu_text, categories=self.categories,

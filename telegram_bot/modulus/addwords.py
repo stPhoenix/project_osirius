@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 class AddWords(BaseModule):
     def __init__(self, **kwargs):
         super(AddWords, self).__init__(**kwargs)
-        self.categories = kwargs['categories']
         self.global_words = kwargs['global_words']
 
     def setup_destinations(self):

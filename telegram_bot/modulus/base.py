@@ -7,6 +7,7 @@ class BaseModule:
         self.users = kwargs['users']
         self.students = kwargs['students']
         self.menu_text = kwargs['menu_text']
+        self.categories = kwargs['categories']
 
     def setup_destinations(self):
         self.DESTINATIONS = {
