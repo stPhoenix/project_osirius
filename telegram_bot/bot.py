@@ -12,7 +12,7 @@ from telegram_bot.modulus.viewwords import ViewWords
 from telegram_bot.modulus.learnwords import LearnWords
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING)
+                    level=logging.WARNING, filename='bot.log')
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,6 @@ class Bot:
 
         self.menu_text = '[You can always go back to /menu]'
         self.setup_destinations()
-        # Helper for unregistered users
         """Start the bot."""
         updater = Updater(config('TELEGRAM_TOKEN'))
 
@@ -51,6 +50,11 @@ class Bot:
         updater.idle()
 
     def setup_destinations(self):
+        """
+        Destinations is an array with pairs of key value where :
+        key used in bot message handlers
+        value used to start the function to respond to user message
+        """
         self.DESTINATIONS = {
             'Menu': self.menu,
             'Menu_action': self.menu_action,
@@ -74,6 +78,13 @@ class Bot:
         self.DESTINATIONS = dict(**self.DESTINATIONS, **self.learnwords.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
+        """
+        Helper function to forward messages by there destination param
+        :param bot: telegram.Bot
+        :param update:
+        :param student: users.models.Student
+        :param destination: a key in self.DESTINATIONS to forward message
+        """
         student.destination = destination
         self.echo(bot, update)
 
@@ -108,7 +119,6 @@ class Bot:
             student = self.students[str(update.effective_user.id)]
         except KeyError:
             self.start()
-        logger.warning('ECHO DESTINATION: %s' % student.destination)
         try:
             self.DESTINATIONS[student.destination](bot, update, student)
         except KeyError:
@@ -121,6 +131,13 @@ class Bot:
 
     @restricted
     def menu(self, bot, update, student):
+        """
+         Display bot menu
+        :param bot:
+        :param update:
+        :param student:
+        :return:
+        """
         menu_list =[
             'Add words',
             'My words',
@@ -139,25 +156,30 @@ class Bot:
         update.message.reply_text(text='Menu'+self.menu_text, reply_markup=reply_markup)
 
     def callback_handler(self, bot, update):
+        """
+        Handle buttons click in telegram InlineButton for example
+        :param bot:
+        :param update:
+        """
         student = self.students[str(update.effective_user.id)]
         update.message = update.callback_query.message
-        logger.warning('CALLBACK HANDLER DESTINATION: %s' % student.destination)
         try:
             self.dispatch_destination(bot, update, student, student.destination)
         except KeyError:
-            logger.warning('KEY ERROR in destinations: %s' % student.destination)
+            logger.error('KEY ERROR in destinations: %s' % student.destination)
             update.message.reply_text('Sorry! Something went wrong.')
             self.dispatch_destination(bot, update, student, 'Menu')
 
     @restricted
     def delete(self, bot, update, student):
+        """ Delete user if exists"""
         student.student.delete()
         update.message.reply_text('User deleted')
 
     @restricted
     def menu_action(self, bot, update, student):
+        """Handle selected menu option"""
         choice = student.callback_data[int(update.callback_query.data)]
-        logger.warning('MENU ACTION DESTINATION: %s' % student.destination)
         try:
             self.dispatch_destination(bot, update, student, choice)
         except KeyError:
@@ -167,6 +189,13 @@ class Bot:
 
     @restricted
     def change_learn_language(self, bot, update, student):
+        """
+        Change student current learn language from list of all student learn languages
+        :param bot:
+        :param update:
+        :param student:
+        :return:
+        """
         student.destination = 'Change language'
         cats = student.student.language_set.all()
         student.callback_data = [c.name for c in cats]
@@ -175,6 +204,13 @@ class Bot:
 
     @restricted
     def add_more_learn_language(self, bot, update, student):
+        """
+        Adding new learn language for student from list
+        :param bot:
+        :param update:
+        :param student:
+        :return:
+        """
         student.destination = 'Change language'
         student.callback_data = [l.name for l in self.langs]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
@@ -183,6 +219,13 @@ class Bot:
 
     @restricted
     def change_language(self, bot, update, student):
+        """
+        Proccessing user selected option from self.change_learn_language and self.add_more_learn_language
+        :param bot:
+        :param update:
+        :param student:
+        :return:
+        """
         choice = student.callback_data[int(update.callback_query.data)]
         language = self.langs.get(name=choice)
         if language not in student.student.language_set.all():
