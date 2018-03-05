@@ -1,7 +1,7 @@
 # Project OSIRIUS (language learning)
 [![Build Status](https://travis-ci.org/stPhoenix/projecttango.svg?branch=master)](https://travis-ci.org/stPhoenix/project_osirius)
 [![Maintainability](https://api.codeclimate.com/v1/badges/04f4306c223fd14809a7/maintainability)](https://codeclimate.com/github/stPhoenix/project_osirius/maintainability)
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ### Hi
 This django project was started to help learn foreign languages
 For hoster we choose [heroku](http://heroku.com/) as it's a great hosting which has all our demands.
