@@ -1,0 +1,22 @@
+sudo: false
+
+language: python
+
+python:
+  - "3.6.4"
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
+install:
+  - pip install pipenv
+  - pipenv install
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
+script:
+  - python manage.py test
