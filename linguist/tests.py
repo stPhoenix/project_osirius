@@ -44,6 +44,10 @@ class TestLinguistHQ(TestCase):
             w.save()
         for word in self.user.word_set.all()[:2]:
             word.viewed = True
+            word.played_match = True
+            word.played_reversed_match = True
+            word.played_typing = True
+            word.played_reversed_typing = True
             word.save()
 
     def test_init(self):
@@ -91,7 +95,7 @@ class TestLinguistHQ(TestCase):
 
     def test_get_learned_words(self):
         l_hq = LinguistHQ(student=self.user)
-        words = self.user.word_set.filter(viewed=False,
+        words = self.user.word_set.filter(viewed=True,
                                           language=Language.objects.get(name=self.user.current_language),
                                           played_match=True, played_reversed_match=True, played_typing=True,
                                           played_reversed_typing=True, category=self.category
