@@ -10,16 +10,12 @@ from telegram_bot.modulus.register import Register
 from telegram_bot.modulus.addwords import AddWords
 from telegram_bot.modulus.viewwords import ViewWords
 from telegram_bot.modulus.learnwords import LearnWords
-# Enable logging
-#logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
- #                   level=logging.WARNING, filename='bot.log')
 
 logger = logging.getLogger(__name__)
 
 
 class Bot:
     def __init__(self):
-        logger.warning('Test')
         """Set LinguistHQ and destinations vars for message forwarding."""
         self.users = Student.objects.all()
         self.students = {}
@@ -80,8 +76,8 @@ class Bot:
     def dispatch_destination(self, bot, update, student, destination):
         """
         Helper function to forward messages by there destination param
-        :param bot: telegram.Bot
-        :param update:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
         :param student: users.models.Student
         :param destination: a key in self.DESTINATIONS to forward message
         """
@@ -133,10 +129,9 @@ class Bot:
     def menu(self, bot, update, student):
         """
          Display bot menu
-        :param bot:
-        :param update:
-        :param student:
-        :return:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
+        :param student: users.models.Student
         """
         menu_list =[
             'Add words',
@@ -158,8 +153,8 @@ class Bot:
     def callback_handler(self, bot, update):
         """
         Handle buttons click in telegram InlineButton for example
-        :param bot:
-        :param update:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
         """
         student = self.students[str(update.effective_user.id)]
         update.message = update.callback_query.message
@@ -191,10 +186,9 @@ class Bot:
     def change_learn_language(self, bot, update, student):
         """
         Change student current learn language from list of all student learn languages
-        :param bot:
-        :param update:
-        :param student:
-        :return:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
+        :param student: users.models.Student
         """
         student.destination = 'Change language'
         cats = student.student.language_set.all()
@@ -206,10 +200,9 @@ class Bot:
     def add_more_learn_language(self, bot, update, student):
         """
         Adding new learn language for student from list
-        :param bot:
-        :param update:
-        :param student:
-        :return:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
+        :param student: users.models.Student
         """
         student.destination = 'Change language'
         student.callback_data = [l.name for l in self.langs]
@@ -221,10 +214,9 @@ class Bot:
     def change_language(self, bot, update, student):
         """
         Proccessing user selected option from self.change_learn_language and self.add_more_learn_language
-        :param bot:
-        :param update:
-        :param student:
-        :return:
+        :param bot: telegram.ext.Dispatcher.bot
+        :param update: telegram.Update
+        :param student: users.models.Student
         """
         choice = student.callback_data[int(update.callback_query.data)]
         language = self.langs.get(name=choice)

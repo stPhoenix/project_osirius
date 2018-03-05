@@ -22,6 +22,9 @@ def make_button_list(self, update, student):
 
 
 def restricted(func):
+    """
+    Helper function to check weather user is registered or not
+    """
     @wraps(func)
     def wrapped(self, bot, update, student=None, *arg, **kwargs):
         try:
