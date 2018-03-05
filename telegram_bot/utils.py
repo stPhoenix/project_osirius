@@ -4,10 +4,6 @@ from linguist.core import LinguistHQ
 from telegram import InlineKeyboardButton
 import logging
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING)
-
 logger = logging.getLogger(__name__)
 
 
@@ -32,7 +28,6 @@ def restricted(func):
             s = self.users.get(username=update.effective_user.id)
             try:
                 student = self.students[str(update.effective_user.id)]
-                logger.warning('WRAPPER DESTINATION: %s' % student.destination)
                 return func(self, bot, update, student, *arg, **kwargs)
             except KeyError:
                 self.start(bot, update, *arg, **kwargs)

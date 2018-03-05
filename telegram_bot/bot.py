@@ -11,15 +11,15 @@ from telegram_bot.modulus.addwords import AddWords
 from telegram_bot.modulus.viewwords import ViewWords
 from telegram_bot.modulus.learnwords import LearnWords
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING, filename='bot.log')
+#logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+ #                   level=logging.WARNING, filename='bot.log')
 
 logger = logging.getLogger(__name__)
 
 
 class Bot:
     def __init__(self):
-
+        logger.warning('Test')
         """Set LinguistHQ and destinations vars for message forwarding."""
         self.users = Student.objects.all()
         self.students = {}

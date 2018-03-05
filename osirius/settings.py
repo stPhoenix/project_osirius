@@ -125,19 +125,31 @@ AUTH_USER_MODEL = 'users.Student'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+      'verbose': {
+          'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+      },
+    },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
+            'formatter': 'verbose',
         },
         'console': {
             'level': 'WARNING',
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
+            'handlers': ['file', 'console'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'telegram_bot.bot': {
             'handlers': ['file', 'console'],
             'level': 'WARNING',
             'propagate': True,

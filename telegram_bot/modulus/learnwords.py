@@ -3,13 +3,6 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram_bot.modulus.base import BaseModule
 from random import randint
 
-import logging
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
 
 class LearnWords(BaseModule):
 

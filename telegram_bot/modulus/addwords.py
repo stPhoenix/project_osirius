@@ -3,20 +3,17 @@ from telegram_bot.modulus.base import BaseModule
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-import logging
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
-
 class AddWords(BaseModule):
     def __init__(self, **kwargs):
         super(AddWords, self).__init__(**kwargs)
         self.global_words = kwargs['global_words']
 
     def setup_destinations(self):
+        """
+        Destinations is an array with pairs of key value where :
+        key used in bot message handlers
+        value used to start the function to respond to user message
+        """
         self.DESTINATIONS = {
             'Add words': self.add_words,
             'Add words option': self.add_words_option,

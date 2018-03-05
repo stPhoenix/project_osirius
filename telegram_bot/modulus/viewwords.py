@@ -2,13 +2,6 @@ from telegram_bot.utils import restricted, make_button_list, build_menu
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram_bot.modulus.base import BaseModule
 
-import logging
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARNING)
-
-logger = logging.getLogger(__name__)
-
 
 class ViewWords(BaseModule):
 
