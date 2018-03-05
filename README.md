@@ -1,5 +1,6 @@
 # Project OSIRIUS (language learning)
 [![Build Status](https://travis-ci.org/stPhoenix/projecttango.svg?branch=master)](https://travis-ci.org/stPhoenix/project_osirius)
+[![Maintainability](https://api.codeclimate.com/v1/badges/04f4306c223fd14809a7/maintainability)](https://codeclimate.com/github/stPhoenix/project_osirius/maintainability)
 
 ### Hi
 This django project was started to help learn foreign languages
