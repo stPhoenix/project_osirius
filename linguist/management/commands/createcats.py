@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from linguist.models import Category
+from django.db.models import ObjectDoesNotExist
 
 
 class Command(BaseCommand):
@@ -10,6 +11,16 @@ class Command(BaseCommand):
         'Greetings',
         'New friends',
         'Countries',
+        'Majors',
+        'Occupations',
+        'Family',
+        'Numbers',
+        'Words that point',
+        'Food',
+        'Things',
+        'Places',
+        'Money matter',
+        'Expressions',
             ]
 
     def add_arguments(self, parser):
@@ -17,8 +28,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for c in self.cats:
-            cat = Category.objects.filter(name=c)
-            if cat is not None:
+            try:
+                Category.objects.get(name=c)
+            except ObjectDoesNotExist:
                 category = Category(name=c)
                 category.save()
                 print('Added %s' % c)
