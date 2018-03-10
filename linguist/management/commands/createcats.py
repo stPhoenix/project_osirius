@@ -9,7 +9,7 @@ class Command(BaseCommand):
     cats = [
         'Default',
         'Greetings',
-        'New friends',
+        'New Friends',
         'Countries',
         'Majors',
         'Occupations',

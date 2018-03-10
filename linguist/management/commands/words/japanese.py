@@ -76,7 +76,7 @@ ja_words = [
     {'name': 'だいがくいんせい', 'translation': 'graduate student', 'pronunciation': 'Dai ga kuin sei', 'language': 'ja', 'category': 'Occupations'},
     {'name': 'だいがくせい', 'translation': 'college student', 'pronunciation': 'Dai ga ku sei', 'language': 'ja', 'category': 'Occupations'},
     {'name': 'べんごし', 'translation': 'lawyer', 'pronunciation': 'Be n goshi', 'language': 'ja', 'category': 'Occupations'},
-    {'name': 'おかあさん','translation': 'mother','pronunciation': 'Okāsan','language': '','category': 'Family'},
+    {'name': 'おかあさん','translation': 'mother','pronunciation': 'Okāsan','language': 'ja','category': 'Family'},
     {'name': 'おとおさん', 'translation': 'father', 'pronunciation': 'O tō-san', 'language': 'ja', 'category': 'Family'},
     {'name': 'おねえさん', 'translation': 'older sister', 'pronunciation': 'O nēsan', 'language': 'ja', 'category': 'Family'},
     {'name': 'おにいさん', 'translation': 'older brother', 'pronunciation': 'O nīsan', 'language': 'ja', 'category': 'Family'},

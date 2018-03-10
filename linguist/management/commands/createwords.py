@@ -15,12 +15,16 @@ class Command(BaseCommand):
         print('Done')
 
     def add_words(self, words):
-        for key, value in words.items():
-            lang = Language.objects.get(slug=value['language'])
+        for word in words:
+            lang = Language.objects.get(slug=word['language'])
+            print('CATEGORY: %s' % word['category'])
             try:
-                GlobalWord.objects.get(name=key, translation=value, language=lang)
+                GlobalWord.objects.get(name=word['name'], translation=word['translation'], language=lang)
             except ObjectDoesNotExist:
-                category = Category.objects.get(name=value['category'])
-                word = GlobalWord(name=key, translation=value, language=lang)
+                category = Category.objects.get(name=word['category'])
+                word = GlobalWord(name=word['name'],
+                                  translation=word['translation'],
+                                  pronunciation=word['pronunciation'],
+                                  language=lang)
                 word.save()
                 word.category_set.add(category)
