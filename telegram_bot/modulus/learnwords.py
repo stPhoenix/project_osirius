@@ -2,6 +2,9 @@ from telegram_bot.utils import restricted, make_button_list, build_menu
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram_bot.modulus.base import BaseModule
 from random import randint
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LearnWords(BaseModule):
@@ -32,8 +35,8 @@ class LearnWords(BaseModule):
         button_list = [InlineKeyboardButton(text='Learned', callback_data='1'),
                        InlineKeyboardButton(text='Not learned', callback_data='0')]
         reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-        update.message.edit_text(text='Word [%s]\nPronunciation [%s]\nTranslation [%s]\n'+self.menu_text %
-                                       (word.name, word.pronunciation, word.translation),
+        text = 'Word [%s]\nPronunciation [%s]\nTranslation [%s]\n' % (word.name, word.pronunciation, word.translation)
+        update.message.edit_text(text=text+self.menu_text,
                                  reply_markup=reply_markup)
 
     @restricted
