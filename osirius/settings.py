@@ -149,7 +149,12 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': True,
         },
-        'telegram_bot.bot': {
+        'telegram_bot': {
+            'handlers': ['file', 'console'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'telegram': {
             'handlers': ['file', 'console'],
             'level': 'WARNING',
             'propagate': True,
