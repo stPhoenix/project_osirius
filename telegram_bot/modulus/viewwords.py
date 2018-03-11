@@ -70,13 +70,14 @@ class ViewWords(BaseModule):
         variants = update.callback_query.data.split(',')
         word = int(variants[1])
         go = student.callback_data[int(variants[0])]
-        student.temp_data = {'word': student.temp_data['words'].get(pk=word)}
+        student.temp_data['word'] = student.temp_data['words'].get(pk=word)
         self.dispatch_destination(bot, update, student, go)
 
     @restricted
     def delete_word(self, bot, update, student):
         student.HQ.delete_word(student.temp_data['word'])
         update.message.edit_text('Word deleted')
+        student.destination = 'Manage word'
 
     @restricted
     def change_translation(self, bot, update, student):
