@@ -20,7 +20,8 @@ class LinguistHQ:
             name=global_word.name,
             translation=alternative_translation if alternative_translation is not None else global_word.translation,
             language=self.get_current_language(),
-            student=self.student
+            student=self.student,
+            pronunciation=global_word.pronunciation
         )
         word.save()
         word.category_set.set(global_word.category_set.all())
