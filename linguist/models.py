@@ -13,7 +13,8 @@ class GlobalWord(models.Model):
     name = models.CharField(max_length=100)
     translation = models.CharField(max_length=100)
     pronunciation = models.CharField(max_length=100, default='No pronunciation')
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='langs')
+    translate_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='translate_langs')
 
 
 class Word(models.Model):

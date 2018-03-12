@@ -17,6 +17,7 @@ class Command(BaseCommand):
     def add_words(self, words):
         for word in words:
             lang = Language.objects.get(slug=word['language'])
+            translate_lang = Language.objects.get(slug=word['translate_language'])
             print('CATEGORY: %s' % word['category'])
             try:
                 GlobalWord.objects.get(name=word['name'], translation=word['translation'], language=lang)
@@ -25,6 +26,7 @@ class Command(BaseCommand):
                 word = GlobalWord(name=word['name'],
                                   translation=word['translation'],
                                   pronunciation=word['pronunciation'],
-                                  language=lang)
+                                  language=lang,
+                                  translate_language=translate_lang)
                 word.save()
                 word.category_set.add(category)

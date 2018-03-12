@@ -110,6 +110,7 @@ class AddWords(BaseModule):
         elif choice == 'No':
             update.message.delete()
             self.dispatch_destination(bot, update, student, 'Add word category')
+
     @restricted
     def choose_from_presets(self, bot, update, student):
         student.callback_data = [c.name for c in self.categories]
@@ -122,7 +123,9 @@ class AddWords(BaseModule):
         category = student.callback_data[int(update.callback_query.data)]
         category = self.categories.get(name=category)
         category_language = self.langs.get(name=student.student.current_language)
-        category_words = self.global_words.filter(category=category, language=category_language)
+        translate_language = self.langs.get(name=student.student.home_language)
+        category_words = self.global_words.filter(category=category, language=category_language,
+                                                  translate_language=translate_language)
         student.callback_data = ['Add all']
         student.destination = 'Add from global word'
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
