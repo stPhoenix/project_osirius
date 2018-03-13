@@ -18,7 +18,10 @@ class TestLinguistHQ(TestCase):
         self.current_language.save()
         self.user.language_set.add(self.current_language)
         self.user.save()
-        self.global_word = GlobalWord.objects.create(name='ありがとう', translation='thank you', language=self.current_language)
+        self.global_word = GlobalWord.objects.create(name='ありがとう',
+                                                     translation='thank you',
+                                                     language=self.current_language,
+                                                     translate_language=self.home_language)
         self.global_word.save()
         self.category = Category.objects.create(name='Default')
         self.category.save()
