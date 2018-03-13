@@ -26,7 +26,7 @@ class Bot:
         self.menu_text = '[You can always go back to /menu]'
         self.setup_destinations()
         """Start the bot."""
-        updater = Updater(config('TELEGRAM_TOKEN'))
+        updater = Updater(token=config('TELEGRAM_TOKEN'), workers=2)
 
         dp = updater.dispatcher
 
@@ -41,7 +41,7 @@ class Bot:
 
         dp.add_error_handler(self.error)
 
-        updater.start_polling()
+        updater.start_polling(poll_interval=1)
 
         updater.idle()
 
