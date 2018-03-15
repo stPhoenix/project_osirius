@@ -25,7 +25,8 @@ class Register(BaseModule):
         student.destination = 'Register current language'
         student.temp_data['home_language'] = student.callback_data[int(update.callback_query.data)]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
-        update.callback_query.message.edit_text(text='Now choose your learn language', reply_markup=reply_markup)
+        update.callback_query.message.edit_text(text='Now choose your learn language')
+        update.callback_query.message.reply_text(text=' -:- ',reply_markup=reply_markup)
 
     def register_current_language(self, bot, update, student):
         student.temp_data['current_language'] = student.callback_data[int(update.callback_query.data)]
