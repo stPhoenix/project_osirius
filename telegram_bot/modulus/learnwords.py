@@ -90,7 +90,9 @@ class LearnWords(BaseModule):
         update.message.edit_text(text=learned['text']+self.menu_text, reply_markup=reply_markup)
 
     def check_answer(self, word, answer):
-        if word.lower().strip(' ') == answer.lower().strip(' '):
+        w = word.lower().replace(' ', '')
+        a = word.lower().replace(' ', '')
+        if w == a:
             return {'text': 'Right', 'update': True}
         else:
             return {'text': 'Wrong: %s' % word, 'update': False}
