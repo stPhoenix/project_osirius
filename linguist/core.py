@@ -61,6 +61,14 @@ class LinguistHQ:
         word.category_set.add(category)
         word.save()
 
+    def get_student_categories(self):
+        categories = []
+        for word in self.student.word_set.filter(language=self.get_current_language()):
+            for category in word.category_set.all():
+                if category.name not in categories:
+                    categories.append(category.name)
+        return categories
+
     def get_all_words(self, category):
         return self.student.word_set.filter(category=category, language=self.get_current_language())
 

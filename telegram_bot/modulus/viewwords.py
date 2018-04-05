@@ -31,7 +31,7 @@ class ViewWords(BaseModule):
     def my_words_option(self, bot, update, student):
         choice = student.callback_data[int(update.callback_query.data)]
         student.destination = choice
-        student.callback_data = [c.name for c in self.categories]
+        student.callback_data = student.HQ.get_student_categories()
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text='Now choose category.'+self.menu_text, reply_markup=reply_markup)
 
