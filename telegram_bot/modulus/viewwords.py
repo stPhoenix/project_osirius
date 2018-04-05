@@ -90,6 +90,7 @@ class ViewWords(BaseModule):
 
     @restricted
     def learn_again(self, bot, update, student):
+        student.destination = 'Manage word'
         student.HQ.update_viewed_field(student.temp_data['word'], False)
         student.HQ.update_match_field(student.temp_data['word'], False, False)
         student.HQ.update_match_field(student.temp_data['word'], False, True)
