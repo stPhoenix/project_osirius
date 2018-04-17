@@ -91,7 +91,7 @@ class LearnWords(BaseModule):
 
     def check_answer(self, word, answer):
         w = word.lower().replace(' ', '')
-        a = word.lower().replace(' ', '')
+        a = answer.lower().replace(' ', '')
         if w == a:
             return {'text': 'Right', 'update': True}
         else:
