@@ -7,3 +7,4 @@ class Student(AbstractUser):
     last_visit = models.DateTimeField(auto_now_add=True)
     home_language = models.CharField(max_length=10, default='English')
     current_language = models.CharField(max_length=10, default='English')
+    telegram = models.IntegerField(max_length=100, default=0)

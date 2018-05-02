@@ -23,12 +23,12 @@ def make_button_list(self, update, student):
 
 def restricted(func):
     """
-    Helper function to check weather user is registered or not
+    Helper function to check weather user is registered and have telegram  or not
     """
     @wraps(func)
     def wrapped(self, bot, update, student=None, *arg, **kwargs):
         try:
-            s = self.users.get(username=update.effective_user.id)
+            s = self.users.get(telegram=update.effective_user.id)
             try:
                 student = self.students[str(update.effective_user.id)]
                 return func(self, bot, update, student, *arg, **kwargs)

@@ -38,7 +38,8 @@ class Register(BaseModule):
                                            password=password,
                                            first_name=student.temp_data['first_name'],
                                            home_language=student.temp_data['home_language'],
-                                           current_language=student.temp_data['current_language'])
+                                           current_language=student.temp_data['current_language'],
+                                           telegram=student.temp_data['username'])
         learn_language = self.langs.get(name=student.temp_data['current_language'])
         learn_language.students.add(user)
         self.users = Student.objects.all()
