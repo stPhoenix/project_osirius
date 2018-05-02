@@ -96,7 +96,8 @@ class AddWords(BaseModule):
             update.message.reply_text(text='Found in data base search \n'
                                            'Word [%s] \n Pronunciation [%s]\n Translation [%s] \n Category [%s]' %
                                            (result['words'][0].name, result['words'][0].pronunciation,
-                                            result['words'][0].translation, result['words'][0].category_set))
+                                            result['words'][0].translation,
+                                            str([cat.name for cat in result['words'][0].category_set.all()])))
             student.HQ.add_from_global_word(global_word=result['words'][0])
             update.message.reply_text('Word(s) added')
             self.dispatch_destination(bot, update, student, 'Menu')
