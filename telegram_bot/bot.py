@@ -10,6 +10,7 @@ from telegram_bot.modulus.register import Register
 from telegram_bot.modulus.addwords import AddWords
 from telegram_bot.modulus.viewwords import ViewWords
 from telegram_bot.modulus.learnwords import LearnWords
+from telegram_bot.modulus.telegramlinker import TelegramLinker
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,8 @@ class Bot:
         dp.add_handler(CommandHandler("help", self.help))
         dp.add_handler(CommandHandler("menu", self.menu))
         dp.add_handler(CommandHandler("delete", self.delete))
+        dp.add_handler(CommandHandler("link", self.link_telegram))
+        dp.add_handler(CommandHandler("regiter", self.register))
 
         dp.add_handler(MessageHandler(Filters.text, self.echo))
 
@@ -59,19 +62,26 @@ class Bot:
             'Add more learn language': self.add_more_learn_language,
             'Change language': self.change_language,
         }
-        self.register = Register(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
-                                 students=self.students, menu_text=self.menu_text, categories=self.categories)
-        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.register.get_destinations())
-        self.addwords = AddWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
-                                 students=self.students, menu_text=self.menu_text, categories=self.categories,
-                                 global_words=self.global_words)
-        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.addwords.get_destinations())
-        self.viewwords = ViewWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
-                                   students=self.students, menu_text=self.menu_text,categories=self.categories)
-        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.viewwords.get_destinations())
-        self.learnwords = LearnWords(langs=self.langs, dispatch_destination=self.dispatch_destination, users=self.users,
-                                     students=self.students, menu_text=self.menu_text, categories=self.categories)
-        self.DESTINATIONS = dict(**self.DESTINATIONS, **self.learnwords.get_destinations())
+        class_args = {
+            'langs': self.langs,
+            'dispatch_destination': self.dispatch_destination,
+            'students': self.students,
+            'menu_text': self.menu_text,
+            'categories': self.categories,
+            'global_words': self.global_words,
+            'users': self.users,
+        }
+        self.register = Register(**class_args)
+        self.addwords = AddWords(**class_args)
+        self.viewwords = ViewWords(**class_args)
+        self.learnwords = LearnWords(**class_args)
+        self.telegramlinker = TelegramLinker(**class_args)
+        self.DESTINATIONS = dict(**self.DESTINATIONS,
+                                 **self.register.get_destinations(),
+                                 **self.addwords.get_destinations(),
+                                 **self.viewwords.get_destinations(),
+                                 **self.learnwords.get_destinations(),
+                                 **self.telegramlinker.get_destinations())
 
     def dispatch_destination(self, bot, update, student, destination):
         """
@@ -88,22 +98,31 @@ class Bot:
         """Send a message when the command /start is issued."""
         text = None
         try:
-            student = self.users.get(username=update.effective_user.id)
+            student = self.users.get(telegram=update.effective_user.id)
             try:
-                self.students[student.username].destination
+                self.students[str(student.telegram)].destination
             except KeyError:
                 self.students[str(update.effective_user.id)] = BotUserHandler(student=student)
                 self.students[str(update.effective_user.id)].destination = 'Menu'
             text = 'Welcome %s. Type anything or /menu to show variants!'\
-                   % self.students[student.username].student.first_name
+                   % self.students[str(student.telegram)].student.first_name
         except ObjectDoesNotExist:
             text = 'Welcome stranger!' \
-                   'To start learning tell a little bit more about yourself.' \
-                   'What is your name?'
+                   'If you have account on web site type /link ' \
+                   'If you new one type /register'
             self.students[str(update.effective_user.id)] = BotUserHandler()
-            self.students[str(update.effective_user.id)].destination = 'Register first name'
         finally:
             update.message.reply_text(text)
+
+    def register(self, bot, update):
+        text = 'To start learning tell a little bit more about yourself.' \
+               'What is your name?'
+        self.students[str(update.effective_user.id)].destination = 'Register first name'
+        update.message.reply_text(text)
+
+    def link_telegram(self, bot, update):
+        self.students[str(update.effective_user.id)].destination = 'Take username'
+        update.message.reply_text('Enter your username:')
 
     def help(self, bot, update, student):
         """Send a message when the command /help is issued."""

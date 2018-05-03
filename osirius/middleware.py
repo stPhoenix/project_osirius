@@ -10,8 +10,9 @@ class SetLastVisitMiddleware(object):
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-        if request.user.is_authenticated():
-            Student.objects.filter(pk=request.pk).update(last_visit=now())
+        if request.user.is_authenticated:
+            request.user.last_visit = now()
+            request.user.save()
 
         response = self.get_response(request)
 
