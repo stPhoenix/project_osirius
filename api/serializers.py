@@ -1,11 +1,23 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
-from linguist.models import Language, GlobalWord, Word
+from linguist.models import Language, GlobalWord, Word, Category
 from django.contrib.auth import get_user_model
 
 # Get the UserModel
 UserModel = get_user_model()
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('pk', 'name')
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
 
 
 class GlobalWordSerializer(serializers.ModelSerializer):
