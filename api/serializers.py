@@ -3,11 +3,15 @@ from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
 from linguist.models import Language, GlobalWord, Word, Category
 from django.contrib.auth import get_user_model
+from news.models import Article
 
 # Get the UserModel
 UserModel = get_user_model()
 
-
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ('__all__', )
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
