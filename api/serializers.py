@@ -1,61 +1,87 @@
-from django.http import HttpRequest
 from django.utils.translation import ugettext_lazy as _
+from rest_framework import serializers
+from rest_auth.registration.serializers import RegisterSerializer
+from linguist.models import Language, GlobalWord, Word
 from django.contrib.auth import get_user_model
 
-from allauth.account import app_settings as allauth_settings
-from allauth.utils import (email_address_exists,
-                           get_username_max_length)
-from allauth.account.adapter import get_adapter
-from allauth.account.utils import setup_user_email
-from rest_framework import serializers
-from requests.exceptions import HTTPError
+# Get the UserModel
+UserModel = get_user_model()
 
 
-class RegisterSerializer(serializers.Serializer):
-    username = serializers.CharField(
-        max_length=get_username_max_length(),
-        min_length=allauth_settings.USERNAME_MIN_LENGTH,
-        required=allauth_settings.USERNAME_REQUIRED
-    )
-    email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
-    password1 = serializers.CharField(write_only=True)
-    password2 = serializers.CharField(write_only=True)
+class GlobalWordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GlobalWord
+        fields = ('__all__',)
 
-    def validate_username(self, username):
-        username = get_adapter().clean_username(username)
-        return username
-
-    def validate_email(self, email):
-        email = get_adapter().clean_email(email)
-        if allauth_settings.UNIQUE_EMAIL:
-            if email and email_address_exists(email):
-                raise serializers.ValidationError(
-                    _("A user is already registered with this e-mail address."))
-        return email
-
-    def validate_password1(self, password):
-        return get_adapter().clean_password(password)
-
-    def validate(self, data):
-        if data['password1'] != data['password2']:
-            raise serializers.ValidationError(_("The two password fields didn't match."))
-        return data
-
-    def custom_signup(self, request, user):
+    def create(self, validated_data):
         pass
+
+    def update(self, instance, validated_data):
+        pass
+
+
+class WordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Word
+        fields = ('__all__',)
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ('name', 'slug')
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
+
+
+class OsiriusRegisterSerializer(RegisterSerializer):
+    home_language = serializers.CharField()
+    current_language = serializers.CharField()
+    first_name = serializers.CharField()
+
+    def validate_home_language(self, home_language):
+        # TODO: Check language in list
+        return home_language
+
+    def validate_current_language(self, current_language):
+        # TODO: Check language in list
+        return current_language
+
+    def validate_first_name(self, first_name):
+        if len(first_name) < 1:
+            raise serializers.ValidationError(
+                _("First name can't be empty."))
+        return first_name
 
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', '')
+            'email': self.validated_data.get('email', ''),
+            'home_language': self.validated_data.get('home_language', ''),
+            'current_language': self.validated_data.get('current_language', ''),
+            'first_name': self.validated_data.get('first_language', ''),
         }
 
-    def save(self, request):
-        adapter = get_adapter()
-        user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data()
-        adapter.save_user(request, user, self)
-        self.custom_signup(request, user)
-        setup_user_email(request, user, [])
-        return user
+    def custom_signup(self, request, user):
+        user.first_name = self.cleaned_data['first_name']
+        user.home_language = self.cleaned_data['home_language']
+        user.current_language = self.cleaned_data['current_language']
+        user.save()
+        learn_language = Language.objects.all().get(name=self.cleaned_data['current_language'])
+        learn_language.students.add(user)
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    """
+    User model w/o password
+    """
+    learn_languages = LanguageSerializer(many=True)
+
+    class Meta:
+        model = UserModel
+        fields = ('pk', 'username', 'email', 'first_name', 'learn_languages', 'current_language')
