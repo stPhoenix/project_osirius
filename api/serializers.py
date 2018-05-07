@@ -4,14 +4,34 @@ from rest_auth.registration.serializers import RegisterSerializer
 from linguist.models import Language, GlobalWord, Word, Category
 from django.contrib.auth import get_user_model
 from news.models import Article
+from api.utils import CustomWord
 
 # Get the UserModel
 UserModel = get_user_model()
+
+
+class SearchWordResult(serializers.Serializer):
+    global_word_search = serializers.BooleanField()
+    google_translate_search = serializers.BooleanField()
+    words = serializers.ListField(child=serializers.DictField())
+
+
+class CustomWordSerializer(serializers.Serializer):
+    category = serializers.CharField(required=True)
+    word_name = serializers.CharField(required=True)
+    translation = serializers.CharField(required=True)
+    pronunciation = serializers.CharField()
+
+    def create(self, validated_data):
+        return CustomWord(**validated_data)
+
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('__all__', )
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category

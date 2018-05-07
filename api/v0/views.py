@@ -3,9 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
+from rest_framework import status
 from news.models import Article
 from linguist.models import Category, GlobalWord, Language
-from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer
+from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
+                            CustomWordSerializer
 from linguist.core import LinguistHQ
 
 
@@ -53,7 +56,7 @@ class GlobalWordAdd(APIView):
         for pk in request.POST.items():
             global_word = GlobalWord.objects.get(pk=pk)
             linguist.add_from_global_word(global_word)
-        return Response({'Result': 'Words added'})
+        return Response({'Result': 'Words added'}, status=status.HTTP_201_CREATED)
 
 
 class CustomWordAdd(APIView):
@@ -63,5 +66,24 @@ class CustomWordAdd(APIView):
     def post(self, request, format=None):
         student = self.request.user
         linguist = LinguistHQ(student)
-        for word in request.POST.items():
-            pass
+        serializer = CustomWordSerializer(request.data)
+        serializer.is_valid(raise_exception=True)
+        word = serializer.save()
+        category = Category.objects.get(name=word.category)
+        linguist.add_custom_word(word_name=word.word_name,
+                                 translation=word.translation,
+                                 pronunciation=word.pronunciation,
+                                 category=category)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
+
+
+class SearchWord(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
