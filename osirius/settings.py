@@ -172,3 +172,13 @@ LOGGING = {
         },
     },
 }
+
+# Rest auth config
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'api.serializers.UserDetailsSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'api.serializers.OsiriusRegisterSerializer',
+}
