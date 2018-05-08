@@ -75,6 +75,9 @@ class LinguistHQ:
     def get_words(self):
         return self.student.word_set.filter(language=self.get_current_language())
 
+    def learn_word(self):
+        return self.student.word_set.filter(language=self.get_current_language(), viewed=False)
+
     def get_learned_words(self, category):
         return self.student.word_set.filter(language=self.get_current_language(), category=category, viewed=True,
                                             played_match=True, played_reversed_match=True, played_typing=True,

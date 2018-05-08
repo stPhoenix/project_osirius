@@ -26,7 +26,7 @@ class LearnWords(BaseModule):
     @restricted
     def learn_words(self, bot, update, student):
         student.destination = 'Learn word status'
-        words = student.HQ.get_words()
+        words = student.HQ.learn_word()
         if words.count() == 0:
             update.message.edit_text(text='No words to learn')
             return
