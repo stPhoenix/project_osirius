@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.views import APIView
-from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet, ViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
@@ -122,3 +122,9 @@ class UserWords(ModelViewSet):
         word = get_object_or_404(queryset, pk=pk)
         linguist.learn_again(word)
         return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class LearnAndPlay(ViewSet):
+    @action(permission_classes=(IsAuthenticated, ))
+    def learn(self, request):
+        pass
