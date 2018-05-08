@@ -1,3 +1,14 @@
+from rest_framework.views import APIView
+from linguist.core import LinguistHQ
+
+
+class LinguistInitializer(APIView):
+    def initial(self, request, *args, **kwargs):
+        super(LinguistInitializer, self).initial(request, *args, **kwargs)
+        student = request.user
+        self.linguist = LinguistHQ(student)
+
+
 class CustomWord:
     def __init__(self, category, word_name, translation, pronunciation):
         self.category = category

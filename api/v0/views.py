@@ -12,8 +12,9 @@ from linguist.models import Category, GlobalWord, Language, Word
 from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
                             CustomWordSerializer, SearchWordResultSerializer, WordSerializer
 from linguist.core import LinguistHQ
-from api.utils import SearchWordResult
+from api.utils import SearchWordResult, LinguistInitializer
 from api.permissions import IsOwnerOrReadOnly
+from random import randint
 
 
 class News(ReadOnlyModelViewSet):
@@ -45,51 +46,45 @@ class Langs(ListAPIView):
     serializer_class = LanguageSerializer
 
 
-class GlobalWordAdd(APIView):
+class GlobalWordAdd(APIView, LinguistInitializer):
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, format=None, pk=None):
-        student = request.user
-        linguist = LinguistHQ(student)
         global_word = get_object_or_404(GlobalWord.objects.all(),pk=pk)
-        linguist.add_from_global_word(global_word)
+        self.linguist.add_from_global_word(global_word)
         return Response({'Result': 'Word added'}, status=status.HTTP_201_CREATED)
 
 
-class CustomWordAdd(APIView):
+class CustomWordAdd(APIView, LinguistInitializer):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
-        student = self.request.user
-        linguist = LinguistHQ(student)
         serializer = CustomWordSerializer(request.data)
         serializer.is_valid(raise_exception=True)
         word = serializer.save()
         category = Category.objects.get(name=word.category)
-        linguist.add_custom_word(word_name=word.word_name,
-                                 translation=word.translation,
-                                 pronunciation=word.pronunciation,
-                                 category=category)
+        self.linguist.add_custom_word(word_name=word.word_name,
+                                      translation=word.translation,
+                                      pronunciation=word.pronunciation,
+                                      category=category)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class SearchWord(APIView):
+class SearchWord(APIView, LinguistInitializer):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
-        student = request.user
-        linguist = LinguistHQ(student)
         word = request.data['word']
-        search_result = SearchWordResult(**linguist.search_word(word))
+        search_result = SearchWordResult(**self.linguist.search_word(word))
         serializer = SearchWordResultSerializer(search_result)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UserWords(ModelViewSet):
+class UserWords(ModelViewSet, LinguistInitializer):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = WordSerializer
 
@@ -97,9 +92,7 @@ class UserWords(ModelViewSet):
         return Response({'message': 'you can not create words from here'}, status=status.HTTP_403_FORBIDDEN)
 
     def get_queryset(self):
-        student = self.request.user
-        linguist = LinguistHQ(student)
-        return linguist.get_words()
+        return self.linguist.get_words()
 
     @action(detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
     def learned(self, request):
@@ -118,13 +111,21 @@ class UserWords(ModelViewSet):
     def learn_again(self, request, pk=None):
         student = request.user
         linguist = LinguistHQ(student)
-        queryset = Word.objects.all()
-        word = get_object_or_404(queryset, pk=pk)
+        word = get_object_or_404(self.get_queryset(), pk=pk)
         linguist.learn_again(word)
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
-class LearnAndPlay(ViewSet):
+class LearnAndPlay(ViewSet, LinguistInitializer):
     @action(permission_classes=(IsAuthenticated, ))
     def learn(self, request):
-        pass
+        words = self.linguist.learn_word()
+        if words.count() == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if words.count() == 1:
+            word = words[0]
+        else:
+            word = words[randint(0, words.count() - 1)]
+        serializer = WordSerializer(word)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
