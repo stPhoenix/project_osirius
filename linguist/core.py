@@ -72,13 +72,17 @@ class LinguistHQ:
     def get_all_words(self, category):
         return self.student.word_set.filter(category=category, language=self.get_current_language())
 
-    def get_words(self, viewed=False):
-        return self.student.word_set.filter(viewed=viewed, language=self.get_current_language())
+    def get_words(self):
+        return self.student.word_set.filter(language=self.get_current_language())
 
     def get_learned_words(self, category):
         return self.student.word_set.filter(language=self.get_current_language(), category=category, viewed=True,
                                             played_match=True, played_reversed_match=True, played_typing=True,
                                             played_reversed_typing=True)
+
+    def get_all_learned_words(self):
+        return self.student.word_set.filter(language=self.get_current_language(), viewed=True, played_match=True,
+                                            played_reversed_match=True, played_typing=True, played_reversed_typing=True)
 
     def delete_word(self, word):
         word.delete()
@@ -104,6 +108,13 @@ class LinguistHQ:
        else:
            word.played_reversed_typing = played
        word.save()
+
+    def learn_again(self, word):
+        self.update_viewed_field(word, False)
+        self.update_match_field(word, False, False)
+        self.update_match_field(word, False, True)
+        self.update_typing_field(word, False, False)
+        self.update_typing_field(word, False, True)
 
     def play_matching(self, reverse=False):
         words = self.student.word_set.filter(language=self.get_current_language())
