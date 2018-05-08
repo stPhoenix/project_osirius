@@ -10,7 +10,7 @@ from api.utils import CustomWord
 UserModel = get_user_model()
 
 
-class SearchWordResult(serializers.Serializer):
+class SearchWordResultSerializer(serializers.Serializer):
     global_word_search = serializers.BooleanField()
     google_translate_search = serializers.BooleanField()
     words = serializers.ListField(child=serializers.DictField())
@@ -57,9 +57,11 @@ class GlobalWordSerializer(serializers.ModelSerializer):
 
 
 class WordSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True)
+
     class Meta:
         model = Word
-        fields = ('__all__',)
+        fields = ('__all__', 'category')
 
 
 class LanguageSerializer(serializers.ModelSerializer):
