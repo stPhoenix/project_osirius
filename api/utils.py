@@ -1,5 +1,6 @@
-from rest_framework.views import APIView
 from linguist.core import LinguistHQ
+from linguist.models import GlobalWord
+from googletrans.models import Translated
 
 
 class LinguistInitializer:
@@ -21,7 +22,10 @@ class SearchWordResult:
     def __init__(self, global_word_search, google_translate_search, words):
         self.global_word_search = global_word_search
         self.google_translate_search = google_translate_search
-        self.words = words
+        if isinstance(words, Translated):
+            self.words = [{'name': words.origin, 'text': words.text, 'pronunciation': words.pronunciation}]
+        else:
+            self.words = [{'id': word.pk, 'name': word.name, 'translation': word.translation} for word in words]
 
 
 class Play:

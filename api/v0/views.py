@@ -56,7 +56,6 @@ class GlobalWordAdd(LinguistInitializer, APIView):
 
 
 class CustomWordAdd(LinguistInitializer, APIView):
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
@@ -72,14 +71,12 @@ class CustomWordAdd(LinguistInitializer, APIView):
 
 
 class SearchWord(LinguistInitializer, APIView):
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
         word = request.data['word']
         search_result = SearchWordResult(**self.linguist.search_word(word))
         serializer = SearchWordResultSerializer(search_result)
-        serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
