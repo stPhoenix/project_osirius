@@ -123,8 +123,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     User model w/o password
     """
-    learn_languages = LanguageSerializer(many=True)
+    language_set = LanguageSerializer(many=True)
 
     class Meta:
         model = UserModel
-        fields = ('pk', 'username', 'email', 'first_name', 'learn_languages', 'current_language')
+        fields = ('pk', 'username', 'email', 'first_name', 'language_set', 'current_language')
