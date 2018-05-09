@@ -35,7 +35,7 @@ class WordsByCat(ListAPIView):
         student= self.request.user
         home_language = Language.objects.get(name=student.home_language)
         current_language = Language.objects.get(name=student.current_language)
-        category = Category.objects.get(name=self.kwargs['category'])
+        category = Category.objects.get(pk=self.kwargs['pk'])
         return GlobalWord.objects.filter(category=category,
                                          language=current_language,
                                          translate_language=home_language)
@@ -47,11 +47,10 @@ class Langs(ListAPIView):
 
 
 class GlobalWordAdd(LinguistInitializer, APIView):
-    authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
 
-    def post(self, request, format=None, pk=None):
-        global_word = get_object_or_404(GlobalWord.objects.all(),pk=pk)
+    def post(self, request, format=None):
+        global_word = get_object_or_404(GlobalWord.objects.all(), pk=request.data['pk'])
         self.linguist.add_from_global_word(global_word)
         return Response({'Result': 'Word added'}, status=status.HTTP_201_CREATED)
 

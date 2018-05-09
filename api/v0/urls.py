@@ -16,18 +16,21 @@ Including another URLconf
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 from api.v0.views import *
+from rest_framework.schemas import get_schema_view
 
 
+schema_view = get_schema_view(title="Server Monitoring API")
 router = SimpleRouter()
 router.register(r'news', News)
 router.register(r'user/words', UserWords, base_name='word')
 router.register(r'play', LearnAndPlay, base_name='word')
 urlpatterns = [
+    path('', schema_view),
     path('cats/', Cats.as_view(), name='cats'),
-    path('cats/words/', WordsByCat.as_view(), name='cats-words'),
+    path('cats/<int:pk>/words/', WordsByCat.as_view(), name='cats-words'),
     path('langs/', Langs.as_view(), name='langs'),
-    path('add/global/<int:pk>/', GlobalWordAdd.as_view(),name='add_global'),
-    path('add/custom/<int:pk>/', CustomWordAdd.as_view(), name='add_custom'),
+    path('add/global/', GlobalWordAdd.as_view(),name='add_global'),
+    path('add/custom/', CustomWordAdd.as_view(), name='add_custom'),
     path('search/word/', SearchWord.as_view(), name='search_word')
 ]
 urlpatterns += router.urls
