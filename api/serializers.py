@@ -107,7 +107,7 @@ class OsiriusRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'home_language': self.validated_data.get('home_language', ''),
             'current_language': self.validated_data.get('current_language', ''),
-            'first_name': self.validated_data.get('first_language', ''),
+            'first_name': self.validated_data.get('first_name', ''),
         }
 
     def custom_signup(self, request, user):
