@@ -182,3 +182,7 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'api.serializers.OsiriusRegisterSerializer',
 }
+
+# All auth config
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
