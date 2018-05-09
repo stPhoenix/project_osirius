@@ -29,7 +29,7 @@ class CustomWordSerializer(serializers.Serializer):
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('__all__', )
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class GlobalWordSerializer(serializers.ModelSerializer):
     class Meta:
         model = GlobalWord
-        fields = ('__all__',)
+        fields = '__all__'
 
     def create(self, validated_data):
         pass
@@ -57,11 +57,11 @@ class GlobalWordSerializer(serializers.ModelSerializer):
 
 
 class WordSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=True)
+    category_set = CategorySerializer(many=True)
 
     class Meta:
         model = Word
-        fields = ('__all__', 'category')
+        fields = '__all__'
 
 
 class LanguageSerializer(serializers.ModelSerializer):
