@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'linguist.apps.LinguistConfig',
-    'api.apps.AppConfig',
+    'api.apps.ApiConfig',
     'news.apps.NewsConfig',
     'rest_framework',
     'rest_framework.authtoken',

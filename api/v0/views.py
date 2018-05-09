@@ -107,7 +107,7 @@ class UserWords(ModelViewSet, LinguistInitializer):
         serializer = self.get_serializer(words, many=True)
         return Response(serializer.data)
 
-    @action(method=['post'], detail=True, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
+    @action(methods=['post'], detail=True, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
     def learn_again(self, request, pk=None):
         student = request.user
         linguist = LinguistHQ(student)

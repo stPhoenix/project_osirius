@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 from api.v0.views import *
@@ -21,9 +20,14 @@ from api.v0.views import *
 
 router = SimpleRouter()
 router.register(r'news', News)
-router.register(r'user/words', UserWords)
-router.register(r'play', LearnAndPlay)
+router.register(r'user/words', UserWords, base_name='word')
+router.register(r'play', LearnAndPlay, base_name='word')
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('cats/', Cats.as_view(), name='cats'),
+    path('cats/words/', WordsByCat.as_view(), name='cats-words'),
+    path('langs/', Langs.as_view(), name='langs'),
+    path('add/global/<int:pk>/', GlobalWordAdd.as_view(),name='add_global'),
+    path('add/custom/<int:pk>/', CustomWordAdd.as_view(), name='add_custom'),
+    path('search/word/', SearchWord.as_view(), name='search_word')
 ]
 urlpatterns += router.urls

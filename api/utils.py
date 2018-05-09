@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from linguist.core import LinguistHQ
 
 
-class LinguistInitializer(APIView):
+class LinguistInitializer:
     def initial(self, request, *args, **kwargs):
         super(LinguistInitializer, self).initial(request, *args, **kwargs)
         student = request.user
