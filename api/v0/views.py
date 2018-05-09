@@ -46,7 +46,7 @@ class Langs(ListAPIView):
     serializer_class = LanguageSerializer
 
 
-class GlobalWordAdd(APIView, LinguistInitializer):
+class GlobalWordAdd(LinguistInitializer, APIView):
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
 
@@ -56,7 +56,7 @@ class GlobalWordAdd(APIView, LinguistInitializer):
         return Response({'Result': 'Word added'}, status=status.HTTP_201_CREATED)
 
 
-class CustomWordAdd(APIView, LinguistInitializer):
+class CustomWordAdd(LinguistInitializer, APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -72,7 +72,7 @@ class CustomWordAdd(APIView, LinguistInitializer):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class SearchWord(APIView, LinguistInitializer):
+class SearchWord(LinguistInitializer, APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -84,7 +84,7 @@ class SearchWord(APIView, LinguistInitializer):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UserWords(ModelViewSet, LinguistInitializer):
+class UserWords(LinguistInitializer, ModelViewSet):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = WordSerializer
 
@@ -116,7 +116,7 @@ class UserWords(ModelViewSet, LinguistInitializer):
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
-class LearnAndPlay(ViewSet, LinguistInitializer):
+class LearnAndPlay(LinguistInitializer, ViewSet):
 
     def get_queryset(self):
         return Word.objects.all()
