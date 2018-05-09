@@ -103,11 +103,11 @@ class UserWords(LinguistInitializer, ModelViewSet):
         serializer = self.get_serializer(words, many=True)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
-    def learn_again(self, request, pk=None):
+    @action(methods=['post'], detail=False, permission_classes=(IsAuthenticated, ))
+    def learn_again(self, request):
         student = request.user
         linguist = LinguistHQ(student)
-        word = get_object_or_404(self.get_queryset(), pk=pk)
+        word = get_object_or_404(self.get_queryset(), pk=request.data['pk'])
         linguist.learn_again(word)
         return Response(status=status.HTTP_202_ACCEPTED)
 
