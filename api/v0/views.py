@@ -133,7 +133,6 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         else:
             word = words[randint(0, words.count() - 1)]
         serializer = WordSerializer(word)
-        serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post_learn(self, request):
@@ -158,8 +157,8 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post_matching(self, request):
-        word = get_object_or_404(self.get_queryset, pk=request.data['word'])
-        answer = get_object_or_404(self.get_queryset, pk=request.data['answer'])
+        word = get_object_or_404(self.get_queryset(), pk=request.data['word'])
+        answer = get_object_or_404(self.get_queryset(), pk=request.data['answer'])
         self.linguist.update_match_field(word, (word == answer), bool(request.data['reverse']))
         return Response(status=status.HTTP_200_OK)
 
@@ -188,5 +187,5 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         word = get_object_or_404(self.get_queryset(), pk=request.data['word'])
         answer = request.data['answer']
         name = word.name if bool(request.data['reverse']) is True else word.translation
-        self.linguist.update_typing_field(word, self.check_answer(name, answer), request.data['reverse'])
+        self.linguist.update_typing_field(word, self.check_answer(name, answer), bool(request.data['reverse']))
         return Response(status=status.HTTP_200_OK)
