@@ -22,3 +22,9 @@ class SearchWordResult:
         self.global_word_search = global_word_search
         self.google_translate_search = google_translate_search
         self.words = words
+
+
+class Play:
+    def __init__(self, words, answer):
+        self.words = words
+        self.answer = answer

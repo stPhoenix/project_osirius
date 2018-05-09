@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+from api.v0.views import *
 
+
+router = SimpleRouter()
+router.register(r'news', News)
+router.register(r'user/words', UserWords)
+router.register(r'play', LearnAndPlay)
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+urlpatterns += router.urls

@@ -10,9 +10,9 @@ from rest_framework import status
 from news.models import Article
 from linguist.models import Category, GlobalWord, Language, Word
 from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
-                            CustomWordSerializer, SearchWordResultSerializer, WordSerializer
+                            CustomWordSerializer, SearchWordResultSerializer, WordSerializer, PlaySerializer
 from linguist.core import LinguistHQ
-from api.utils import SearchWordResult, LinguistInitializer
+from api.utils import SearchWordResult, LinguistInitializer, Play
 from api.permissions import IsOwnerOrReadOnly
 from random import randint
 
@@ -117,8 +117,18 @@ class UserWords(ModelViewSet, LinguistInitializer):
 
 
 class LearnAndPlay(ViewSet, LinguistInitializer):
-    @action(permission_classes=(IsAuthenticated, ))
+
+    def get_queryset(self):
+        return Word.objects.all()
+
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, ))
     def learn(self, request):
+        if request.method == 'GET':
+            return self.get_learn(request)
+        elif request.method == 'POST':
+            return self.post_learn(request)
+
+    def get_learn(self, request):
         words = self.linguist.learn_word()
         if words.count() == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -129,3 +139,58 @@ class LearnAndPlay(ViewSet, LinguistInitializer):
         serializer = WordSerializer(word)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post_learn(self, request):
+        word = get_object_or_404(self.get_queryset(), pk=request.data['pk'])
+        self.linguist.update_viewed_field(word, bool(request.data['learned']))
+        return Response(status=status.HTTP_200_OK)
+
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated,))
+    def matching(self, request, reverse=False):
+        if request.method == 'GET':
+            return self.get_matching(request, reverse)
+        elif request.method == 'POST':
+            return self.post_matching(request)
+
+    def get_matching(self, request, reverse):
+        play = self.linguist.play_matching(bool(reverse))
+        if play != 'No words to play matching':
+            data = Play(**play)
+            serializer = PlaySerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def post_matching(self, request):
+        word = get_object_or_404(self.get_queryset, pk=request.data['word'])
+        answer = get_object_or_404(self.get_queryset, pk=request.data['answer'])
+        self.linguist.update_match_field(word, (word == answer), bool(request.data['reverse']))
+        return Response(status=status.HTTP_200_OK)
+
+    def check_answer(self, word, answer):
+        w = word.lower().replace(' ', '')
+        a = answer.lower().replace(' ', '')
+        return w == a
+
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated,))
+    def typing(self, request, reverse=False):
+        if request.method == 'GET':
+            return self.get_typing(request, reverse)
+        elif request.method == 'POST':
+            return self.post_typing(request)
+
+    def get_typing(self, request, reverse):
+        word = self.linguist.play_typing(bool(reverse))
+        if word == 'No word to play typing':
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            data = Play([word], word)
+            serializer = PlaySerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post_typing(self, request):
+        word = get_object_or_404(self.get_queryset(), pk=request.data['word'])
+        answer = request.data['answer']
+        name = word.name if bool(request.data['reverse']) is True else word.translation
+        self.linguist.update_typing_field(word, self.check_answer(name, answer), request.data['reverse'])
+        return Response(status=status.HTTP_200_OK)

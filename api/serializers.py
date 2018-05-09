@@ -76,6 +76,11 @@ class LanguageSerializer(serializers.ModelSerializer):
         pass
 
 
+class PlaySerializer(serializers.Serializer):
+    words = serializers.ListField(child=WordSerializer())
+    answer = WordSerializer()
+
+
 class OsiriusRegisterSerializer(RegisterSerializer):
     home_language = serializers.CharField()
     current_language = serializers.CharField()
