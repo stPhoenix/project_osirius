@@ -1,47 +1,36 @@
 import React from 'react';
-import {Nav, NavItem, NavLink} from 'reactstrap';
+import {Nav, NavItem} from 'reactstrap';
+import {NavItemComponent} from './NavItemComponent';
+import usericon from '../assets/user.png';
+import abouticon from '../assets/about.png';
+import getstartedicon from '../assets/getstarted.png';
+import learnwordsicon from '../assets/learnwords.png';
+import mywordsicon from '../assets/mywords.png';
+import newsicon from '../assets/news.png';
+import settingsicon from '../assets/settings.png';
+import wordstrainericon from '../assets/wordstrainer.png';
+import addwordsicon from '../assets/addwords.png';
+
 
 const NavBarComponent = ({isAuthenticated}) => {
 	return (
-				<nav>
-                	<Nav vertical>
-						<NavItem visible={!isAuthenticated} >
-							<NavLink href="#">Sign Up</NavLink>
-						</NavItem>
-						<NavItem visible={!isAuthenticated} >
-							<NavLink href="#">Log in</NavLink>
-						</NavItem>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">Sign Out</NavLink>
-						</NavItem>
-						<NavItem >
-							<NavLink href="#">Get started</NavLink>
-						</NavItem>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">Settings</NavLink>
-						</NavItem>
+				<nav className="px-4 py-1">
+                	<Nav className="my-3" vertical>
+						<NavItemComponent src={usericon} text="Sign Up" />
+				        <NavItemComponent src={usericon} text="Log in" />
+						<NavItemComponent src={usericon} text="Sign out" />
+						<NavItemComponent src={getstartedicon} text="Get started" />
+						<NavItemComponent src={settingsicon} text="Settings" />
 					</Nav>
-					<Nav vertical>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">Add words</NavLink>
-						</NavItem>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">Learn words</NavLink>
-						</NavItem>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">My words</NavLink>
-						</NavItem>
-						<NavItem visible={isAuthenticated} >
-							<NavLink href="#">Words trainer	</NavLink>
-						</NavItem>
+					<Nav className="my-3" vertical>
+						<NavItemComponent src={addwordsicon} text="Add words" />
+						<NavItemComponent src={learnwordsicon} text="Learn words" />
+						<NavItemComponent src={mywordsicon} text="My words" />
+						<NavItemComponent src={wordstrainericon} text="Words trainer" />
 					</Nav>
-					<Nav vertical>
-						<NavItem >
-							<NavLink href="#">News</NavLink>
-						</NavItem>
-						<NavItem>
-							<NavLink href="#">About</NavLink>
-						</NavItem>
+					<Nav className="my-3" vertical>
+						<NavItemComponent src={newsicon} text="News" />
+						<NavItemComponent src={abouticon} text="About" />
 					</Nav>
 				</nav>
 	);
