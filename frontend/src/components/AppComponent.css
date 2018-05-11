@@ -7,3 +7,12 @@
 .theme-dark{
     background-color: #006db3;
 }
+.bg-first{
+	background-color: #FAFAFA;
+}
+.bg-second{
+	background-color: #F5F5F5;
+}
+.vh-100{
+	height: 100vh;
+}

@@ -3,11 +3,12 @@ import {Container, Col, Row} from 'reactstrap';
 import './AppComponent.css';
 import logo from '../assets/logo.png';
 import NavBar from '../containers/NavBar';
+import Login from '../containers/Login';
 
 class App extends Component {
   render() {
     return (
-      <Container fluid={true}>
+      <Container fluid className="bg-first">
         <Row className="d-flex flex-column">
             <Col xs="12" className="px-0">
                 <header className="theme-dark px-4 py-2">
@@ -16,11 +17,12 @@ class App extends Component {
             </Col>
             <Col xs="12" className="px-0">
                 <section className="theme-primary">
-                    <NavBar />
+                    <NavBar/>
                 </section>
             </Col>
             <Col xs="12">
-                <main>
+                <main className="vh-100">
+					<Login />
                 </main>
             </Col>
         </Row>

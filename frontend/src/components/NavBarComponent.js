@@ -1,5 +1,5 @@
 import React from 'react';
-import {Nav, NavItem} from 'reactstrap';
+import {Nav} from 'reactstrap';
 import {NavItemComponent} from './NavItemComponent';
 import usericon from '../assets/user.png';
 import abouticon from '../assets/about.png';
@@ -10,23 +10,24 @@ import newsicon from '../assets/news.png';
 import settingsicon from '../assets/settings.png';
 import wordstrainericon from '../assets/wordstrainer.png';
 import addwordsicon from '../assets/addwords.png';
+import './AppComponent.css';
 
 
 const NavBarComponent = ({isAuthenticated}) => {
 	return (
-				<nav className="px-4 py-1">
+				<nav className="px-4 py-1 shadow-sm vh-100">
                 	<Nav className="my-3" vertical>
-						<NavItemComponent src={usericon} text="Sign Up" />
-				        <NavItemComponent src={usericon} text="Log in" />
-						<NavItemComponent src={usericon} text="Sign out" />
+						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" />
+				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" />
+						<NavItemComponent visible={isAuthenticated} src={usericon} text="Sign out" />
 						<NavItemComponent src={getstartedicon} text="Get started" />
-						<NavItemComponent src={settingsicon} text="Settings" />
+						<NavItemComponent visible={isAuthenticated} src={settingsicon} text="Settings" />
 					</Nav>
-					<Nav className="my-3" vertical>
-						<NavItemComponent src={addwordsicon} text="Add words" />
-						<NavItemComponent src={learnwordsicon} text="Learn words" />
-						<NavItemComponent src={mywordsicon} text="My words" />
-						<NavItemComponent src={wordstrainericon} text="Words trainer" />
+					<Nav className="my-5" vertical>
+						<NavItemComponent visible={isAuthenticated} src={addwordsicon} text="Add words" />
+						<NavItemComponent visible={isAuthenticated} src={learnwordsicon} text="Learn words" />
+						<NavItemComponent visible={isAuthenticated} src={mywordsicon} text="My words" />
+						<NavItemComponent visible={isAuthenticated} src={wordstrainericon} text="Words trainer" />
 					</Nav>
 					<Nav className="my-3" vertical>
 						<NavItemComponent src={newsicon} text="News" />
