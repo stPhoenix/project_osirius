@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-import NavBarComponent from '../components/NavBarComponent';
+import {NavBarComponent} from '../components';
 
 class NavBar extends Component{
     render(){

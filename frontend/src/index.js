@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppComponent from './components/AppComponent';
+import {AppComponent} from './components';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
@@ -20,6 +20,7 @@ const logger = store => next => action => {
 const store = createStore(rootReducers, applyMiddleware(logger));
 
 console.log(store.getState());
+console.log("Test env "+process.env.REACT_APP_TEST_ENV);
 
 ReactDOM.render(<Provider store={store}>
                     <BrowserRouter>

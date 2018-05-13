@@ -1,20 +1,13 @@
-import React, {Component} from 'react';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import React from 'react';
 import './AppComponent.css';
 
 
-export const LoginComponent = () => {
+export const LoginComponent = (props) => {
 	return(
-		<Form>
-			<FormGroup>
-				<Label for="username">Username</Label>
-				<Input type="text" name="username" id="username" placeholder="Enter username"/>
-			</FormGroup>
-			<FormGroup>
-				<Label for="upassword">Password</Label>
-				<Input type="password" name="password" id="upassword" placeholder="Enter password"/>
-			</FormGroup>
-			<Button color="theme-primary" className="theme-primary">Login</Button>
-		</Form>
+		<form className="col-10 d-flex flex-column">
+            <input className="m-2 custom-form-control" type="text" name="username" id="username" placeholder="Enter username"/>
+            <input className="m-2 custom-form-control" type="password" name="password" id="upassword" placeholder="Enter password"/>
+			<button className="custom-btn theme-primary m-2 px-4 align-self-center" onClick={props.click}>Login</button>
+		</form>
 	);
 }
