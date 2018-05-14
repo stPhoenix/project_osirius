@@ -8,6 +8,7 @@ import Alerts from '../containers/Alerts';
 import {Switch, Route} from 'react-router';
 import News from '../containers/News';
 import Logout from '../containers/Logout';
+import {SignUpComponent} from '../components';
 
 
 export const AppComponent = () => {
@@ -20,19 +21,20 @@ export const AppComponent = () => {
                 </header>
             </Col>
             <Col xs="12" className="px-0" style={{zIndex:1}}>
-                <section className="theme-primary shadow-sm">
+                <section className="theme-primary shadow-sm full-screen">
                     <NavBar/>
                 </section>
             </Col>
             <Col xs="12 px-0">
-                <main className="d-flex flex-column vh-100">
+                <main className="d-flex flex-column full-screen">
                     <Alerts />
-                    <section className="d-flex h-100 justify-content-center align-items-center">
+                    <section className="d-flex justify-content-center align-items-center">
                         <Switch>
                             <Route exact path="/" component={News} />
                             <Route path="/news" component={News} />
                             <Route path="/login" component={Login} />
                             <Route path="/logout" component={Logout} />
+                            <Route path="/signup" component={SignUpComponent} />
                         </Switch>
                     </section>
                     

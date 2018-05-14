@@ -15,9 +15,9 @@ import './AppComponent.css';
 
 export const NavBarComponent = ({isAuthenticated}) => {
 	return (
-				<nav className="px-4 py-1 vh-100" style={{overflow:"auto"}}>
+				<nav className="px-4 py-1 h-100">
                 	<Nav className="my-3" vertical>
-						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" />
+						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" link="/signup" />
 				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" link="/login" />
 						<NavItemComponent visible={isAuthenticated} src={usericon} text="Log out" link="/logout" />
 						<NavItemComponent src={getstartedicon} text="Get started" />

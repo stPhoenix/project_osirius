@@ -13,8 +13,16 @@
 .bg-second{
 	background-color: #F5F5F5;
 }
+html {
+    background-color: #FAFAFA;
+}
 .vh-100{
 	height: 100vh;
+}
+
+.full-screen{
+    min-height: 100vh;
+    max-height: 100%;
 }
 
 .custom-form-control {

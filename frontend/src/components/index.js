@@ -4,6 +4,7 @@ import {LoginComponent} from './LoginComponent';
 import {NavBarComponent} from './NavBarComponent';
 import {NavItemComponent} from './NavItemComponent';
 import {NewsComponent} from './NewsComponent';
+import {SignUpComponent} from './SignUpComponent';
 
 export {
     AppComponent,
@@ -11,5 +12,6 @@ export {
     LoginComponent,
     NavBarComponent,
     NavItemComponent,
-    NewsComponent
+    NewsComponent,
+    SignUpComponent
 };
