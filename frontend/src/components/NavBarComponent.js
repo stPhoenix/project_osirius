@@ -13,13 +13,13 @@ import addwordsicon from '../assets/addwords.png';
 import './AppComponent.css';
 
 
-const NavBarComponent = ({isAuthenticated}) => {
+export const NavBarComponent = ({isAuthenticated}) => {
 	return (
-				<nav className="px-4 py-1 shadow-sm vh-100">
+				<nav className="px-4 py-1 vh-100" style={{overflow:"auto"}}>
                 	<Nav className="my-3" vertical>
 						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" />
-				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" />
-						<NavItemComponent visible={isAuthenticated} src={usericon} text="Sign out" />
+				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" link="/login" />
+						<NavItemComponent visible={isAuthenticated} src={usericon} text="Log out" link="/logout" />
 						<NavItemComponent src={getstartedicon} text="Get started" />
 						<NavItemComponent visible={isAuthenticated} src={settingsicon} text="Settings" />
 					</Nav>
@@ -30,11 +30,9 @@ const NavBarComponent = ({isAuthenticated}) => {
 						<NavItemComponent visible={isAuthenticated} src={wordstrainericon} text="Words trainer" />
 					</Nav>
 					<Nav className="my-3" vertical>
-						<NavItemComponent src={newsicon} text="News" />
+						<NavItemComponent src={newsicon} text="News" to="/news" />
 						<NavItemComponent src={abouticon} text="About" />
 					</Nav>
 				</nav>
 	);
 }
-
-export default NavBarComponent;

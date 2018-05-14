@@ -1,11 +1,10 @@
-export const auth = (state={isAuthenticated:true, user:{username:"NonRegistered"}}, action) => {
+export const auth = (state={isAuthenticated:false, user:{username:"NonRegistered"}}, action) => {
     switch(action.type) {
-        case "STORE_USER":
-            return {...state, user: action.user};
         case "LOGIN":
-            return {isAuthenticated: true, token: action.token};
+            return {isAuthenticated: true, token: action.token, user: action.user};
         case "LOGOUT":
+            return {isAuthenticated:false, token:null, user:{username:"NonRegistered"}}
         default:
             return state;
     }
-}
+};

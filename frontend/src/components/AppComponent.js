@@ -1,28 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Container, Col, Row} from 'reactstrap';
 import './AppComponent.css';
 import logo from '../assets/logo.png';
 import NavBar from '../containers/NavBar';
 import Login from '../containers/Login';
+import Alerts from '../containers/Alerts';
+import {Switch, Route} from 'react-router';
+import News from '../containers/News';
+import Logout from '../containers/Logout';
 
-class App extends Component {
-  render() {
-    return (
+
+export const AppComponent = () => {
+        return (
       <Container fluid className="bg-first">
         <Row className="d-flex flex-column">
-            <Col xs="12" className="px-0">
+            <Col xs="12" className="px-0" style={{zIndex:1}}>
                 <header className="theme-dark px-4 py-2">
                     <img style={{height:'2rem', width:'auto'}} src={logo} alt="logo" />
                 </header>
             </Col>
-            <Col xs="12" className="px-0">
-                <section className="theme-primary">
+            <Col xs="12" className="px-0" style={{zIndex:1}}>
+                <section className="theme-primary shadow-sm">
                     <NavBar/>
                 </section>
             </Col>
-            <Col xs="12">
-                <main className="vh-100">
-					<Login />
+            <Col xs="12 px-0">
+                <main className="d-flex flex-column vh-100">
+                    <Alerts />
+                    <section className="d-flex h-100 justify-content-center align-items-center">
+                        <Switch>
+                            <Route exact path="/" component={News} />
+                            <Route path="/news" component={News} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/logout" component={Logout} />
+                        </Switch>
+                    </section>
+                    
                 </main>
             </Col>
         </Row>
@@ -34,7 +47,5 @@ class App extends Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
 
-export default App;
