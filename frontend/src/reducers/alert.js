@@ -20,4 +20,4 @@ export const alert = (state={visible:true, alerts:[]}, action) => {
         default:
             return state;
     }
-}
+};

@@ -6,6 +6,7 @@ export default class News extends Component{
     constructor(props){
         super(props);
         this.state = {articles:[]};
+        this.fetch_news = this.fetch_news.bind(this);
     }
     
     componentDidMount(){
@@ -30,4 +31,4 @@ export default class News extends Component{
             <NewsComponent articles={this.state.articles} />
         );
     }
-}
+};

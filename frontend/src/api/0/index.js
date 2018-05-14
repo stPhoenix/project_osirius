@@ -1,5 +1,3 @@
-
-
 export const get_news = () => {
     const news = [{title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
                  {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
