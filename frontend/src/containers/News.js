@@ -11,7 +11,6 @@ export default class News extends Component{
     
     componentDidMount(){
         this.fetch_news();
-        setInterval(this.fetch_news, 300000);  
     };
     
     fetch_news(){

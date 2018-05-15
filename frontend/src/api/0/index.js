@@ -10,7 +10,7 @@ export const get_news = () => {
 
 export const login = (username, password) => {
     console.log("api called");
-    const data = {user:{username:"Bohdan"}, token:"1221dasd123aqsdas"};
+    const data = {user:get_user("1221dasd123aqsdas").data, token:"1221dasd123aqsdas"};
     return {result:true, data, message:"All ok"};
 };
 
@@ -19,7 +19,7 @@ export const logout = (token) => {
 };
 
 export const sign_up = (username, email, password, learn_language, home_language, first_name) => {
-    const data = {user:{username:"Bohdan"}, token:"1221dasd123aqsdas"};
+    const data = {user:get_user("1221dasd123aqsdas").data, token:"1221dasd123aqsdas"};
 	return {result:true, message:"All ok", data};
 };
 
@@ -37,14 +37,50 @@ export const get_user = (token) => {
         {
             "name": "Japanese",
             "slug": "ja"
+        },
+        {
+        "name": "Afrikaans",
+        "slug": "af"
+        },
+        {
+        "name": "Albanian",
+        "slug": "sq"
+        },
+        {
+        "name": "Arabic",
+        "slug": "ar"
         }
     ],
     "current_language": "Japanese"
     }}
 };
 
-export const update_user = (user, token) => {
-    return {result:true, message:"All ok"};
+export const update_user = (user, token) => { 
+    return {result:true, message:"All ok", data:{user:{
+    "pk": 5,
+    "username": "bohdan",
+    "email": "bohdan@mail.com",
+    "first_name": "Bohdan",
+    "language_set": [
+        {
+            "name": "Japanese",
+            "slug": "ja"
+        },
+        {
+        "name": "Afrikaans",
+        "slug": "af"
+        },
+        {
+        "name": "Albanian",
+        "slug": "sq"
+        },
+        {
+        "name": "Arabic",
+        "slug": "ar"
+        }
+    ],
+    "current_language": "Japanese"
+    }, token:"12321faqsdasd123"}};
 };
 
 export const add_custom_word = (word, token) => {

@@ -9,6 +9,7 @@ import {Switch, Route} from 'react-router';
 import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
+import Settings from '../containers/Settings';
 
 
 export const AppComponent = () => {
@@ -35,6 +36,7 @@ export const AppComponent = () => {
                             <Route path="/login" component={Login} />
                             <Route path="/logout" component={Logout} />
                             <Route path="/signup" component={SignUp} />
+                            <Route path="/settings" component={Settings} />
                         </Switch>
                     </section>
                     
