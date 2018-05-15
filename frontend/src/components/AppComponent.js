@@ -8,7 +8,7 @@ import Alerts from '../containers/Alerts';
 import {Switch, Route} from 'react-router';
 import News from '../containers/News';
 import Logout from '../containers/Logout';
-import {SignUpComponent} from '../components';
+import SignUp from '../containers/SignUp';
 
 
 export const AppComponent = () => {
@@ -34,7 +34,7 @@ export const AppComponent = () => {
                             <Route path="/news" component={News} />
                             <Route path="/login" component={Login} />
                             <Route path="/logout" component={Logout} />
-                            <Route path="/signup" component={SignUpComponent} />
+                            <Route path="/signup" component={SignUp} />
                         </Switch>
                     </section>
                     

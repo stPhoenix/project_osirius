@@ -8,7 +8,7 @@ class Alerts extends Component {
     render(){
         const {alerts} = this.props;
         if (alerts.length === 0){
-            return <Alert color="primary" style={{top:"-50px"}} className="w-100 d-flex justify-content-center py-2 rounded-0"> Placeholder </Alert>;
+            return <Alert color="primary" style={{top:"-50px", opacity:"0"}} className="w-100 d-flex justify-content-center py-2 rounded-0"> Placeholder </Alert>;
         }
         else{
             console.log(this.props);

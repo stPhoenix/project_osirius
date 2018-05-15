@@ -5,6 +5,8 @@ import {NavBarComponent} from './NavBarComponent';
 import {NavItemComponent} from './NavItemComponent';
 import {NewsComponent} from './NewsComponent';
 import {SignUpComponent} from './SignUpComponent';
+import {SettingsComponent} from './SettingsComponent';
+
 
 export {
     AppComponent,
@@ -13,5 +15,6 @@ export {
     NavBarComponent,
     NavItemComponent,
     NewsComponent,
-    SignUpComponent
+    SignUpComponent,
+	SettingsComponent
 };

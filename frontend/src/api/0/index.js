@@ -19,7 +19,8 @@ export const logout = (token) => {
 };
 
 export const sign_up = (username, email, password, learn_language, home_language, first_name) => {
-    return {result:true, message:"All ok"};
+    const data = {user:{username:"Bohdan"}, token:"1221dasd123aqsdas"};
+	return {result:true, message:"All ok", data};
 };
 
 export const change_password = (passowrd, token) => {
