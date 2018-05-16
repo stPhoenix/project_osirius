@@ -6,6 +6,7 @@ import {NavItemComponent} from './NavItemComponent';
 import {NewsComponent} from './NewsComponent';
 import {SignUpComponent} from './SignUpComponent';
 import {SettingsComponent} from './SettingsComponent';
+import {SettingsModalComponent} from './SettingsModalComponent';
 
 
 export {
@@ -16,5 +17,6 @@ export {
     NavItemComponent,
     NewsComponent,
     SignUpComponent,
-	SettingsComponent
+	SettingsComponent,
+    SettingsModalComponent
 };

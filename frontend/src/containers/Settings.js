@@ -17,7 +17,10 @@ class Settings extends Component {
 			language_set:this.props.auth.user.language_set,
 			current_language:this.props.auth.user.current_language,
 			langs:[],
-            temp_language: ""
+            temp_language: "",
+            modal: false,
+            password1: "",
+            password2: ""
 		};
 		this.dispatch = this.props.dispatch;
         this.token = this.props.auth.token;
@@ -27,6 +30,7 @@ class Settings extends Component {
         this.delete_language = this.delete_language.bind(this);
         this.set_active = this.set_active.bind(this);
         this.add_learn_language = this.add_learn_language.bind(this);
+        this.toggle_modal = this.toggle_modal.bind(this);
 	};
 	
 	componentDidMount(){
@@ -79,6 +83,12 @@ class Settings extends Component {
         this.setState({language_set});
     };
     
+    toggle_modal(e) {
+      e.preventDefault();
+      const modal = !this.state.modal;
+      this.setState({modal});  
+    };
+    
 	render(){
 		if(!this.props.auth.isAuthenticated){
 			return (<Redirect to="/news" />);
@@ -89,7 +99,8 @@ class Settings extends Component {
                                                change_password={this.change_password}
                                                add_learn_language={this.add_learn_language}
                                                delete_language={this.delete_language}
-                                               set_active={this.set_active} />
+                                               set_active={this.set_active}
+                                               toggle_modal={this.toggle_modal}/>
 		);
 	};
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 import { UncontrolledTooltip } from 'reactstrap';
+import {SettingsModalComponent} from '../components';
 
 
 export const SettingsComponent = (props) => {
@@ -14,7 +15,7 @@ export const SettingsComponent = (props) => {
                 <label htmlFor="email">Change email</label>
                 <input className="custom-form-control" type="text" name="email" id="email" placeholder="Email" onChange={props.handleChange} value={props.email} />
             </div>
-			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.change_password}>Change password</button>
+			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.toggle_modal}>Change password</button>
             <div className="m-2 form-group">
                 <label htmlFor="firstname">Change your name</label>
                 <input className="custom-form-control" type="text" name="first_name" id="firstname" placeholder="Your name" onChange={props.handleChange} value={props.first_name} />
@@ -39,6 +40,11 @@ export const SettingsComponent = (props) => {
 			<button className="custom-btn theme-primary px-3 mb-2 mr-2 align-self-end" onClick={props.add_learn_language}>Add</button>
 			
 			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.click}>Save</button>
+            <SettingsModalComponent change_password={props.change_password}
+                                    toggle_modal={props.toggle_modal}
+                                    password1={props.password1}
+                                    password2={props.password2}
+                                    modal={props.modal} />
 		</form>
 	);
 };
