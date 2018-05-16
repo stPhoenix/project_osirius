@@ -30,7 +30,7 @@ export const NavBarComponent = ({isAuthenticated}) => {
 						<NavItemComponent visible={isAuthenticated} src={wordstrainericon} text="Words trainer" />
 					</Nav>
 					<Nav className="my-3" vertical>
-						<NavItemComponent src={newsicon} text="News" to="/news" />
+						<NavItemComponent src={newsicon} text="News" link="/news" />
 						<NavItemComponent src={abouticon} text="About" />
 					</Nav>
 				</nav>

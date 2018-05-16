@@ -11,7 +11,6 @@ class Alerts extends Component {
             return <Alert color="primary" style={{top:"-50px", opacity:"0"}} className="w-100 d-flex justify-content-center py-2 rounded-0"> Placeholder </Alert>;
         }
         else{
-            console.log(this.props);
             const {color, text, key} = this.props.alerts[0]; 
             return (<CustomAlert color={color} text={text} key={key} pk={key} />);
         }

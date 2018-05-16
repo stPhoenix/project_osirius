@@ -61,11 +61,13 @@ class Settings extends Component {
     };
 
     delete_language(e) {
+		e.preventDefault();
         const language_set = this.state.language_set.filter((language) => (language.name !== e.target.name));
         this.setState({language_set});
     };
     
     set_active(e) {
+		e.preventDefault();
         const current_language = e.target.name;
         this.setState({current_language});
     }
@@ -73,7 +75,6 @@ class Settings extends Component {
     add_learn_language(e) {
         e.preventDefault();
         const new_language = this.state.langs.find((lang) => (lang.name === this.state.temp_language));
-        console.log(new_language);
         const language_set = [...this.state.language_set, new_language];
         this.setState({language_set});
     };
