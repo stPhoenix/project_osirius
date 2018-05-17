@@ -7,6 +7,7 @@ import {NewsComponent} from './NewsComponent';
 import {SignUpComponent} from './SignUpComponent';
 import {SettingsComponent} from './SettingsComponent';
 import {SettingsModalComponent} from './SettingsModalComponent';
+import {AddwordsComponent} from './AddwordsComponent';
 
 
 export {
@@ -18,5 +19,6 @@ export {
     NewsComponent,
     SignUpComponent,
 	SettingsComponent,
-    SettingsModalComponent
+    SettingsModalComponent,
+	AddwordsComponent
 };

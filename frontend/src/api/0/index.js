@@ -23,7 +23,7 @@ export const sign_up = (username, email, password, learn_language, home_language
 	return {result:true, message:"All ok", data};
 };
 
-export const change_password = (passowrd, token) => {
+export const change_password = (password1, password2, token) => {
     return {result:true, message:"All ok"};
 };
 

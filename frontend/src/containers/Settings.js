@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {add_alert} from '../actions/alert';
-import {update_user, get_langs} from '../api';
+import {update_user, get_langs, change_password} from '../api';
 import {login} from '../actions/auth';
 import {SettingsComponent} from '../components';
 import {connect} from 'react-redux';
@@ -50,7 +50,7 @@ class Settings extends Component {
 		e.preventDefault();
 		this.dispatch(add_alert());
 		const request = update_user(this.state, this.token);
-		let color = "primary"
+		let color = "primary";
 		if (request.result === true){
 			color = "success";
 			this.dispatch(login(request.data.token, request.data.user));
@@ -61,7 +61,14 @@ class Settings extends Component {
 	};
     
     change_password(e) {
-      return null;  
+		e.preventDefault();
+		this.setState({modal:false});
+	  	this.dispatch(add_alert());
+		const request = change_password(this.state.password1, this.state.password2, this.token);
+		let color = "primary";
+		color = (request.result === true) ? "success" : color = "danger";
+		this.dispatch(add_alert({color:color, text:request.message}));
+		
     };
 
     delete_language(e) {

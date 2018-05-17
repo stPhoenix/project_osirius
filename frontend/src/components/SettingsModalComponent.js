@@ -21,7 +21,7 @@ export const SettingsModalComponent = (props) => {
                                 </div>
                             </form>
                         
-                        <button className="btn btn-link">Change</button>
+                        <button className="btn btn-link" onClick={props.change_password}>Change</button>
                     </CardBody>
                 </Card>
             </ModalBody>

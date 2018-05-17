@@ -10,6 +10,7 @@ import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
+import {AddwordsComponent} from '../components';
 
 
 export const AppComponent = () => {
@@ -37,6 +38,7 @@ export const AppComponent = () => {
                             <Route path="/logout" component={Logout} />
                             <Route path="/signup" component={SignUp} />
                             <Route path="/settings" component={Settings} />
+							<Route path="/addwords" component={AddwordsComponent} />
                         </Switch>
                     </section>
                     
