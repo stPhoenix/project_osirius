@@ -7,6 +7,9 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {rootReducers} from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ScrollMain from './containers/ScrollMain';
+
+
 
 const logger = store => next => action => {
   console.group(action.type)
@@ -24,7 +27,9 @@ console.log("Test env "+process.env.REACT_APP_TEST_ENV);
 
 ReactDOM.render(<Provider store={store}>
                     <BrowserRouter>
+						<ScrollMain>
                         <AppComponent />
+						</ScrollMain>
                     </BrowserRouter>
                 </Provider>
                 , document.getElementById('root'));

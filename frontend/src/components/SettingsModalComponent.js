@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, ModalBody, Card, CardBody, CardTitle, CardText} from 'reactstrap';
+import {Modal, ModalBody, Card, CardBody, CardTitle} from 'reactstrap';
 
 
 export const SettingsModalComponent = (props) => {

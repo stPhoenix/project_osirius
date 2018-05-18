@@ -39,6 +39,7 @@ export const AppComponent = () => {
                             <Route path="/signup" component={SignUp} />
                             <Route path="/settings" component={Settings} />
 							<Route path="/addwords" component={AddwordsComponent} />
+							<Route path="/addwords/typing" component={Login} />
                         </Switch>
                     </section>
                     
