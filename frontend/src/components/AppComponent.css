@@ -58,6 +58,14 @@ html {
 }
 
 .custom-btn:focus, .custom-btn.focus {
+  text-decoration: none;
+  color: #000000;
   outline: 0;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+}
+.black {
+    color: #000000;
+}
+.opacity-50{
+    opacity: .5;
 }
