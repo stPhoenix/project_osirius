@@ -7,7 +7,7 @@ export const SettingsModalComponent = (props) => {
         <Modal isOpen={props.modal} toggle={props.toggle_modal} className="p-0 align-self-center">
             <ModalBody className="p-0">
                 <Card className="rounded-0">
-                    <CardBody>
+                    <CardBody className="d-flex flex-column">
                         <CardTitle>Change password</CardTitle>
                         
                             <form>
@@ -21,7 +21,7 @@ export const SettingsModalComponent = (props) => {
                                 </div>
                             </form>
                         
-                        <button className="btn btn-link" onClick={props.change_password}>Change</button>
+                        <button className="btn btn-link align-self-end" onClick={props.change_password}>Change</button>
                     </CardBody>
                 </Card>
             </ModalBody>
