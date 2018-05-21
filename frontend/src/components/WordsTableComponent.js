@@ -19,14 +19,14 @@ export const WordsTableComponent = (props) => {
                                                             <div className="text-center">
                                                                 <br />{word.name}
                                                                 <br />[{word.pronunciation}]
-                                                                <br />Category: [{word.category.map(category => (category.name+" "))}]
+                                                                <br />Category: [{word.category_set.map(category => (category.name+" "))}]
                                                                 <br />{word.translation}
                                                             </div>
                                                         </td>
-                                                        <td className="align-middle text-center">
-                                                            <label class="m-checkbox-container">
-                                                                <input type="checkbox" />
-                                                                <span class="m-checkbox"></span>
+                                                        <td className="align-middle">
+                                                            <label className="m-checkbox-container d-flex justify-content-center">
+                                                                <input name={word.id} onChange={props.handleCheck} type="checkbox" />
+																<span className="m-checkbox"></span>
                                                             </label>
                                                         </td>
                                                      </tr>);

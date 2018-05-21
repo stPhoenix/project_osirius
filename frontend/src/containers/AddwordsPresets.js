@@ -13,11 +13,14 @@ class AddwordsPresets extends Component {
         this.token = this.props.token;
         this.state = {
             cats: [],
-            words: []
+            words: [],
+			selected: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.add_global = this.add_global.bind(this);
         this.add_all = this.add_all.bind(this);
+		this.handleCheck = this.handleCheck.bind(this);
+		this.add_selected = this.add_selected.bind(this);
     };
     
     componentDidMount(){
@@ -49,6 +52,16 @@ class AddwordsPresets extends Component {
             this.dispatch(add_alert({color: "danger", text: request.message}));   
         }
     };
+	
+	handleCheck(e) {
+		let selected;
+		if (e.target.checked){
+			selected = [...this.state.selected, e.target.name];
+		} else {
+			selected = this.state.selected.filter((id) => (id !== e.target.name));
+		}
+		this.setState({selected});
+	};
     
     add_global(e) {
         e.preventDefault();
@@ -65,15 +78,23 @@ class AddwordsPresets extends Component {
             this.add_global(e);
         });
     };
+	
+	add_selected(e) {
+		e.preventDefault();
+        this.state.selected.forEach((word) => {
+            e.target.name = word;
+            this.add_global(e);
+        });
+	};
     
     render(){
        if (!this.props.isAuthenticated){
             return (<Redirect to="/login" />);
         }
-        
         return (<AddwordsPresetsComponent {...this.state} handleChange={this.handleChange}
-                                                          add_global={this.add_global}
-                                                          add_all={this.add_all} />);
+                                                          add_selected={this.add_selected}
+                                                          add_all={this.add_all}
+														  handleCheck={this.handleCheck} />);
     };
 };
 

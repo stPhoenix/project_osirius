@@ -12,6 +12,9 @@ import {AddwordsTypeComponent} from './AddwordsTypeComponent';
 import {AddwordsTypeModalComponent} from './AddwordsTypeModalComponent';
 import {AddwordsPresetsComponent} from './AddwordsPresetsComponent';
 import {WordsTableComponent} from './WordsTableComponent';
+import {MywordsComponent} from './MywordsComponent';
+import {MywordsAllComponent} from './MywordsAllComponent';
+import {MywordsLearnedComponent} from './MywordsLearnedComponent';
 
 
 export {
@@ -28,5 +31,8 @@ export {
     AddwordsTypeComponent,
     AddwordsTypeModalComponent,
     AddwordsPresetsComponent,
-    WordsTableComponent
+    WordsTableComponent,
+	MywordsComponent,
+	MywordsAllComponent,
+	MywordsLearnedComponent
 };

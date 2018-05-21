@@ -14,7 +14,7 @@ export const AddwordsTypeComponent = (props) => {
                             <CardText className="text-center">
                                 <br />{word.name}
                                 <br />{word.pronunciation}
-                                <br />Category: [{word.category.map(category => (category.name+" "))}]
+                                <br />Category: [{word.category_set.map(category => (category.name+" "))}]
                                 <br />{word.translation}
                             </CardText>
                             <button name={word.id} className="btn btn-link align-self-end" onClick={props.add_global}>Add</button>

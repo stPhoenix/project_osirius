@@ -11,7 +11,10 @@ export const AddwordsPresetsComponent = (props) => {
                                         {props.cats.map((category) => (<option key={category.name}>{category.name}</option>))}
                     </select>
                 </form>
-                <button className="btn btn-link align-self-end mt-3 px-0" onClick={props.add_all}>Add all</button>
-                <WordsTableComponent words={props.words} />
+                <div className="d-flex align-self-end mt-3 px-0" >
+					<button className="btn btn-link " onClick={props.add_selected}>Add selected</button>
+					<button className="btn btn-link pr-0" onClick={props.add_all}>Add all</button>
+				</div>
+                <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
           </div>);  
 };

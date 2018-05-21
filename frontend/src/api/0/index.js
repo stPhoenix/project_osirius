@@ -80,7 +80,7 @@ export const get_words_by_cat = (cat_id, token) => {
         "pronunciation": "Aisatsu",
         "language": 29,
         "translate_language": 13,
-        "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}]
+        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}]
     },
     {
         "id": 2,
@@ -88,7 +88,7 @@ export const get_words_by_cat = (cat_id, token) => {
         "translation": "good morning",
         "pronunciation": "Ohayō",
         "language": 29,
-        "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
         "translate_language": 13
     },
     {
@@ -97,7 +97,7 @@ export const get_words_by_cat = (cat_id, token) => {
         "translation": "good morning polite",
         "pronunciation": "Ohayōgozaimasu",
         "language": 29,
-        "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
         "translate_language": 13
     }]}; 
 };
@@ -292,7 +292,7 @@ export const search_word = (word, token) => {
             "id": 8,
             "name": "ありがとう",
             "translation": "Thank you",
-            "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
             "pronunciation": "Arigatoo"
         },
         
@@ -300,7 +300,7 @@ export const search_word = (word, token) => {
             "id": 8,
             "name": "ありがとう",
             "translation": "Thank you",
-            "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
             "pronunciation": "Arigatoo"
         },
         
@@ -308,7 +308,7 @@ export const search_word = (word, token) => {
             "id": 8,
             "name": "ありがとう",
             "translation": "Thank you",
-            "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
             "pronunciation": "Arigatoo"
         },
         
@@ -316,7 +316,7 @@ export const search_word = (word, token) => {
             "id": 8,
             "name": "ありがとう",
             "translation": "Thank you",
-            "category": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
+            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
             "pronunciation": "Arigatoo"
         }
     ]

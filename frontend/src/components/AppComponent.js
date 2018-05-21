@@ -10,7 +10,7 @@ import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
-import {AddwordsComponent} from '../components';
+import {AddwordsComponent,MywordsComponent} from '../components';
 
 
 export const AppComponent = () => {
@@ -39,7 +39,7 @@ export const AppComponent = () => {
                             <Route path="/signup" component={SignUp} />
                             <Route path="/settings" component={Settings} />
 							<Route path="/addwords" component={AddwordsComponent} />
-							<Route path="/addwords/typing" component={Login} />
+							<Route path="/mywords" component={MywordsComponent} />
                         </Switch>
                     </section>
                     
