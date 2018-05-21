@@ -15,6 +15,8 @@ import {WordsTableComponent} from './WordsTableComponent';
 import {MywordsComponent} from './MywordsComponent';
 import {MywordsAllComponent} from './MywordsAllComponent';
 import {MywordsLearnedComponent} from './MywordsLearnedComponent';
+import {ContentComponent} from './ContentComponent';
+import {LearnwordsComponent} from './LearnwordsComponent';
 
 
 export {
@@ -34,5 +36,7 @@ export {
     WordsTableComponent,
 	MywordsComponent,
 	MywordsAllComponent,
-	MywordsLearnedComponent
+	MywordsLearnedComponent,
+    ContentComponent,
+    LearnwordsComponent
 };

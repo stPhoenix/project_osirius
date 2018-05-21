@@ -11,7 +11,7 @@ import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
 import {AddwordsComponent,MywordsComponent} from '../components';
-
+import Learnwords from '../containers/Learnwords';
 
 export const AppComponent = () => {
         return (
@@ -40,6 +40,8 @@ export const AppComponent = () => {
                             <Route path="/settings" component={Settings} />
 							<Route path="/addwords" component={AddwordsComponent} />
 							<Route path="/mywords" component={MywordsComponent} />
+                            <Route path="/learnwords" component={Learnwords} />
+
                         </Switch>
                     </section>
                     
