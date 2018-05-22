@@ -45,7 +45,7 @@ class MywordsLearned extends Component {
         this.dispatch(add_alert());
 		const request = learn_again_word(id, this.token);
 		if (request.result) {
-			this.dispatch(add_alert({color: "succes", text: request.message}));
+			this.dispatch(add_alert({color: "success", text: request.message}));
 			const words = this.state.words.filter((word) => (word.id !== id));
 			this.setState({words});
 		} else {

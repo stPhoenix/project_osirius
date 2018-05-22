@@ -234,7 +234,7 @@ export const result_play_matching = (word_pk, answer_pk, token) => {
     return {result:true, message:"All ok"};
 };
 
-export const play_typing = (token) => {
+export const play_typing = (reverse, token) => {
   return {result:true, message:"All ok", data:{
     "words": [
         {
@@ -279,7 +279,7 @@ export const play_typing = (token) => {
 }};  
 };
 
-export const result_play_typing = (word_pk, token) => {
+export const result_play_typing = (reverse, word_pk, token) => {
   return {result:true, message:"All ok"};  
 };
 
