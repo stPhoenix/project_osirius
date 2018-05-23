@@ -17,6 +17,7 @@ class WordstrainerMatch extends Component {
 			answer: {},
 			question: ""
         };
+        console.log(this.props);
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
     };

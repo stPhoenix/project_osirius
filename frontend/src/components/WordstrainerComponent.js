@@ -11,10 +11,10 @@ import WordstrainerMatch from '../containers/WordstrainerMatch';
 export const WordstrainerComponent = ({location}) => {
 	if (location.pathname !== "/wordstrainer"){
 		return (<Switch>
-					<Route path="/wordstrainer/type" render={() => (<WordstrainerType reverse={false} />)} />
-					<Route path="/wordstrainer/match" render={() => (<WordstrainerMatch reverse={false} />)} />
 					<Route path="/wordstrainer/type/reverse" render={() => (<WordstrainerType reverse={true} />)} />
 					<Route path="/wordstrainer/match/reverse" render={() => (<WordstrainerMatch reverse={true} />)} />
+                    <Route path="/wordstrainer/type" render={() => (<WordstrainerType reverse={false} />)} />
+					<Route path="/wordstrainer/match" render={() => (<WordstrainerMatch reverse={false} />)} />
 				</Switch>);	
 	};
 	return(<ContentComponent>

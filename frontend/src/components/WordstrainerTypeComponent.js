@@ -9,7 +9,7 @@ export const WordstrainerTypeComponent = (props) => {
 		<ContentComponent>
 			<h3>{props.question}</h3>
 			<Alert color="danger" isOpen={(props.right_answer) ? true : false}>{props.right_answer}</Alert>
-			<div className="form-group">
+			<div className="w-100 form-group">
 				<label htmlFor="answer">Type answer</label>
 				<input className="custom-form-control" type="text" name="answer" value={props.answer} onChange={props.handleChange} placeholder="Answer" />
 			</div>
