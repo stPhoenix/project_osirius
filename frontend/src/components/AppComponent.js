@@ -10,7 +10,7 @@ import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
-import {AddwordsComponent,MywordsComponent} from '../components';
+import {AddwordsComponent, MywordsComponent, WordstrainerComponent} from '../components';
 import Learnwords from '../containers/Learnwords';
 
 export const AppComponent = () => {
@@ -41,6 +41,7 @@ export const AppComponent = () => {
 							<Route path="/addwords" component={AddwordsComponent} />
 							<Route path="/mywords" component={MywordsComponent} />
                             <Route path="/learnwords" component={Learnwords} />
+							<Route path="/wordstrainer" component={WordstrainerComponent} />
 
                         </Switch>
                     </section>

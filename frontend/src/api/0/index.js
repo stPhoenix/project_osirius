@@ -279,7 +279,7 @@ export const play_typing = (reverse, token) => {
 }};  
 };
 
-export const result_play_typing = (reverse, word_pk, token) => {
+export const result_play_typing = (reverse, word_pk, answer, token) => {
   return {result:true, message:"All ok"};  
 };
 

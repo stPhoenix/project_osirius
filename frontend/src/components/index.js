@@ -17,6 +17,9 @@ import {MywordsAllComponent} from './MywordsAllComponent';
 import {MywordsLearnedComponent} from './MywordsLearnedComponent';
 import {ContentComponent} from './ContentComponent';
 import {LearnwordsComponent} from './LearnwordsComponent';
+import {WordstrainerComponent} from './WordstrainerComponent';
+import {WordstrainerTypeComponent} from './WordstrainerTypeComponent';
+import {WordstrainerMatchComponent} from './WordstrainerMatchComponent';
 
 
 export {
@@ -38,5 +41,8 @@ export {
 	MywordsAllComponent,
 	MywordsLearnedComponent,
     ContentComponent,
-    LearnwordsComponent
+    LearnwordsComponent,
+	WordstrainerComponent,
+	WordstrainerTypeComponent,
+    WordstrainerMatchComponent
 };

@@ -1,7 +1,7 @@
 .alert-anim {
   z-index: 0;
   top: -50px;
-  transition: top 0.30s linear;
+  transition: top 0.15s linear;
 }
 
 .alert-anim.show {

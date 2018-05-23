@@ -19,7 +19,7 @@ class CustomAlert extends Component {
     
     onEntered() {
       if (this.props.color){
-            setTimeout(this.onDismiss, 3000);  
+            setTimeout(this.onDismiss, 700);  
         };  
     };
     

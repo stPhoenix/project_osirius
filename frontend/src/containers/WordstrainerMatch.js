@@ -2,25 +2,21 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
-import {play_typing, result_play_typing} from '../api';
-import {WordstrainerTypeComponent} from '../components';
+import {play_matching, result_play_matching} from '../api';
+import {WordstrainerMatchComponent} from '../components';
 
 
-class WordstrainerType extends Component {
+class WordstrainerMatch extends Component {
     constructor(props){
         super(props);
         this.dispatch = this.props.dispatch;
         this.token = this.props.token;
 		this.reverse = this.props.reverse;
         this.state = {
-            word: {},
-			answer: "",
-			button_text: "Check",
-			button_click: null,
-			right_answer: "",
+            words: [],
+			answer: {},
 			question: ""
         };
-		this.handleChange = this.handleChange.bind(this);
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
     };
@@ -29,47 +25,45 @@ class WordstrainerType extends Component {
 		this.next_word();
     };
 	
-	handleChange(e) {
-		this.setState({[e.target.name]: e.target.value});	
-	};
-	
 	proceed_answer(e) {
 		e.preventDefault();
 		this.dispatch(add_alert());
-		const right_answer = (this.reverse) ? this.state.word.name : this.state.word.translation;
-		const user_answer = this.state.answer;
-		const result = this.check_answer(right_answer, user_answer);
+		const right_answer = this.state.answer.id;
+		const user_answer = parseInt(e.target.name);
+		const result = right_answer === user_answer;
 		if (result) {
 			this.dispatch(add_alert({color: "success", text: "Right"}));
-			const request = result_play_typing(this.reverse, this.state.word.id, user_answer, this.token);
+			const request = result_play_matching(this.reverse, this.state.answer.id, user_answer, this.token);
 			if (request.result === false) {
 				this.dispatch(add_alert({color: "danger", text: request.message}));
 			}
 		} else {
-			this.setState({right_answer});
 			this.dispatch(add_alert({color: "danger", text: "Wrong"}));
 		}
-		this.setState({button_text: "Next", button_click: this.next_word});
-	};
-	
-	check_answer(right_answer, user_answer) {
-		const r = right_answer.toLowerCase().replace(/ /g, "");
-		const u = user_answer.toLowerCase().replace(/ /g, "");
-		console.log(r);
-		console.log(u);
-		return r === u;
+        const words = this.state.words.map((w) => {
+            if (w.id === this.state.answer.id){
+                w.color = "alert-success"; 
+            } else if(w.id !== this.state.answer.id && w.id === user_answer){
+                w.color = "alert-danger";
+            }
+            return w;
+        });
+        this.setState({words: [...words]});
+        console.log(words);
 	};
 	
 	next_word() {
 		this.dispatch(add_alert());
-		const request = play_typing(this.reverse, this.token);
+		const request = play_matching(this.reverse, this.token);
 		if (request.result){
 			const question = (this.reverse) ? request.data.answer.translation : request.data.answer.name;
-			this.setState({word: request.data.answer,
+            const words = request.data.words.map((word) =>{
+                const active = (this.reverse) ? word.name : word.translation;
+                return {...word, color: "", active};
+            });
+			this.setState({words,
 						   question,
-						   button_text: "Check",
-						   button_click: this.proceed_answer,
-						   right_answer: ""
+                           answer: request.data.answer
 						  });
 		} else{
 			this.dispatch(add_alert({color: "danger", text: request.message}));
@@ -80,7 +74,8 @@ class WordstrainerType extends Component {
        if (!this.props.isAuthenticated){
             return (<Redirect to="/login" />);
         }
-        return (<WordstrainerTypeComponent {...this.state} handleChange={this.handleChange} />);
+        return (<WordstrainerMatchComponent {...this.state} proceed_answer={this.proceed_answer}
+                                                            next_word={this.next_word} />);
     };
 };
 
@@ -91,4 +86,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(WordstrainerType);
+export default connect(mapStateToProps)(WordstrainerMatch);
