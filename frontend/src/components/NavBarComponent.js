@@ -20,7 +20,7 @@ export const NavBarComponent = ({isAuthenticated}) => {
 						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" link="/signup" />
 				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" link="/login" />
 						<NavItemComponent visible={isAuthenticated} src={usericon} text="Log out" link="/logout" />
-						<NavItemComponent src={getstartedicon} text="Get started" />
+						<NavItemComponent src={getstartedicon} text="Get started" link="/getstarted" />
 						<NavItemComponent visible={isAuthenticated} src={settingsicon} text="Settings" link="/settings" />
 					</Nav>
 					<Nav className="my-5" vertical>
@@ -31,7 +31,7 @@ export const NavBarComponent = ({isAuthenticated}) => {
 					</Nav>
 					<Nav className="my-3" vertical>
 						<NavItemComponent src={newsicon} text="News" link="/news" />
-						<NavItemComponent src={abouticon} text="About" />
+						<NavItemComponent src={abouticon} text="About" link="/about" />
 					</Nav>
 				</nav>
 	);

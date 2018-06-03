@@ -10,8 +10,9 @@ import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
-import {AddwordsComponent, MywordsComponent, WordstrainerComponent} from '../components';
+import {AddwordsComponent, MywordsComponent, WordstrainerComponent, AboutComponent, GetStartedComponent} from '../components';
 import Learnwords from '../containers/Learnwords';
+
 
 export const AppComponent = () => {
         return (
@@ -22,31 +23,37 @@ export const AppComponent = () => {
                     <img style={{height:'2rem', width:'auto'}} src={logo} alt="logo" />
                 </header>
             </Col>
-            <Col xs="12" className="px-0" style={{zIndex:1}}>
-                <section className="theme-primary shadow-sm full-screen">
-                    <NavBar/>
-                </section>
-            </Col>
-            <Col xs="12 px-0">
-                <main className="d-flex flex-column full-screen">
-                    <Alerts />
-                    <section className="d-flex justify-content-center align-items-center">
-                        <Switch>
-                            <Route exact path="/" component={News} />
-                            <Route path="/news" component={News} />
-                            <Route path="/login" component={Login} />
-                            <Route path="/logout" component={Logout} />
-                            <Route path="/signup" component={SignUp} />
-                            <Route path="/settings" component={Settings} />
-							<Route path="/addwords" component={AddwordsComponent} />
-							<Route path="/mywords" component={MywordsComponent} />
-                            <Route path="/learnwords" component={Learnwords} />
-							<Route path="/wordstrainer" component={WordstrainerComponent} />
+            <Col xs="12" >
+                <Row className="flex-column flex-lg-row">
+                    <Col xs="12" lg="2" className="px-0" style={{zIndex:1}}>
+                        <section className="theme-primary shadow-sm full-screen">
+                            <NavBar/>
+                        </section>
+                    </Col>
+                    <Col xs="12" lg="10" className="px-0">
+                        <main className="d-flex flex-column full-screen">
+                            <Alerts />
+                            <section className="d-flex justify-content-center align-items-center">
+                            <Switch>
+                                <Route exact path="/" component={News} />
+                                <Route path="/news" component={News} />
+                                <Route path="/login" component={Login} />
+                                <Route path="/logout" component={Logout} />
+                                <Route path="/signup" component={SignUp} />
+                                <Route path="/settings" component={Settings} />
+				                <Route path="/addwords" component={AddwordsComponent} />
+                                <Route path="/mywords" component={MywordsComponent} />
+                                <Route path="/learnwords" component={Learnwords} />
+				                <Route path="/wordstrainer" component={WordstrainerComponent} />
+                                <Route path="/about" component={AboutComponent} />
+                                <Route path="/getstarted" component={GetStartedComponent} />
 
-                        </Switch>
-                    </section>
+                            </Switch>
+                            </section>
                     
-                </main>
+                        </main>
+                    </Col>
+                </Row>
             </Col>
         </Row>
         <Row className="d-flex flex-column">

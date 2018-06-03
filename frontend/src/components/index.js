@@ -20,6 +20,8 @@ import {LearnwordsComponent} from './LearnwordsComponent';
 import {WordstrainerComponent} from './WordstrainerComponent';
 import {WordstrainerTypeComponent} from './WordstrainerTypeComponent';
 import {WordstrainerMatchComponent} from './WordstrainerMatchComponent';
+import {AboutComponent} from './AboutComponent';
+import {GetStartedComponent} from './GetStartedComponent';
 
 
 export {
@@ -44,5 +46,7 @@ export {
     LearnwordsComponent,
 	WordstrainerComponent,
 	WordstrainerTypeComponent,
-    WordstrainerMatchComponent
+    WordstrainerMatchComponent,
+    AboutComponent,
+    GetStartedComponent
 };
