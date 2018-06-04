@@ -10,7 +10,7 @@ export const NavItemComponent = ({src="#", link="#", text="No text", visible=tru
                 <img className="align-self-center link-img" src={src} alt="img" />
                 <div className="media-body align-self-center">
                     <NavLink className="link p-1" tag={Link} to={link}>
-						<h4 className="m-0 p-0">{text}</h4>
+						<h5 className="m-0 p-0">{text}</h5>
 					</NavLink>
                 </div>
         	</NavItem>);

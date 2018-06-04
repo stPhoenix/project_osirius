@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap';
+import { Card, CardTitle, CardText, CardSubtitle, CardBody, CardColumns } from 'reactstrap';
 
 
 export const NewsComponent = (props) => {
-    return(<CardDeck className="px-2 align-self-start">
+    return(<CardColumns>
                 {props.articles.map((article, index) => {
                 return (<Card key={index} className="shadow-sm">
                             <CardBody>
@@ -13,5 +13,5 @@ export const NewsComponent = (props) => {
                             </CardBody>
                         </Card>)
             })}
-           </CardDeck>);
+           </CardColumns>);
 };
