@@ -1,12 +1,13 @@
 import React from 'react';
 import './AppComponent.css';
 import { UncontrolledTooltip } from 'reactstrap';
-import {SettingsModalComponent} from '../components';
+import {SettingsModalComponent, ContentComponent} from '../components';
 
 
 export const SettingsComponent = (props) => {
 	return	(
-	        <form className="col-10 d-flex flex-column h-100 mb-4" >
+        <ContentComponent>
+	        <form className="col-12 col-md-8 col-lg-6 d-flex flex-column h-100 mb-4" >
             <div className="m-2 form-group">
                 <label htmlFor="username">Change username</label>
                 <input className="custom-form-control" type="text" name="username" id="username" placeholder="Username" onChange={props.handleChange} value={props.username} />
@@ -47,5 +48,6 @@ export const SettingsComponent = (props) => {
                                     modal={props.modal}
 									handleChange={props.handleChange}/>
 		</form>
+    </ContentComponent>
 	);
 };
