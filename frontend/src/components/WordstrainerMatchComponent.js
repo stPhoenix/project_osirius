@@ -7,7 +7,7 @@ export const WordstrainerMatchComponent = (props) => {
 	return (
 		<ContentComponent>
 			<h3>{props.question}</h3>
-			<div className="w-100 form-group">
+			<div className="col-12 col-lg-8 form-group">
 				<label htmlFor="answer_set">Choose answer</label>
 				<div className="list-group" id="answer_set">
                     {props.words.map((word) => {

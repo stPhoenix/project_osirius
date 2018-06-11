@@ -285,8 +285,8 @@ export const result_play_typing = (reverse, word_pk, answer, token) => {
 
 export const search_word = (word, token) => {
     return {result: true, message:"all ok", data:{
-    "global_word_search": true,
-    "google_translate_search": false,
+    "global_word_search": false,
+    "google_translate_search": true,
     "words": [
         {
             "id": 8,

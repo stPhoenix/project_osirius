@@ -17,7 +17,7 @@ export const AddwordsComponent = ({location}) => {
 	};
 	return(
     <ContentComponent>
-            <section className="d-flex flex-column flex-lg-row align-items-center justify-content-center">
+            <section className="d-flex flex-column align-items-center justify-content-center">
 		      <div className="d-flex flex-column align-items-center justify-content-center">
                 <img src={typing} alt="typing" style={{height:'7rem', width:'auto'}} />
 		        <h4 className="opacity-50 text-center px-2 mb-4 mt-0">Type word. System will search word in database or in the internet.</h4>

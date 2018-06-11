@@ -25,12 +25,12 @@ export const AppComponent = () => {
             </Col>
             <Col xs="12" >
                 <Row className="flex-column flex-lg-row">
-                    <Col xs="12" lg="2" className="px-0" style={{zIndex:1}}>
+                    <Col xs="12" lg="3" className="px-0" style={{zIndex:1}}>
                         <section className="theme-primary shadow-sm full-screen">
                             <NavBar/>
                         </section>
                     </Col>
-                    <Col xs="12" lg="10" className="px-0">
+                    <Col xs="12" lg="9" className="px-0">
                         <main className="d-flex flex-column full-screen">
                             <Alerts />
                             <section className="d-flex justify-content-center align-items-center">
