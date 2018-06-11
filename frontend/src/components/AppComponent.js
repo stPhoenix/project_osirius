@@ -26,7 +26,7 @@ export const AppComponent = () => {
             <Col xs="12" >
                 <Row className="flex-column flex-lg-row">
                     <Col xs="12" lg="3" className="px-0" style={{zIndex:1}}>
-                        <section className="theme-primary shadow-sm full-screen">
+                        <section className="theme-primary shadow-sm full-screen h-100">
                             <NavBar/>
                         </section>
                     </Col>
