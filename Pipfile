@@ -22,3 +22,4 @@ django-rest-auth = {extras = ["with-social"]}
 django-allauth = "*"
 "psycopg2-binary" = "*"
 coreapi = "*"
+django-webpack-loader = "*"

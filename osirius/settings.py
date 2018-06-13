@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
+    'webpack_loader',
+    'web.apps.WebConfig',
 ]
 
 SITE_ID = 1
@@ -187,3 +189,17 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 # All auth config
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# Webpack loader
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend/build'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'static/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
+    }
+}
