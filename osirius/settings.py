@@ -191,15 +191,15 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 # Webpack loader
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'frontend/build'),
+    os.path.join(BASE_DIR, 'frontend'),
 )
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'static/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
+        'BUNDLE_DIR_NAME': 'build/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/build/webpack-stats.json'),
     }
 }
