@@ -1,2 +1,2 @@
-web: python manage.py runserver
+web: gunicorn osirius.wsgi --log-file -
 worker: python manage.py runtelegrambot
