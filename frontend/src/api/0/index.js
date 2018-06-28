@@ -1,11 +1,23 @@
-export const get_news = () => {
-    const news = [{title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
-                 {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
-                 {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
-                 {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
-                 {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."},
-                 {title: "title", pub_date:"1.1.1111", text:"If the URL is /about, then <About>, <User>, and <NoMatch> will all render because they all match the path. This is by design, allowing us to compose <Route>s into our apps in many ways, like sidebars and breadcrumbs, bootstrap tabs, etc."}];
-    return {result:true, message:"All ok", data:news};  
+import axios from 'axios';
+
+
+//const backend_url = process.env.REACT_APP_BACKEND_URL;
+axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
+
+export get_news = async () => {
+    let api_response = {result: false, message: "Bad", data: []};
+    
+    await axios.get("/news/")
+        .then((response) => {
+        api_response.result = response.status === 200;
+        api_response.message = response.statusText;
+        api_response.data = response.data;
+    })
+        .catch(error => {
+        api_response.result = false;
+        api_response.message = error.statusText;
+    });
+    return api_response;
 };
 
 export const login = (username, password) => {

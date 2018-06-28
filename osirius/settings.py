@@ -53,11 +53,13 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'webpack_loader',
     'web.apps.WebConfig',
+    'corsheaders',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -210,3 +212,6 @@ WEBPACK_LOADER = {
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# To allow requests from different ip
+CORS_ORIGIN_ALLOW_ALL = True

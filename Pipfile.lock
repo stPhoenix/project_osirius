@@ -1,13 +1,13 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fcd55a99a2c37776f6a32bb36fe4da528dc66347445886cf5d0810845c0a7dd8"
+            "sha256": "b5d0f03da71ee8dadc578034dc8538cdba6845b0c0f4a8ba860da700d2d6a51f"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
             "implementation_version": "3.6.4",
             "os_name": "nt",
-            "platform_machine": "AMD64",
+            "platform_machine": "x86",
             "platform_python_implementation": "CPython",
             "platform_release": "10",
             "platform_system": "Windows",
@@ -81,6 +81,13 @@
                 "sha256:7d9646e3560279d6294ebb4c361fef829708d106da697658cf158bf2ca57b474"
             ],
             "version": "==0.36.0"
+        },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:0e9532628b3aa8806442d4d0b15e56112e6cfbef3735e13401935c98b842a2b4",
+                "sha256:c7ec4816ec49416517b84f317499d1519db62125471922ab78d670474ed9b987"
+            ],
+            "version": "==2.2.0"
         },
         "django-rest-auth": {
             "hashes": [
