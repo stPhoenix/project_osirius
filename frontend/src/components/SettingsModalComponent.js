@@ -19,6 +19,10 @@ export const SettingsModalComponent = (props) => {
                                     <label htmlFor="password2">Repeat password</label>
                                     <input className="custom-form-control" type="password" name="password2" id="password2" placeholder="Password" onChange={props.handleChange} value={props.password2} />
                                 </div>
+                                <div className="m-2 form-group">
+                                    <label htmlFor="password">Old password</label>
+                                    <input className="custom-form-control" type="password" name="password" id="password" placeholder="Password" onChange={props.handleChange} value={props.password} />
+                                </div>
                             </form>
                         
                         <button className="btn btn-link align-self-end" onClick={props.change_password}>Change</button>

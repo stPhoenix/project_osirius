@@ -20,7 +20,8 @@ class Settings extends Component {
             temp_language: "",
             modal: false,
             password1: "",
-            password2: ""
+            password2: "",
+            password: "",
 		};
 		this.dispatch = this.props.dispatch;
         this.token = this.props.auth.token;
@@ -34,12 +35,14 @@ class Settings extends Component {
 	};
 	
 	componentDidMount(){
-		const request = get_langs();
-		if (request.result === true){
-			this.setState({langs: request.data});
-		} else {
-			this.dispatch(add_alert({color: "danger", text: request.message}));
+		get_langs()
+        .then(api_response => {
+		  if (api_response.result === true){
+			 this.setState({langs: api_response.data});
+		  } else {
+			 this.dispatch(add_alert({color: "danger", text: api_response.message}));
 		}
+        });
 	};
 	
 	handleChange(e){
@@ -49,26 +52,35 @@ class Settings extends Component {
 	save(e){
 		e.preventDefault();
 		this.dispatch(add_alert());
-		const request = update_user(this.state, this.token);
-		let color = "primary";
-		if (request.result === true){
-			color = "success";
-			this.dispatch(login(request.data.token, request.data.user));
-		} else {
-			color = "danger";
-		}
-		this.dispatch(add_alert({color:color, text:request.message}));
+		update_user({username: this.state.username,
+                     email: this.state.email,
+                     first_name: this.state.first_name,
+                     language_set: this.state.language_set,
+                     current_language: this.state.current_language}
+                    , this.token)
+        .then(api_response => {
+            let color = "primary";
+            if (api_response.result === true){
+                color = "success";
+                this.dispatch(login(api_response.data.token, api_response.data.user));
+            } else {
+                color = "danger";
+            }
+            this.dispatch(add_alert({color:color, text:api_response.message}));  
+        });
 	};
     
     change_password(e) {
 		e.preventDefault();
 		this.setState({modal:false});
 	  	this.dispatch(add_alert());
-		const request = change_password(this.state.password1, this.state.password2, this.token);
-		let color = "primary";
-		color = (request.result === true) ? "success" : color = "danger";
-		this.dispatch(add_alert({color:color, text:request.message}));
-		
+		change_password(this.state.password1, this.state.password2, this.token)
+            .then(api_response => {
+                let color = "primary";
+		        color = (api_response.result === true) ? "success" : "danger";
+		        this.dispatch(add_alert({color:color, text:api_response.message}));
+
+        });		
     };
 
     delete_language(e) {

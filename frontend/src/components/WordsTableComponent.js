@@ -1,5 +1,4 @@
 import React from 'react';
-import {Card, CardBody, CardText} from 'reactstrap';
 import "./AppComponent.css";
 
 

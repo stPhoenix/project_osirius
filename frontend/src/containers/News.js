@@ -10,11 +10,10 @@ export default class News extends Component{
     }
     
     componentDidMount(){
-        this.fetch_news();
+        get_news().then(api_response => (this.fetch_news(api_response)));
     };
     
-    fetch_news(){
-        const news = get_news();
+    fetch_news(news){
         if (news.result === true){
             this.setState({articles: news.data});
         }

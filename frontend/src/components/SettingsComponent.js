@@ -45,6 +45,7 @@ export const SettingsComponent = (props) => {
                                     toggle_modal={props.toggle_modal}
                                     password1={props.password1}
                                     password2={props.password2}
+                                    password={props.password}
                                     modal={props.modal}
 									handleChange={props.handleChange}/>
 		</form>

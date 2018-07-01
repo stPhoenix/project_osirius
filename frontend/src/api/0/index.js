@@ -1,74 +1,93 @@
 import axios from 'axios';
 
+//export const get_langs = async () => {
+//    let api_response = {result: false, message: "Bad", data: []};
+//    await axios.get("/langs/", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
+//    .then((response) => (response_handler(api_response, response)))
+//    .catch((error) => (error_handler(api_response, error)));
+//    return api_response;
+//};
 
 //const backend_url = process.env.REACT_APP_BACKEND_URL;
 axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
 
-export get_news = async () => {
+const error_handler = (api_response, error) => {
+    console.log(error.response);
+        api_response.result = false;
+        api_response.message = JSON.stringify(error.response.data).replace("\"", "").replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace("'", "");
+    };
+
+const response_handler = (api_response, response) => {
+    console.log(response);
+    api_response.result = true;
+    api_response.message = response.statusText;
+    api_response.data = response.data;
+};
+
+export const get_news = async () => {
     let api_response = {result: false, message: "Bad", data: []};
     
     await axios.get("/news/")
-        .then((response) => {
-        api_response.result = response.status === 200;
-        api_response.message = response.statusText;
-        api_response.data = response.data;
-    })
-        .catch(error => {
-        api_response.result = false;
-        api_response.message = error.statusText;
-    });
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
     return api_response;
 };
 
-export const login = (username, password) => {
-    console.log("api called");
-    const data = {user:get_user("1221dasd123aqsdas").data, token:"1221dasd123aqsdas"};
-    return {result:true, data, message:"All ok"};
+export const login = async (username, password) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/auth/login/",{
+        username: username,
+        password: password,
+    }).then((response) => (response_handler(api_response, response)))
+      .catch((error) => (error_handler(api_response, error)));
+    await get_user(api_response.data.key)
+        .then(user => {
+        api_response.data = {...api_response.data, user};
+                })
+    return api_response;
 };
 
-export const logout = (token) => {
-    return {result:true, message:"All ok"};
+export const logout = async (token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/auth/logout/", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const sign_up = (username, email, password, learn_language, home_language, first_name) => {
-    const data = {user:get_user("1221dasd123aqsdas").data, token:"1221dasd123aqsdas"};
-	return {result:true, message:"All ok", data};
+export const sign_up = async (props) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/auth/register", {...props})
+    .then((response) => (response_handler(api_response, response)))
+    .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const change_password = (password1, password2, token) => {
-    return {result:true, message:"All ok"};
+export const change_password = async (password1, password2, password, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/auth/password/change/", {headers:{AUTHORIZATION:`TOKEN ${token}`},
+                                              new_password1: password1,
+                                              new_password2: password2,
+                                              old_password: password})
+    .then((response) => (response_handler(api_response, response)))
+    .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const get_user = (token) => {
-    return {result:true, message:"All ok", data:{
-    "pk": 5,
-    "username": "bohdan",
-    "email": "bohdan@mail.com",
-    "first_name": "Bohdan",
-    "language_set": [
-        {
-            "name": "Japanese",
-            "slug": "ja"
-        },
-        {
-        "name": "Afrikaans",
-        "slug": "af"
-        },
-        {
-        "name": "Albanian",
-        "slug": "sq"
-        },
-        {
-        "name": "Arabic",
-        "slug": "ar"
-        }
-    ],
-    "current_language": "Japanese"
-    }}
+export const get_user = async (token) => {
+    let user;
+    await axios.get("/auth/user", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
+        .then(response => (user=response.data))
+        .catch(error => (error_handler(user, error)));
+    return user;
 };
 
-export const update_user = (user, token) => { 
-    return {result:true, message:"All ok", data:{user, token}};
+export const update_user = async (user, token) => { 
+   let api_response;
+    await axios.put("/auth/user", {headers:{AUTHORIZATION:`TOKEN ${token}`},...user})
+        .then(response => (response_handler(api_response, response)))
+        .catch(error => (error_handler(api_response, error)));
+    return api_response;
 };
 
 export const add_custom_word = (word, token) => {
@@ -114,23 +133,12 @@ export const get_words_by_cat = (cat_id, token) => {
     }]}; 
 };
 
-export const get_langs = (token) => {
-    return {result:true, message:"All ok", data:[{
-        "name": "Afrikaans",
-        "slug": "af"
-    },
-    {
-        "name": "Albanian",
-        "slug": "sq"
-    },
-    {
-        "name": "Arabic",
-        "slug": "ar"
-    },
-    {
-        "name": "Belarusian",
-        "slug": "be"
-    }]};
+export const get_langs = async () => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/langs/")
+    .then((response) => (response_handler(api_response, response)))
+    .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
 export const get_learn_word = (token) => {

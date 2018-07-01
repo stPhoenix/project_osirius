@@ -12,7 +12,7 @@ class Login extends Component{
         super(props);
         this.state = {
             username: "",
-            passowrd: ""
+            password: ""
         };
         this.login = this.login.bind(this);
         this.dispatch = this.props.dispatch;
@@ -26,22 +26,24 @@ class Login extends Component{
     login(e){
         e.preventDefault();
         this.dispatch(add_alert());
-        const auth = apiLogin(this.state.username, this.state.password);
-        if (auth.result) {
-            this.dispatch(add_alert({color:"success", "text": auth.message}));
-            this.dispatch(login(auth.data.token, auth.data.user));
-        }
-        else{
-           this.dispatch(add_alert({color:"danger", "text": auth.message})); 
-        }
-        
+        apiLogin(this.state.username, this.state.password)
+            .then(api_response => {
+                if (api_response.result) {
+                    this.dispatch(add_alert({color:"success", "text": api_response.message}));
+                    this.dispatch(login(api_response.data.key, api_response.data.user));
+                }
+                else{
+                    this.dispatch(add_alert({color:"danger", "text": api_response.message})); 
+                }
+
+        });        
     };
     
 	render(){
         if(this.props.isAuthenticated){
             return <Redirect to="/" />
         }
-		return(<LoginComponent click={this.login} username={this.state.username} passowrd={this.state.password} />);
+		return(<LoginComponent click={this.login} username={this.state.username} passowrd={this.state.password} onChange={this.onChange} />);
 	};
 }
 

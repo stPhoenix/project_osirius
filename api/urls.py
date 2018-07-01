@@ -16,6 +16,8 @@ Including another URLconf
 from django.urls import path, include
 urlpatterns = [
     path('auth/', include('rest_auth.urls')),
-    path('auth/registration', include('rest_auth.registration.urls')),
-    path('v0/', include('api.v0.urls'))
+    path('auth/register', include('rest_auth.registration.urls')),
+    path('v0/', include('api.v0.urls')),
+    path('v0/auth/', include('rest_auth.urls')),
+    path('v0/auth/register', include('rest_auth.registration.urls')),
 ]

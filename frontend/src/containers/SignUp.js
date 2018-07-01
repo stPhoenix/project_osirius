@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {add_alert} from '../actions/alert';
-import {sign_up, get_langs} from '../api';
+import {sign_up, get_langs, get_user} from '../api';
 import {login} from '../actions/auth';
 import {Redirect} from 'react-router';
 import {SignUpComponent} from '../components';
@@ -15,7 +15,7 @@ class SignUp extends Component {
 			password1:"",
 			password2:"",
 			email:"",
-			first_name:"",
+			first_name:"Noname",
 			home_language:"",
 			current_language:"",
 			langs:[]
@@ -26,31 +26,36 @@ class SignUp extends Component {
 	};
 	
 	componentDidMount(){
-		const request = get_langs();
-		if (request.result === true){
-			this.setState({langs: request.data});
-		} else {
-			this.dispatch(add_alert({color: "danger", text: request.message}));
-		}
+		get_langs()
+            .then(api_response => {
+                if (api_response.result === true){
+                    this.setState({langs: api_response.data});
+		      } else {
+                  this.dispatch(add_alert({color: "danger", text: api_response.message}));
+		      }
+        });
 	};
 	
 	handleChange(e){
 		this.setState({[e.target.name]:e.target.value});
-		console.log(this.state);
 	};
 	
 	register(e){
 		e.preventDefault();
 		this.dispatch(add_alert());
-		const request = sign_up(...this.state);
-		let color = "primary"
-		if (request.result === true){
-			color = "success";
-			this.dispatch(login(...request.data));
-		} else {
-			color = "danger";
-		}
-		this.dispatch(add_alert({color:color, text:request.message}));
+		sign_up(this.state)
+            .then(api_response => {
+                let color = "primary"
+		      if (api_response.result === true){
+                    color = "success";
+                    get_user(api_response.data.key)
+                        .then(user => {
+                            this.dispatch(login(api_response.data.key, user)); });
+		      } else {
+                    color = "danger";
+                }
+                this.dispatch(add_alert({color:color, text:api_response.message}));
+});
 	};
 	
 	render(){

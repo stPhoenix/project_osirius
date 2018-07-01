@@ -30,7 +30,7 @@ class WordstrainerMatch extends Component {
 		e.preventDefault();
 		this.dispatch(add_alert());
 		const right_answer = this.state.answer.id;
-		const user_answer = parseInt(e.target.name);
+		const user_answer = parseInt(e.target.name, 10);
 		const result = right_answer === user_answer;
 		if (result) {
 			this.dispatch(add_alert({color: "success", text: "Right"}));

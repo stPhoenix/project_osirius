@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardSubtitle, CardBody, CardColumns } from 'reactstrap';
+import { Card, CardTitle, CardText, CardSubtitle, CardBody} from 'reactstrap';
 import {ContentComponent} from '../components';
 
 
@@ -11,7 +11,7 @@ export const NewsComponent = (props) => {
                         <Card className="shadow-sm rounded-0">
                             <CardBody>
                                 <CardTitle>{article.title}</CardTitle>
-                                <CardSubtitle>{article.pub_date}</CardSubtitle>
+                                <CardSubtitle>{new Date(article.pub_date).toLocaleString()}</CardSubtitle>
                                 <CardText>{article.text}</CardText>
                             </CardBody>
                         </Card>

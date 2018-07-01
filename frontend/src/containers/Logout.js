@@ -15,13 +15,15 @@ class Logout extends Component {
     
     componentDidMount(){
         this.dispatch(add_alert());
-        const l = logout(this.token);
-        if (l.result === true){
-            this.dispatch(add_alert({color:"success", text:"Success"}))
-            this.dispatch(logout_action());
-        } else {
-            this.dispatch(add_alert({color:"danger", text:"Something went wrong"}))
-        }
+        logout(this.token)
+            .then(api_response => {
+                 if (api_response.result === true){
+                    this.dispatch(add_alert({color:"success", text:api_response.message}))
+                    this.dispatch(logout_action());
+                } else {
+                    this.dispatch(add_alert({color:"danger", text:api_response.message}))
+                }
+            });
     };
     
     render(){

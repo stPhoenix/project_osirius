@@ -1,6 +1,6 @@
 import React from 'react';
 import './AppComponent.css';
-import {CardColumns, Card, CardBody, CardText} from 'reactstrap';
+import {Card, CardBody, CardText} from 'reactstrap';
 import {AddwordsTypeModalComponent, ContentComponent} from '../components';
 
 
