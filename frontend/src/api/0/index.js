@@ -83,8 +83,9 @@ export const get_user = async (token) => {
 };
 
 export const update_user = async (user, token) => { 
-   let api_response;
-    await axios.put("/auth/user", {headers:{AUTHORIZATION:`TOKEN ${token}`},...user})
+    let api_response = {result: false, message: "Bad", data: []};
+    let headers = {AUTHORIZATION:`TOKEN ${token}`};
+    await axios.put("/auth/user/", {headers, ...user})
         .then(response => (response_handler(api_response, response)))
         .catch(error => (error_handler(api_response, error)));
     return api_response;

@@ -128,3 +128,24 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = ('pk', 'username', 'email', 'first_name', 'language_set', 'current_language')
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.first = validated_data.get('first_name', instance.first_name)
+        instance.home_language = validated_data.get('home_language', instance.home_language)
+        instance.current_language = validated_data.get('current_language', instance.current_language)
+        instance.save()
+        recieved_langs = [l['name'] for l in validated_data.get('language_set')]
+        old_langs = [l.name for l in instance.language_set.all()]
+        delete_langs = set(old_langs).difference(recieved_langs)
+        add_langs = set(recieved_langs).difference(old_langs)
+        for lang in delete_langs:
+            del_lang = Language.objects.get(name=lang)
+            del_lang.students.delete(instance)
+
+        for lang in add_langs:
+            add_lang = Language.objects.get(name=lang)
+            add_lang.students.add(instance)
+
+        return instance
