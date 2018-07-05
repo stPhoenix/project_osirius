@@ -15,7 +15,7 @@ export const AddwordsTypeComponent = (props) => {
                             <CardText className="text-center">
                                 <br />{word.name}
                                 <br />{word.pronunciation}
-                                <br />Category: [{word.category_set.map(category => (category.name+" "))}]
+                                <br />Category: [{word.category}]
                                 <br />{word.translation}
                             </CardText>
                             <button name={word.id} className="btn btn-link align-self-end" onClick={props.add_global}>Add</button>
@@ -33,7 +33,7 @@ export const AddwordsTypeComponent = (props) => {
                                 <br />{word.pronunciation}
                                 <br />{word.translation}
                             </CardText>
-                        <button className="btn btn-link align-self-end" onClick={(e) => {props.choose_category(word.name, word.pronuciation, word.translation)}}>Add</button>
+                        <button className="btn btn-link align-self-end" onClick={(e) => {props.choose_category(word.name, word.pronunciation, word.translation)}}>Add</button>
                         </CardBody>
                     </Card>
                 </div>  );

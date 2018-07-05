@@ -23,12 +23,14 @@ class MywordsLearned extends Component {
     
     componentDidMount(){
 		this.dispatch(add_alert());
-        const request = get_learned_words(this.token);
-        if (request.result){
-            this.setState({words: request.data});
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        get_learned_words(this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    this.setState({words: api_response.data});
+                }else{
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));   
+                } 
+        });
     };
 	
 	handleCheck(e) {

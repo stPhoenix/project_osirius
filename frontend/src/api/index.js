@@ -20,7 +20,8 @@ import {
     search_word,
     get_user_words,
     learn_again_word,
-    get_learned_words
+    get_learned_words,
+    delete_word,
 } from './0';
 
 export {
@@ -45,5 +46,6 @@ export {
     search_word,
     get_user_words,
     learn_again_word,
-    get_learned_words
+    get_learned_words,
+    delete_word,
 };

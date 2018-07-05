@@ -59,7 +59,7 @@ class CustomWordAdd(LinguistInitializer, APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
-        serializer = CustomWordSerializer(request.data)
+        serializer = CustomWordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         word = serializer.save()
         category = Category.objects.get(name=word.category)
@@ -87,14 +87,17 @@ class UserWords(LinguistInitializer, ModelViewSet):
     def create(self, request, *args, **kwargs):
         return Response({'message': 'you can not create words from here'}, status=status.HTTP_403_FORBIDDEN)
 
+    def destroy(self, request, *args, **kwargs):
+        word = self.get_object()
+        self.linguist.delete_word(word)
+        return Response({'message': 'word deleted'}, status=status.HTTP_200_OK)
+
     def get_queryset(self):
         return self.linguist.get_words()
 
     @action(detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
     def learned(self, request):
-        student = request.user
-        linguist = LinguistHQ(student)
-        words = linguist.get_all_learned_words()
+        words = self.linguist.get_all_learned_words()
         page = self.paginate_queryset(words)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -103,12 +106,10 @@ class UserWords(LinguistInitializer, ModelViewSet):
         serializer = self.get_serializer(words, many=True)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=False, permission_classes=(IsAuthenticated, ))
+    @action(methods=['post'], detail=False, permission_classes=(IsAuthenticated,IsOwnerOrReadOnly ))
     def learn_again(self, request):
-        student = request.user
-        linguist = LinguistHQ(student)
-        word = get_object_or_404(self.get_queryset(), pk=request.data['pk'])
-        linguist.learn_again(word)
+        word = self.get_object()
+        self.linguist.learn_again(word)
         return Response(status=status.HTTP_202_ACCEPTED)
 
 

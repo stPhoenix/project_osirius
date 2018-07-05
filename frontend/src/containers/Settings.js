@@ -74,7 +74,7 @@ class Settings extends Component {
 		e.preventDefault();
 		this.setState({modal:false});
 	  	this.dispatch(add_alert());
-		change_password(this.state.password1, this.state.password2, this.token)
+		change_password(this.state.password1, this.state.password2, this.state.password, this.token)
             .then(api_response => {
                 let color = "primary";
 		        color = (api_response.result === true) ? "success" : "danger";

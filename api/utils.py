@@ -23,9 +23,9 @@ class SearchWordResult:
         self.global_word_search = global_word_search
         self.google_translate_search = google_translate_search
         if isinstance(words, Translated):
-            self.words = [{'name': words.origin, 'text': words.text, 'pronunciation': words.pronunciation}]
+            self.words = [{'name': words.origin, 'translation': words.text, 'pronunciation': words.pronunciation}]
         else:
-            self.words = [{'id': word.pk, 'name': word.name, 'translation': word.translation} for word in words]
+            self.words = [{'id': word.pk, 'name': word.name, 'translation': word.translation, 'category': word.category_set.all()[0].name} for word in words]
 
 
 class Play:

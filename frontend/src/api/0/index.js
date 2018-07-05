@@ -65,10 +65,10 @@ export const sign_up = async (props) => {
 
 export const change_password = async (password1, password2, password, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get("/auth/password/change/", {headers:{AUTHORIZATION:`TOKEN ${token}`},
-                                              new_password1: password1,
-                                              new_password2: password2,
-                                              old_password: password})
+    await axios.post("/auth/password/change/", {new_password1: password1,
+                                               new_password2: password2,
+                                               old_password: password},
+                                              {headers:{AUTHORIZATION:`TOKEN ${token}`}})
     .then((response) => (response_handler(api_response, response)))
     .catch((error) => (error_handler(api_response, error)));
     return api_response;
@@ -84,54 +84,42 @@ export const get_user = async (token) => {
 
 export const update_user = async (user, token) => { 
     let api_response = {result: false, message: "Bad", data: []};
-    let headers = {AUTHORIZATION:`TOKEN ${token}`};
-    await axios.put("/auth/user/", {headers, ...user})
+    await axios.put("/auth/user/",{...user},{headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then(response => (response_handler(api_response, response)))
         .catch(error => (error_handler(api_response, error)));
     return api_response;
 };
 
-export const add_custom_word = (word, token) => {
-    return {result:true, message:"All ok"};
+export const add_custom_word = async (word, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/add/custom/",{...word},{headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then(response => (response_handler(api_response, response)))
+        .catch(error => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const add_global_word = (word, token) => {
-    return {result:true, message:"All ok"};
+export const add_global_word = async (word, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/add/global/",{pk:word},{headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then(response => (response_handler(api_response, response)))
+        .catch(error => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const get_cats = (token) => {
-  return {result:true, message:"All ok", data:[{"pk": 1, "name": "Default"}, {"pk": 2, "name": "Greetings"}, {"pk": 3, "name": "New Friends"}]};  
+export const get_cats = async (token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/cats/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response; 
 };
 
-export const get_words_by_cat = (cat_id, token) => {
-  return {result:true, message:"All ok", data:[
-      {
-        "id": 1,
-        "name": "あいさつ",
-        "translation": "Greetings",
-        "pronunciation": "Aisatsu",
-        "language": 29,
-        "translate_language": 13,
-        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}]
-    },
-    {
-        "id": 2,
-        "name": "おはよう",
-        "translation": "good morning",
-        "pronunciation": "Ohayō",
-        "language": 29,
-        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-        "translate_language": 13
-    },
-    {
-        "id": 3,
-        "name": "おはよう　ございます",
-        "translation": "good morning polite",
-        "pronunciation": "Ohayōgozaimasu",
-        "language": 29,
-        "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-        "translate_language": 13
-    }]}; 
+export const get_words_by_cat = async (cat_id, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get(`/cats/${cat_id}/words`, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response; 
 };
 
 export const get_langs = async () => {
@@ -304,131 +292,39 @@ export const result_play_typing = (reverse, word_pk, answer, token) => {
   return {result:true, message:"All ok"};  
 };
 
-export const search_word = (word, token) => {
-    return {result: true, message:"all ok", data:{
-    "global_word_search": false,
-    "google_translate_search": true,
-    "words": [
-        {
-            "id": 8,
-            "name": "ありがとう",
-            "translation": "Thank you",
-            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-            "pronunciation": "Arigatoo"
-        },
-        
-        {
-            "id": 8,
-            "name": "ありがとう",
-            "translation": "Thank you",
-            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-            "pronunciation": "Arigatoo"
-        },
-        
-        {
-            "id": 8,
-            "name": "ありがとう",
-            "translation": "Thank you",
-            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-            "pronunciation": "Arigatoo"
-        },
-        
-        {
-            "id": 8,
-            "name": "ありがとう",
-            "translation": "Thank you",
-            "category_set": [{name:"Greetings"}, {name:"Friends"}, {name:"Blablabla"}],
-            "pronunciation": "Arigatoo"
-        }
-    ]
-}};
+export const search_word = async (word, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/search/word/",{word},{headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then(response => (response_handler(api_response, response)))
+        .catch(error => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const get_user_words = (token) => {
-    return {result: true, message:"all ok", data:[
-    {
-        "id": 1,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "あいさつ",
-        "translation": "Greetings",
-        "pronunciation": "Aisatsu",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5,
-    }, {
-        "id": 3,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "おはよう　ございます",
-        "translation": "good morning polite",
-        "pronunciation": "Ohayōgozaimasu",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5,
-    }]
-           };
+export const get_user_words = async (token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/user/words/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;   
 };
+
+export const delete_word = async (word_pk, token) => {
+    console.log(token);
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.delete(`/user/words/${word_pk}`, {"pk": word_pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
+}
 
 export const learn_again_word = (pk, token) => {
     return {result:true, message:"All ok"};
 };
 
-export const get_learned_words = (token) => {
-     return {result: true, message:"all ok", data:[
-    {
-        "id": 1,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "あいさつ",
-        "translation": "Greetings",
-        "pronunciation": "Aisatsu",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5
-    },
-    {
-        "id": 3,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "おはよう　ございます",
-        "translation": "good morning polite",
-        "pronunciation": "Ohayōgozaimasu",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5
-    }]
-           };
+export const get_learned_words = async (token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/user/words/learned", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };

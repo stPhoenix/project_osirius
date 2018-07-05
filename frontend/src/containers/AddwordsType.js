@@ -34,17 +34,19 @@ class AddwordsType extends Component {
     };
     
     choose_category(name, pronunciation, translation) {
-        const request = get_cats(this.token);
-        if (request.result){
-            this.setState({cats:request.data});
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));
-        }
-        this.setState({modal:true, custom_word: {
-            name,
-            pronunciation,
-            translation
-        }});
+        get_cats(this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    this.setState({cats:api_response.data});
+                }else{
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                }    
+                this.setState({modal:true, custom_word: {
+                                                            word_name: name,
+                                                            pronunciation,
+                                                            translation,
+                }});
+        });
     };
     
     handleChange(e) {
@@ -56,28 +58,34 @@ class AddwordsType extends Component {
         this.setState({modal: false});
         const word = {...this.state.custom_word, category:this.state.category};
         this.dispatch(add_alert());
-        const request = add_custom_word(word, this.token);
-        const color = (request.result) ? "success" : "danger";
-        this.dispatch(add_alert({color, text:request.message}));
+        add_custom_word(word, this.token)
+            .then(api_response => {
+                const color = (api_response.result) ? "success" : "danger";
+                this.dispatch(add_alert({color, text:api_response.message}));
+        });
     };
     
     add_global(e) {
         e.preventDefault();
         this.dispatch(add_alert());
-        const request = add_global_word(e.target.name, this.token);
-        const color = (request.result) ? "success" : "danger";
-        this.dispatch(add_alert({color, text:request.message}));
+        add_global_word(e.target.name, this.token)
+            .then(api_response => {
+                const color = (api_response.result) ? "success" : "danger";
+                this.dispatch(add_alert({color, text:api_response.message})); 
+        });
     };
     
     search(e) {
         e.preventDefault();
         this.dispatch(add_alert());
-        const request = search_word(this.state.search_word, this.token);
-        if (request.result) {
-            this.setState({...request.data});
-        }else{
-         this.dispatch(add_alert({color:"danger", text:request.message}));   
-        }
+        search_word(this.state.search_word, this.token)
+            .then(api_response => {
+                if (api_response.result) {
+                    this.setState({...api_response.data});
+                }else{
+                    this.dispatch(add_alert({color:"danger", text:api_response.message}));   
+                }
+        });
     };
     
     render(){

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
-import {get_user_words} from '../api';
+import {get_user_words, delete_word as api_delete_word} from '../api';
 import {MywordsAllComponent} from '../components';
 
 
@@ -23,12 +23,14 @@ class MywordsAll extends Component {
     
     componentDidMount(){
 		this.dispatch(add_alert());
-        const request = get_user_words(this.token);
-        if (request.result){
-            this.setState({words: request.data});
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        get_user_words(this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    this.setState({words: api_response.data});
+                }else{
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));   
+                } 
+        });
     };
 	
 	handleCheck(e) {
@@ -43,6 +45,15 @@ class MywordsAll extends Component {
     
     delete_word(id) {
         this.dispatch(add_alert());
+        api_delete_word(id, this.token)
+            .then(api_response => {
+                if (api_response.result) {
+                    const words = this.state.words.filter((word) => (parseInt(id, 10) !== word.id));
+                    this.setState({words});
+                }
+                const color = (api_response.result) ? "success" : "danger";
+                this.dispatch(add_alert({color, text: api_response.message}))
+        })
     };
     
     delete_all(e) {

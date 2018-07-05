@@ -45,6 +45,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class GlobalWordSerializer(serializers.ModelSerializer):
+    category_set = CategorySerializer(many=True)
     class Meta:
         model = GlobalWord
         fields = '__all__'
@@ -142,7 +143,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         add_langs = set(recieved_langs).difference(old_langs)
         for lang in delete_langs:
             del_lang = Language.objects.get(name=lang)
-            del_lang.students.delete(instance)
+            del_lang.students.remove(instance)
 
         for lang in add_langs:
             add_lang = Language.objects.get(name=lang)

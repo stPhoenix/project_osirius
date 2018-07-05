@@ -24,20 +24,24 @@ class AddwordsPresets extends Component {
     };
     
     componentDidMount(){
-        const request = get_cats(this.token);
-        if (request.result){
-            this.setState({cats: request.data});
-            const category = request.data.find((category) => (category.name === "Default"));
-            this.dispatch(add_alert());
-            const req = get_words_by_cat(category.id, this.token);
-            if (req.result){
-                this.setState({words: req.data});
+        get_cats(this.token)
+            .then(api_response => {
+            if (api_response.result){
+                this.setState({cats: api_response.data});
+                const category = api_response.data.find((category) => (category.name === "Default"));
+                this.dispatch(add_alert());
+                get_words_by_cat(category.pk, this.token)
+                    .then(api_response2 => {
+                        if (api_response2.result){
+                            this.setState({words: api_response2.data});
+                        }else{
+                            this.dispatch(add_alert({color: "danger", text: api_response2.message}));   
+                        }
+                    });
             }else{
-                    this.dispatch(add_alert({color: "danger", text: req.message}));   
+                this.dispatch(add_alert({color: "danger", text: api_response.message}));   
             }
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        });
     };
     
     handleChange(e){
@@ -45,12 +49,14 @@ class AddwordsPresets extends Component {
         this.setState({words: []});
         const category = this.state.cats.find((category) => (category.name === e.target.value));
         this.dispatch(add_alert());
-        const request = get_words_by_cat(category.id, this.token);
-        if (request.result){
-            this.setState({words: request.data});
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        get_words_by_cat(category.pk, this.token)
+                    .then(api_response2 => {
+                        if (api_response2.result){
+                            this.setState({words: api_response2.data});
+                        }else{
+                            this.dispatch(add_alert({color: "danger", text: api_response2.message}));   
+                        }
+                    });
     };
 	
 	handleCheck(e) {
@@ -66,9 +72,11 @@ class AddwordsPresets extends Component {
     add_global(e) {
         e.preventDefault();
         this.dispatch(add_alert());
-        const request = add_global_word(e.target.name, this.token);
-        const color = (request.result) ? "success" : "danger";
-        this.dispatch(add_alert({color, text:request.message}));
+        add_global_word(e.target.name, this.token)
+            .then(api_response => {
+                const color = (api_response.result) ? "success" : "danger";
+                this.dispatch(add_alert({color, text:api_response.message}));
+        });
     };
     
     add_all(e) {
