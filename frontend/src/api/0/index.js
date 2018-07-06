@@ -8,13 +8,19 @@ import axios from 'axios';
 //    return api_response;
 //};
 
-//const backend_url = process.env.REACT_APP_BACKEND_URL;
-axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
+const backend_url = process.env.REACT_APP_BACKEND_URL;
+//axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
+axios.defaults.baseURL =  backend_url;
+
 
 const error_handler = (api_response, error) => {
-    console.log(error.response);
         api_response.result = false;
-        api_response.message = JSON.stringify(error.response.data).replace("\"", "").replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace("'", "");
+        if (error.response){
+            api_response.message = JSON.stringify(error.response.data).replace("\"", "").replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace("'", "");
+        }else{
+            api_response.message = "Oops! Something went wrong..."
+            console.log(error)
+        }
     };
 
 const response_handler = (api_response, response) => {
