@@ -78,7 +78,7 @@ export const get_user = async (token) => {
     let user;
     await axios.get("/auth/user", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
         .then(response => (user=response.data))
-        .catch(error => (error_handler(user, error)));
+        .catch(error => (user=undefined));
     return user;
 };
 
@@ -125,171 +125,58 @@ export const get_words_by_cat = async (cat_id, token) => {
 export const get_langs = async () => {
     let api_response = {result: false, message: "Bad", data: []};
     await axios.get("/langs/")
-    .then((response) => (response_handler(api_response, response)))
-    .catch((error) => (error_handler(api_response, error)));
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
     return api_response;
 };
 
-export const get_learn_word = (token) => {
-  return {result:true, message:"All ok", data:{
-    "id": 5,
-    "category_set": [
-        {
-            "pk": 2,
-            "name": "Greetings"
-        }
-    ],
-    "name": "こんばんは",
-    "translation": "good evening",
-    "pronunciation": "Konbanwa",
-    "viewed": false,
-    "played_match": false,
-    "played_reversed_match": false,
-    "played_typing": false,
-    "played_reversed_typing": false,
-    "language": 29,
-    "student": 5
-}};  
+export const get_learn_word = async (token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/play/learn/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
+  
 };
 
-export const set_learn_word = (pk, token) => {
-    return {result:true, message:"All ok"};
+export const set_learn_word = async (pk, learned, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/play/learn/", {pk, learned}, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const play_matching = (token) => {
-    return {result:true, message:"All ok", data:{
-    "words": [
-        {
-            "id": 18,
-            "category_set": [
-                {
-                    "pk": 2,
-                    "name": "Greetings"
-                }
-            ],
-            "name": "はじめまして",
-            "translation": "Nice to meet you",
-            "pronunciation": "Hajimemashite",
-            "viewed": false,
-            "played_match": false,
-            "played_reversed_match": false,
-            "played_typing": false,
-            "played_reversed_typing": false,
-            "language": 29,
-            "student": 5
-        },
-        {
-            "id": 14,
-            "category_set": [
-                {
-                    "pk": 2,
-                    "name": "Greetings"
-                }
-            ],
-            "name": "ただいま",
-            "translation": "I'm home",
-            "pronunciation": "Tadaima",
-            "viewed": false,
-            "played_match": false,
-            "played_reversed_match": false,
-            "played_typing": false,
-            "played_reversed_typing": false,
-            "language": 29,
-            "student": 5
-        },
-        {
-            "id": 7,
-            "category_set": [
-                {
-                    "pk": 2,
-                    "name": "Greetings"
-                }
-            ],
-            "name": "おやすみなさい",
-            "translation": "good night",
-            "pronunciation": "Oyasuminasai",
-            "viewed": false,
-            "played_match": false,
-            "played_reversed_match": false,
-            "played_typing": false,
-            "played_reversed_typing": false,
-            "language": 29,
-            "student": 5
-        }
-    ],
-    "answer": {
-        "id": 7,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "おやすみなさい",
-        "translation": "good night",
-        "pronunciation": "Oyasuminasai",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5
-    }
-    }};
+export const play_matching = async (reverse, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/play/matching/", {headers: {AUTHORIZATION:`TOKEN ${token}`}, params:{reverse}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const result_play_matching = (word_pk, answer_pk, token) => {
-    return {result:true, message:"All ok"};
+export const result_play_matching = async (word, answer, reverse, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/play/matching/", {word, answer, reverse}, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const play_typing = (reverse, token) => {
-  return {result:true, message:"All ok", data:{
-    "words": [
-        {
-            "id": 8,
-            "category_set": [
-                {
-                    "pk": 2,
-                    "name": "Greetings"
-                }
-            ],
-            "name": "ありがとう",
-            "translation": "Thank you",
-            "pronunciation": "Arigatō",
-            "viewed": false,
-            "played_match": false,
-            "played_reversed_match": false,
-            "played_typing": false,
-            "played_reversed_typing": false,
-            "language": 29,
-            "student": 5
-        }
-    ],
-    "answer": {
-        "id": 8,
-        "category_set": [
-            {
-                "pk": 2,
-                "name": "Greetings"
-            }
-        ],
-        "name": "ありがとう",
-        "translation": "Thank you",
-        "pronunciation": "Arigatō",
-        "viewed": false,
-        "played_match": false,
-        "played_reversed_match": false,
-        "played_typing": false,
-        "played_reversed_typing": false,
-        "language": 29,
-        "student": 5
-    }
-}};  
+export const play_typing = async (reverse, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.get("/play/typing/", {headers: {AUTHORIZATION:`TOKEN ${token}`}, params:{reverse}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
-export const result_play_typing = (reverse, word_pk, answer, token) => {
-  return {result:true, message:"All ok"};  
+export const result_play_typing = async (reverse, word_pk, answer, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post("/play/typing/", {reverse, word: word_pk, answer}, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
 };
 
 export const search_word = async (word, token) => {
@@ -309,7 +196,6 @@ export const get_user_words = async (token) => {
 };
 
 export const delete_word = async (word_pk, token) => {
-    console.log(token);
     let api_response = {result: false, message: "Bad", data: []};
     await axios.delete(`/user/words/${word_pk}`, {"pk": word_pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then((response) => (response_handler(api_response, response)))
@@ -317,8 +203,13 @@ export const delete_word = async (word_pk, token) => {
     return api_response;
 }
 
-export const learn_again_word = (pk, token) => {
-    return {result:true, message:"All ok"};
+export const learn_again_word = async (pk, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post(`/user/words/${pk}/learn_again/`, {}, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
+
 };
 
 export const get_learned_words = async (token) => {

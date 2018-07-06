@@ -17,7 +17,6 @@ class WordstrainerMatch extends Component {
 			answer: {},
 			question: ""
         };
-        console.log(this.props);
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
     };
@@ -34,13 +33,15 @@ class WordstrainerMatch extends Component {
 		const result = right_answer === user_answer;
 		if (result) {
 			this.dispatch(add_alert({color: "success", text: "Right"}));
-			const request = result_play_matching(this.reverse, this.state.answer.id, user_answer, this.token);
-			if (request.result === false) {
-				this.dispatch(add_alert({color: "danger", text: request.message}));
-			}
-		} else {
-			this.dispatch(add_alert({color: "danger", text: "Wrong"}));
-		}
+			result_play_matching(this.state.answer.id, user_answer, this.reverse, this.token)
+                .then(api_response => {
+                    if (api_response.result === false) {
+				        this.dispatch(add_alert({color: "danger", text: api_response.message}));
+			         }
+		            });
+        } else {
+			             this.dispatch(add_alert({color: "danger", text: "Wrong"}));
+		              }
         const words = this.state.words.map((w) => {
             if (w.id === this.state.answer.id){
                 w.color = "alert-success"; 
@@ -50,25 +51,27 @@ class WordstrainerMatch extends Component {
             return w;
         });
         this.setState({words: [...words]});
-        console.log(words);
 	};
 	
 	next_word() {
 		this.dispatch(add_alert());
-		const request = play_matching(this.reverse, this.token);
-		if (request.result){
-			const question = (this.reverse) ? request.data.answer.translation : request.data.answer.name;
-            const words = request.data.words.map((word) =>{
-                const active = (this.reverse) ? word.name : word.translation;
-                return {...word, color: "", active};
+		play_matching(this.reverse, this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    const question = (this.reverse) ? api_response.data.answer.translation : api_response.data.answer.name;
+                    const words = api_response.data.words.map((word) =>{
+                        const active = (this.reverse) ? word.name : word.translation;
+                        return {...word, color: "", active};
+                    });
+			        this.setState({words,
+						        question,
+                                answer: api_response.data.answer
+						      });
+		          } else{
+			         this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                      this.setState({words: []});
+		          }
             });
-			this.setState({words,
-						   question,
-                           answer: request.data.answer
-						  });
-		} else{
-			this.dispatch(add_alert({color: "danger", text: request.message}));
-		}
 	};
     
     render(){

@@ -45,14 +45,16 @@ class MywordsLearned extends Component {
     
     learn_word(id) {
         this.dispatch(add_alert());
-		const request = learn_again_word(id, this.token);
-		if (request.result) {
-			this.dispatch(add_alert({color: "success", text: request.message}));
-			const words = this.state.words.filter((word) => (word.id !== id));
-			this.setState({words});
-		} else {
-			this.dispatch(add_alert({color: "danger", text: request.message}));
-		}
+		learn_again_word(id, this.token)
+            .then(api_response => {
+               if (api_response.result) {
+			     this.dispatch(add_alert({color: "success", text: api_response.message}));
+			     const words = this.state.words.filter((word) => (word.id !== parseInt(id, 10)));
+			     this.setState({words});
+		      } else {
+			     this.dispatch(add_alert({color: "danger", text: api_response.message}));
+		      } 
+            });
     };
     
     learn_all(e) {

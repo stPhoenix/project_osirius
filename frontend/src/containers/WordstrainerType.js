@@ -41,10 +41,13 @@ class WordstrainerType extends Component {
 		const result = this.check_answer(right_answer, user_answer);
 		if (result) {
 			this.dispatch(add_alert({color: "success", text: "Right"}));
-			const request = result_play_typing(this.reverse, this.state.word.id, user_answer, this.token);
-			if (request.result === false) {
-				this.dispatch(add_alert({color: "danger", text: request.message}));
-			}
+			result_play_typing(this.reverse, this.state.word.id, user_answer, this.token)
+                .then(api_response => {
+                    if (api_response.result === false) {
+				        this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                        this.setState({word: {}});
+			         }
+            });
 		} else {
 			this.setState({right_answer});
 			this.dispatch(add_alert({color: "danger", text: "Wrong"}));
@@ -55,25 +58,25 @@ class WordstrainerType extends Component {
 	check_answer(right_answer, user_answer) {
 		const r = right_answer.toLowerCase().replace(/ /g, "");
 		const u = user_answer.toLowerCase().replace(/ /g, "");
-		console.log(r);
-		console.log(u);
 		return r === u;
 	};
 	
 	next_word() {
 		this.dispatch(add_alert());
-		const request = play_typing(this.reverse, this.token);
-		if (request.result){
-			const question = (this.reverse) ? request.data.answer.translation : request.data.answer.name;
-			this.setState({word: request.data.answer,
-						   question,
-						   button_text: "Check",
-						   button_click: this.proceed_answer,
-						   right_answer: ""
+		play_typing(this.reverse, this.token)
+            .then(api_response => {
+                if (api_response.result){
+			         const question = (this.reverse) ? api_response.data.answer.translation : api_response.data.answer.name;
+			         this.setState({word: api_response.data.answer,
+						            question,
+						            button_text: "Check",
+						            button_click: this.proceed_answer,
+						            right_answer: ""
 						  });
-		} else{
-			this.dispatch(add_alert({color: "danger", text: request.message}));
-		}
+		        } else{
+			         this.dispatch(add_alert({color: "danger", text: api_response.message}));
+		        } 
+        });
 	};
     
     render(){

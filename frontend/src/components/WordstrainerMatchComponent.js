@@ -4,9 +4,9 @@ import "./AppComponent.css";
 
 
 export const WordstrainerMatchComponent = (props) => {
-	return (
-		<ContentComponent>
-			<h3>{props.question}</h3>
+	let data;
+    if (props.words.length !== 0){
+		data = (<ContentComponent><h3>{props.question}</h3>
 			<div className="col-12 col-lg-8 form-group">
 				<label htmlFor="answer_set">Choose answer</label>
 				<div className="list-group" id="answer_set">
@@ -16,7 +16,14 @@ export const WordstrainerMatchComponent = (props) => {
                     })}
 			     </div>
             </div>
-			<button className="custom-btn theme-primary px-3 py-1" onClick={props.next_word}>Next</button>
-		</ContentComponent>
+                <button className="custom-btn theme-primary px-3 py-1" onClick={props.next_word}>Next</button></ContentComponent>
 	);
+    } else {
+        data = "No words to play!"
+    }
+    return (
+        <ContentComponent>
+            {data}
+        </ContentComponent>
+    );
 };

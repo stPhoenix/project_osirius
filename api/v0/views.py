@@ -106,8 +106,8 @@ class UserWords(LinguistInitializer, ModelViewSet):
         serializer = self.get_serializer(words, many=True)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=False, permission_classes=(IsAuthenticated,IsOwnerOrReadOnly ))
-    def learn_again(self, request):
+    @action(methods=['post'], detail=True, permission_classes=(IsAuthenticated,IsOwnerOrReadOnly ))
+    def learn_again(self, request, pk):
         word = self.get_object()
         self.linguist.learn_again(word)
         return Response(status=status.HTTP_202_ACCEPTED)
@@ -118,7 +118,13 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
     def get_queryset(self):
         return Word.objects.all()
 
-    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, ))
+    def get_object(self):
+        query_set = self.get_queryset()
+        obj = get_object_or_404(query_set, pk=self.request.data['pk'])
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
     def learn(self, request):
         if request.method == 'GET':
             return self.get_learn(request)
@@ -128,7 +134,7 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
     def get_learn(self, request):
         words = self.linguist.learn_word()
         if words.count() == 0:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({'no words to learn'},status=status.HTTP_404_NOT_FOUND)
         if words.count() == 1:
             word = words[0]
         else:
@@ -136,15 +142,15 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         serializer = WordSerializer(word)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post_learn(self, request):
-        word = get_object_or_404(self.get_queryset(), pk=request.data['pk'])
+    def post_learn(self, request, **kwargs):
+        word = self.get_object()
         self.linguist.update_viewed_field(word, bool(request.data['learned']))
         return Response(status=status.HTTP_200_OK)
 
-    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated,))
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
     def matching(self, request, reverse=False):
         if request.method == 'GET':
-            return self.get_matching(request, reverse)
+            return self.get_matching(request, request.query_params['reverse'])
         elif request.method == 'POST':
             return self.post_matching(request)
 
@@ -155,10 +161,11 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
             serializer = PlaySerializer(data)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response('No words to play matching', status=status.HTTP_404_NOT_FOUND)
 
     def post_matching(self, request):
         word = get_object_or_404(self.get_queryset(), pk=request.data['word'])
+        self.check_object_permissions(request, word)
         answer = get_object_or_404(self.get_queryset(), pk=request.data['answer'])
         self.linguist.update_match_field(word, (word == answer), bool(request.data['reverse']))
         return Response(status=status.HTTP_200_OK)
@@ -168,17 +175,17 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         a = answer.lower().replace(' ', '')
         return w == a
 
-    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated,))
-    def typing(self, request, reverse=False):
+    @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
+    def typing(self, request):
         if request.method == 'GET':
-            return self.get_typing(request, reverse)
+            return self.get_typing(request, request.query_params['reverse'])
         elif request.method == 'POST':
             return self.post_typing(request)
 
     def get_typing(self, request, reverse):
         word = self.linguist.play_typing(bool(reverse))
         if word == 'No word to play typing':
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({'No word to play typing'}, status=status.HTTP_404_NOT_FOUND)
         else:
             data = Play([word], word)
             serializer = PlaySerializer(data)
@@ -186,6 +193,7 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
 
     def post_typing(self, request):
         word = get_object_or_404(self.get_queryset(), pk=request.data['word'])
+        self.check_object_permissions(request, word)
         answer = request.data['answer']
         name = word.name if bool(request.data['reverse']) is True else word.translation
         self.linguist.update_typing_field(word, self.check_answer(name, answer), bool(request.data['reverse']))

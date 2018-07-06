@@ -5,8 +5,9 @@ import {Alert} from 'reactstrap';
 
 
 export const WordstrainerTypeComponent = (props) => {
-	return (
-		<ContentComponent>
+    let data;
+    if (Object.keys(props.word).length !== 0){
+        data = (<ContentComponent>
 			<h3>{props.question}</h3>
 			<Alert color="danger" isOpen={(props.right_answer) ? true : false}>{props.right_answer}</Alert>
 			<div className="col-12 col-lg-8 form-group">
@@ -14,6 +15,13 @@ export const WordstrainerTypeComponent = (props) => {
 				<input className="custom-form-control" type="text" name="answer" value={props.answer} onChange={props.handleChange} placeholder="Answer" />
 			</div>
 			<button className="custom-btn theme-primary px-3 py-1" onClick={props.button_click}>{props.button_text}</button>
-		</ContentComponent>
+		</ContentComponent>);
+    } else {
+        data = (<h3>No words to play!</h3>)
+    }
+	return (
+        <ContentComponent>
+		{data}
+        </ContentComponent>
 	);
 };

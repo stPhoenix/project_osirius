@@ -25,23 +25,28 @@ class Learnwords extends Component {
 	
 	get_word() {
         this.dispatch(add_alert());
-        const request = get_learn_word(this.token);
-        if (request.result){
-            this.setState({word: request.data});
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        get_learn_word(this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    this.setState({word: api_response.data});
+                }else{
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                    this.setState({word: {}});
+                }
+        });
     };
     
     learned(e) {
         e.preventDefault();
         this.dispatch(add_alert());
-        const request = set_learn_word(this.token);
-        if (request.result){
-            this.get_word();
-        }else{
-            this.dispatch(add_alert({color: "danger", text: request.message}));   
-        }
+        set_learn_word(e.target.name, true, this.token)
+            .then(api_response => {
+                if (api_response.result){
+                    this.get_word();
+                }else{
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));   
+                }
+        });
     };
     
     not_learned(e) {

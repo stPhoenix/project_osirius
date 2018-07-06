@@ -5,7 +5,7 @@ import './AppComponent.css';
 
 export const LearnwordsComponent = (props) => {
     let data;
-    if (props.word !== false){
+    if (Object.keys(props.word).length !== 0){
         data = (<div className="d-flex flex-column text-center">
                     <br /> {props.word.name}
                     <br /> [{props.word.pronunciation}]
