@@ -1,5 +1,4 @@
 import axios from 'axios';
-import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 
 //export const get_langs = async () => {
@@ -9,11 +8,8 @@ import runtimeEnv from '@mars/heroku-js-runtime-env';
 //    .catch((error) => (error_handler(api_response, error)));
 //    return api_response;
 //};
-const env = runtimeEnv();
 //axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
-axios.defaults.baseURL =  env.REACT_APP_BACKEND_URL;
-console.log(env.REACT_APP_BACKEND_URL);
-
+axios.defaults.baseURL =  "/api/v0";
 
 const error_handler = (api_response, error) => {
         api_response.result = false;
