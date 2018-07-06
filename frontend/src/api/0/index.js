@@ -11,6 +11,7 @@ import axios from 'axios';
 const backend_url = process.env.REACT_APP_BACKEND_URL;
 //axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
 axios.defaults.baseURL =  backend_url;
+console.log(process.env.REACT_APP_BACKEND_URL);
 
 
 const error_handler = (api_response, error) => {
