@@ -31,7 +31,7 @@ class CustomAlert extends Component {
     render() {
       const {color, text} = this.props;
       return (
-        <CustomAlertComponent visible={this.props.visible} color={color} text={text} onExited={this.onExited} onEntered={this.onEntered} />
+        <CustomAlertComponent visible={this.props.visible} color={color} text={text} onExited={this.onExited} toggle={this.onDismiss} />
       );  
     };
 }

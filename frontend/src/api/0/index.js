@@ -9,7 +9,7 @@ import axios from 'axios';
 //    return api_response;
 //};
 //axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
-axios.defaults.baseURL =  "/api/v0";
+axios.defaults.baseURL =  process.env.REACT_APP_BACKEND_URL;
 
 const error_handler = (api_response, error) => {
         api_response.result = false;

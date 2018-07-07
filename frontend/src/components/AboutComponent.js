@@ -25,7 +25,7 @@ export const AboutComponent = () => {
             </ul>
         <p className="align-self-start">It's all for <b>FREE!</b></p>
         <p className="align-self-start">
-        If you're interested in code or want to contribute - welcome to Github!
+        If you're interested in code or want to contribute - welcome to <a href="https://github.com/stPhoenix/project_osirius">Github!</a>
         </p>
     </ContentComponent>
         );
