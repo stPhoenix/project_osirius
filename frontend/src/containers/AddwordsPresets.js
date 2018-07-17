@@ -4,7 +4,14 @@ import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
 import {add_global_word, get_cats, get_words_by_cat} from '../api';
 import {AddwordsPresetsComponent} from '../components';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class AddwordsPresets extends Component {
     constructor(props){

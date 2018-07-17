@@ -42,6 +42,13 @@ export const GetStartedComponent = () => {
                     <CardTitle>Good! You have come to this step! I can consume that you undesrtood main logic of service. So what are you waiting for - repeat from step 2 and easy learn more foreign words!</CardTitle>
           </CardBody>
       </Card>
+      <Card>
+          <CardHeader>Additional advice 1</CardHeader>
+          <CardBody>
+                    <CardTitle>In settings you can add and remove learnt languages.</CardTitle>
+                    <CardText> Way of doing it pretty intuitive. Remember, all words in pages Learn words, My words, Add words, Words trainer are relative to active learn language which set in Settings.</CardText>
+          </CardBody>
+      </Card>
                 </CardColumns>
             </div>
     </ContentComponent>
