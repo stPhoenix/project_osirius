@@ -1,7 +1,14 @@
 import React from 'react';
 import './AppComponent.css';
 import {WordsTableComponent, ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleCheck: PropTypes.func,
+    delete_selected: PropTypes.func,
+    delete_all: PropTypes.func,
+    words: PropTypes.array,
+};
 
 export const MywordsAllComponent = (props) => {
     return (<ContentComponent>
@@ -12,3 +19,5 @@ export const MywordsAllComponent = (props) => {
                 <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
           </ContentComponent>);  
 };
+
+MywordsAllComponent.propTypes = componentProps;

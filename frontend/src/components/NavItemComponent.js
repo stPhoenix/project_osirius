@@ -2,6 +2,14 @@ import React from 'react';
 import {NavItem, NavLink} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import'./NavItemComponent.css';
+import PropTypes from 'prop-types';
+
+const componentProps = {
+    src: PropTypes.string,
+    link: PropTypes.string,
+    text: PropTypes.string,
+    visible: PropTypes.bool,
+};
 
 export const NavItemComponent = ({src="#", link="#", text="No text", visible=true}) => {
      if (visible){
@@ -18,3 +26,5 @@ export const NavItemComponent = ({src="#", link="#", text="No text", visible=tru
 	 	return null;	
 	 }
 };
+
+NavItem.propTypes = componentProps;

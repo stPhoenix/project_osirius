@@ -6,7 +6,11 @@ import './AppComponent.css';
 import AddwordsType from '../containers/AddwordsType';
 import AddwordsPresets from '../containers/AddwordsPresets';
 import {ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+  location: PropTypes.object.isRequired,  
+};
 
 export const AddwordsComponent = ({location}) => {
 	if (location.pathname !== "/addwords"){
@@ -32,3 +36,5 @@ export const AddwordsComponent = ({location}) => {
 	</ContentComponent>
 		);
 };
+
+AddwordsComponent.propTypes = componentProps;

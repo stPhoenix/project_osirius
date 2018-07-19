@@ -76,4 +76,6 @@ class SignUp extends Component {
 
 const mapStateToProps = (state) => ({isAuthenticated: state.auth.isAuthenticated});
 
+SignUp.propTypes = classProps;
+
 export default connect(mapStateToProps)(SignUp);

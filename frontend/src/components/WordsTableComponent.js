@@ -1,6 +1,11 @@
 import React from 'react';
 import "./AppComponent.css";
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    words: PropTypes.array,
+    handleCheck: PropTypes.func,
+};
 
 export const WordsTableComponent = (props) => {
     return(
@@ -34,3 +39,5 @@ export const WordsTableComponent = (props) => {
         </table>
     );
 };
+
+WordsTableComponent.propTypes = componentProps;

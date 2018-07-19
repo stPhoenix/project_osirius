@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 
 const classProps = {
     dispatch: PropTypes.func.isRequired,
-    visible: PropTypes.bool,
-    pk: PropTypes.number,
+    visible: PropTypes.bool.isRequired,
+    pk: PropTypes.string.isRequired,
 };
 
 class CustomAlert extends Component {
@@ -45,5 +45,7 @@ class CustomAlert extends Component {
 }
 
 const matchStateToProps = (state) => ({visible: state.alert.visible});
+
+CustomAlert.propTypes = classProps;
 
 export default connect(matchStateToProps)(CustomAlert);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 
 const classProps = {
-    location: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
 };
 
 class ScrollMain extends Component {
@@ -21,5 +21,7 @@ class ScrollMain extends Component {
 		return this.props.children;
 	};
 };
+
+ScrollMain.propTypes = classProps;
 
 export default withRouter(ScrollMain);

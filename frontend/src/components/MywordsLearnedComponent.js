@@ -1,7 +1,13 @@
 import React from 'react';
 import './AppComponent.css';
 import {WordsTableComponent, ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleCheck: PropTypes.func,
+    learn_selected: PropTypes.func,
+    learn_all: PropTypes.func,
+};
 
 export const MywordsLearnedComponent = (props) => {
     return (<ContentComponent>
@@ -12,3 +18,5 @@ export const MywordsLearnedComponent = (props) => {
                 <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
         </ContentComponent>);  
 };
+
+MywordsLearnedComponent.propTypes = componentProps;

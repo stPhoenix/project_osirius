@@ -77,4 +77,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+Learnwords.propTypes = classProps;
+
 export default connect(mapStateToProps)(Learnwords);

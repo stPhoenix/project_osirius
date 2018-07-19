@@ -132,4 +132,6 @@ class Settings extends Component {
 
 const mapStateToProps = (state) => ({auth: state.auth});
 
+Settings.propTypes = classProps;
+
 export default connect(mapStateToProps)(Settings);

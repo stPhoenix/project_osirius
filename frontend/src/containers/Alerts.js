@@ -24,4 +24,6 @@ class Alerts extends Component {
 
 const matchStateToProps = (state) => ({alerts: state.alert.alerts});
 
+Alerts.propTypes = classProps;
+
 export default connect(matchStateToProps)(Alerts);

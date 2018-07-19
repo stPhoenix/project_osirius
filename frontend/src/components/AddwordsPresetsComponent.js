@@ -1,7 +1,16 @@
 import React from 'react';
 import './AppComponent.css';
 import {WordsTableComponent, ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    cats: PropTypes.array,
+    handleChange: PropTypes.func,
+    add_selected: PropTypes.func,
+    add_all: PropTypes.func,
+    words: PropTypes.array,
+    handleCheck: PropTypes.func,
+};
 
 export const AddwordsPresetsComponent = (props) => {
     return (<ContentComponent>
@@ -18,3 +27,5 @@ export const AddwordsPresetsComponent = (props) => {
                 <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
           </ContentComponent>);  
 };
+
+AddwordsPresetsComponent.propTypes = componentProps;

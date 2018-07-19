@@ -98,4 +98,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+WordstrainerMatch.propTypes = classProps;
+
 export default connect(mapStateToProps)(WordstrainerMatch);

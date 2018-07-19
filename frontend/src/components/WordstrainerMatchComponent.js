@@ -1,7 +1,14 @@
 import React from 'react';
 import {ContentComponent} from '../components';
 import "./AppComponent.css";
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    words: PropTypes.array,
+    question: PropTypes.string,
+    proceed_answer: PropTypes.func,
+    next_word: PropTypes.func,
+};
 
 export const WordstrainerMatchComponent = (props) => {
 	let data;
@@ -27,3 +34,5 @@ export const WordstrainerMatchComponent = (props) => {
         </ContentComponent>
     );
 };
+
+WordstrainerMatchComponent.propTypes = componentProps;

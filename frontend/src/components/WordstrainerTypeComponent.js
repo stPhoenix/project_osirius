@@ -2,7 +2,17 @@ import React from 'react';
 import {ContentComponent} from '../components';
 import "./AppComponent.css";
 import {Alert} from 'reactstrap';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    word: PropTypes.object,
+    question: PropTypes.string,
+    right_answer: PropTypes.string,
+    answer: PropTypes.string,
+    handleChange: PropTypes.func,
+    button_click: PropTypes.func,
+    button_text: PropTypes.string,
+};
 
 export const WordstrainerTypeComponent = (props) => {
     let data;
@@ -25,3 +35,5 @@ export const WordstrainerTypeComponent = (props) => {
         </ContentComponent>
 	);
 };
+
+WordstrainerTypeComponent.propTypes = componentProps;

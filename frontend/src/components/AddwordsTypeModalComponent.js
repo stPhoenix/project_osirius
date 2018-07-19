@@ -1,6 +1,14 @@
 import React from 'react';
 import {Modal, ModalBody, Card, CardBody, CardTitle} from 'reactstrap';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleChange: PropTypes.func,
+    add_custom: PropTypes.func,
+    cats: PropTypes.array,
+    modal: PropTypes.bool,
+    toggle_modal: PropTypes.func,
+};
 
 export const AddwordsTypeModalComponent = (props) => {
     return (
@@ -22,3 +30,5 @@ export const AddwordsTypeModalComponent = (props) => {
         </Modal>
     );
 };
+
+AddwordsTypeModalComponent.propTypes = componentProps;

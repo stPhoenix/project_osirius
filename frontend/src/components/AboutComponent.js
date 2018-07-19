@@ -1,7 +1,7 @@
 import React from 'react';
 import {ContentComponent} from '../components';
 
-
+      
 export const AboutComponent = () => {
     return (
     <ContentComponent>

@@ -1,5 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    children: PropTypes.oneOfType([
+                                    PropTypes.array,
+                                    PropTypes.object,
+                                    PropTypes.string,
+  ]),
+};
 
 export const ContentComponent = (props) => {
     return(
@@ -8,3 +16,5 @@ export const ContentComponent = (props) => {
         </div>
     );
 };
+
+ContentComponent.propTypes = componentProps;

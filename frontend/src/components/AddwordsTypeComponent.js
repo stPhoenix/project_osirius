@@ -2,7 +2,21 @@ import React from 'react';
 import './AppComponent.css';
 import {Card, CardBody, CardText} from 'reactstrap';
 import {AddwordsTypeModalComponent, ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    global_word_search: PropTypes.bool,
+    words: PropTypes.array,
+    add_global: PropTypes.func,
+    google_translate_search: PropTypes.bool,
+    choose_category: PropTypes.func,
+    search_word: PropTypes.string,
+    handleChange: PropTypes.func,
+    add_custom: PropTypes.func,
+    cats: PropTypes.array,
+    modal: PropTypes.bool,
+    toggle_modal: PropTypes.func,
+};
 
 export const AddwordsTypeComponent = (props) => {
 	
@@ -57,3 +71,5 @@ export const AddwordsTypeComponent = (props) => {
                                             toggle_modal={props.toggle_modal} />
 		</ContentComponent>);
 };
+
+AddwordsTypeComponent.propTypes = componentProps;

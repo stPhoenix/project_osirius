@@ -2,7 +2,27 @@ import React from 'react';
 import './AppComponent.css';
 import { UncontrolledTooltip } from 'reactstrap';
 import {SettingsModalComponent, ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleChange: PropTypes.func,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    toggle_modal: PropTypes.func,
+    first_name: PropTypes.string,
+    language_set: PropTypes.array,
+    current_language: PropTypes.string,
+    set_active: PropTypes.func,
+    delete_language: PropTypes.func,
+    langs: PropTypes.array,
+    add_learn_language: PropTypes.func,
+    click: PropTypes.func,
+    change_password: PropTypes.func,
+    password1: PropTypes.string,
+    password2: PropTypes.string,
+    password: PropTypes.string,
+    modal: PropTypes.bool,
+};
 
 export const SettingsComponent = (props) => {
 	return	(
@@ -52,3 +72,5 @@ export const SettingsComponent = (props) => {
     </ContentComponent>
 	);
 };
+
+SettingsComponent.propTypes = componentProps;

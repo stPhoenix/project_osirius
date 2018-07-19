@@ -11,7 +11,11 @@ import settingsicon from '../assets/settings.png';
 import wordstrainericon from '../assets/wordstrainer.png';
 import addwordsicon from '../assets/addwords.png';
 import './AppComponent.css';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 export const NavBarComponent = ({isAuthenticated}) => {
 	return (
@@ -36,3 +40,5 @@ export const NavBarComponent = ({isAuthenticated}) => {
 				</nav>
 	);
 }
+
+NavBarComponent.propTypes = componentProps;

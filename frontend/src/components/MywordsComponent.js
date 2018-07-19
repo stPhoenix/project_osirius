@@ -6,7 +6,11 @@ import './AppComponent.css';
 import MywordsAll from '../containers/MywordsAll';
 import MywordsLearned from '../containers/MywordsLearned';
 import {ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    location: PropTypes.object,
+};
 
 export const MywordsComponent = ({location}) => {
 	if (location.pathname !== "/mywords"){
@@ -26,3 +30,5 @@ export const MywordsComponent = ({location}) => {
 	</ContentComponent>
 		);
 };
+
+MywordsComponent.propTypes = componentProps;

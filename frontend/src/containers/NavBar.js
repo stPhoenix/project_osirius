@@ -22,4 +22,6 @@ class NavBar extends Component{
 
 const matchStateToProps = (state) => ({auth: state.auth});
 
+NavBar.propTypes = classProps;
+
 export default connect(matchStateToProps)(NavBar);

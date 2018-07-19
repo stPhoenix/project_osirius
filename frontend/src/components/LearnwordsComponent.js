@@ -1,7 +1,11 @@
 import React from 'react';
 import {ContentComponent} from '../components';
 import './AppComponent.css';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    word: PropTypes.object,
+};
 
 export const LearnwordsComponent = (props) => {
     let data;
@@ -25,3 +29,5 @@ export const LearnwordsComponent = (props) => {
         </ContentComponent>
     );
 };
+
+LearnwordsComponent.propTypes = componentProps;

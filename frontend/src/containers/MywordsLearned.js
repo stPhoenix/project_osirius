@@ -95,4 +95,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+MywordsLearned.propTypes = classProps;
+
 export default connect(mapStateToProps)(MywordsLearned);

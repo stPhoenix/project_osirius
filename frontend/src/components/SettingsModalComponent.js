@@ -1,6 +1,16 @@
 import React from 'react';
 import {Modal, ModalBody, Card, CardBody, CardTitle} from 'reactstrap';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleChange: PropTypes.func,
+    toggle_modal: PropTypes.func,
+    change_password: PropTypes.func,
+    password1: PropTypes.string,
+    password2: PropTypes.string,
+    password: PropTypes.string,
+    modal: PropTypes.bool,
+};
 
 export const SettingsModalComponent = (props) => {
     return (
@@ -32,3 +42,5 @@ export const SettingsModalComponent = (props) => {
         </Modal>
     );
 };
+
+SettingsModalComponent.propTypes = componentProps;

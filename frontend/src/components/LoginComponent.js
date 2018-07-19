@@ -1,7 +1,12 @@
 import React from 'react';
 import './AppComponent.css';
 import {ContentComponent} from '../components';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    onChange: PropTypes.func,
+    click: PropTypes.func,
+};
 
 export const LoginComponent = (props) => {
 	return(
@@ -14,3 +19,5 @@ export const LoginComponent = (props) => {
     </ContentComponent>
 	);
 }
+
+LoginComponent.propTypes = componentProps;

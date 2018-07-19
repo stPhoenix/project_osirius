@@ -120,4 +120,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+AddwordsPresets.propTypes = classProps;
+
 export default connect(mapStateToProps)(AddwordsPresets);

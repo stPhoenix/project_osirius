@@ -117,4 +117,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+AddwordsType.propTypes = classProps;
+
 export default connect(mapStateToProps)(AddwordsType);

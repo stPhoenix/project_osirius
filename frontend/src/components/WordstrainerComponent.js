@@ -6,7 +6,11 @@ import './AppComponent.css';
 import {ContentComponent} from '../components';
 import WordstrainerType from '../containers/WordstrainerType';
 import WordstrainerMatch from '../containers/WordstrainerMatch';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    location: PropTypes.object,
+};
 
 export const WordstrainerComponent = ({location}) => {
 	if (location.pathname !== "/wordstrainer"){
@@ -36,3 +40,5 @@ export const WordstrainerComponent = ({location}) => {
 		</ContentComponent>
 		);
 };
+
+WordstrainerComponent.propTypes = componentProps;

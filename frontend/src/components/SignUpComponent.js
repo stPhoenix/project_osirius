@@ -1,6 +1,17 @@
 import React from 'react';
 import './AppComponent.css';
+import PropTypes from 'prop-types';
 
+const componentProps = {
+    handleChange: PropTypes.func,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    first_name: PropTypes.string,
+    langs: PropTypes.array,
+    click: PropTypes.func,
+    password1: PropTypes.string,
+    password2: PropTypes.string,
+};
 
 export const SignUpComponent = (props) => {
     return (
@@ -41,3 +52,5 @@ export const SignUpComponent = (props) => {
 		</form>
     );
 };
+
+SignUpComponent.propTypes = componentProps;

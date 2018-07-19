@@ -39,4 +39,6 @@ class Logout extends Component {
 
 const mapStateToProps = (state) => ({token: state.auth.token});
 
+Logout.propTypes = classProps;
+
 export default connect(mapStateToProps)(Logout);
