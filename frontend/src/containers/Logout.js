@@ -4,7 +4,13 @@ import {add_alert} from '../actions/alert';
 import {logout as logout_action} from '../actions/auth';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
+};
 
 class Logout extends Component {
     constructor(props){

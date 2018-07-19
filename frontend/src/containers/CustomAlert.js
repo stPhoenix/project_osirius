@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CustomAlertComponent} from '../components';
 import {toggle_alert, delete_alert} from '../actions/alert';
+import PropTypes from 'prop-types';
+
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    visible: PropTypes.bool,
+    pk: PropTypes.number,
+};
 
 class CustomAlert extends Component {
     constructor(props) {

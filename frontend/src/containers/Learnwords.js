@@ -4,7 +4,14 @@ import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
 import {get_learn_word, set_learn_word} from '../api';
 import {LearnwordsComponent} from '../components';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class Learnwords extends Component {
     constructor(props){

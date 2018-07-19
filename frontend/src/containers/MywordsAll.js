@@ -4,7 +4,14 @@ import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
 import {get_user_words, delete_word as api_delete_word} from '../api';
 import {MywordsAllComponent} from '../components';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class MywordsAll extends Component {
     constructor(props){

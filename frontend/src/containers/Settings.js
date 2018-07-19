@@ -5,7 +5,13 @@ import {login} from '../actions/auth';
 import {SettingsComponent} from '../components';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+};
 
 class Settings extends Component {
 	constructor(props){

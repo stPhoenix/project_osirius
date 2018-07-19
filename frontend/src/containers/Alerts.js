@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import CustomAlert from './CustomAlert';
 import {connect} from 'react-redux';
 import {Alert} from 'reactstrap';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    alerts: PropTypes.array,
+};
 
 class Alerts extends Component {
     render(){

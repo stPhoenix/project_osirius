@@ -5,7 +5,13 @@ import {login} from '../actions/auth';
 import {Redirect} from 'react-router';
 import {SignUpComponent} from '../components';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class SignUp extends Component {
 	constructor(props){

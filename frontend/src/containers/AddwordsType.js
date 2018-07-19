@@ -4,7 +4,14 @@ import {Redirect} from 'react-router-dom';
 import {add_custom_word, add_global_word, get_cats, search_word} from '../api';
 import {add_alert} from '../actions/alert';
 import {AddwordsTypeComponent} from '../components';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    token: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class AddwordsType extends Component {
     constructor(props){

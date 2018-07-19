@@ -5,7 +5,13 @@ import {login} from '../actions/auth';
 import {connect} from 'react-redux';
 import {login as apiLogin} from '../api';
 import {Redirect} from 'react-router';
+import PropTypes from 'prop-types';
 
+
+const classProps = {
+    dispatch: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class Login extends Component{
     constructor(props){
