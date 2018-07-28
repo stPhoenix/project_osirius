@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsComponent should render correctly 1`] = `
+<Component>
+  <form
+    className="col-12 col-md-8 col-lg-6 d-flex flex-column h-100 mb-4"
+  >
+    <div
+      className="m-2 form-group"
+    >
+      <label
+        htmlFor="username"
+      >
+        Change username
+      </label>
+      <input
+        className="custom-form-control"
+        id="username"
+        name="username"
+        onChange={[Function]}
+        placeholder="Username"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="m-2 form-group"
+    >
+      <label
+        htmlFor="email"
+      >
+        Change email
+      </label>
+      <input
+        className="custom-form-control"
+        id="email"
+        name="email"
+        onChange={[Function]}
+        placeholder="Email"
+        type="text"
+        value=""
+      />
+    </div>
+    <button
+      className="custom-btn theme-primary align-self-center px-3"
+      onClick={[Function]}
+    >
+      Change password
+    </button>
+    <div
+      className="m-2 form-group"
+    >
+      <label
+        htmlFor="firstname"
+      >
+        Change your name
+      </label>
+      <input
+        className="custom-form-control"
+        id="firstname"
+        name="first_name"
+        onChange={[Function]}
+        placeholder="Your name"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="m-2 form-group"
+    >
+      <label
+        htmlFor="language_set"
+      >
+        Learn languages
+      </label>
+      <div
+        className="list-group"
+        id="language_set"
+      />
+    </div>
+    <div
+      className="mx-2 mt-2 mb-1 form-group"
+    >
+      <label
+        htmlFor="learn_language"
+      >
+        Add learn language
+      </label>
+      <select
+        className="custom-form-control"
+        id="learn_language"
+        name="temp_language"
+        onChange={[Function]}
+      />
+    </div>
+    <button
+      className="custom-btn theme-primary px-3 mb-2 mr-2 align-self-end"
+      onClick={[Function]}
+    >
+      Add
+    </button>
+    <button
+      className="custom-btn theme-primary align-self-center px-3"
+      onClick={[Function]}
+    >
+      Save
+    </button>
+    <Component
+      change_password={[Function]}
+      handleChange={[Function]}
+      modal={false}
+      password=""
+      password1=""
+      password2=""
+      toggle_modal={[Function]}
+    />
+  </form>
+</Component>
+`;

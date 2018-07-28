@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpComponent should render correctly 1`] = `
+<form
+  className="col-10 d-flex flex-column h-100 mb-4"
+>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="username"
+    >
+      Username
+    </label>
+    <input
+      className="custom-form-control"
+      id="username"
+      name="username"
+      onChange={[Function]}
+      placeholder="Username"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="password1"
+    >
+      Password
+    </label>
+    <input
+      className="custom-form-control"
+      id="password1"
+      name="password1"
+      onChange={[Function]}
+      placeholder="Password"
+      type="password"
+      value=""
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="password2"
+    >
+      Repeat password
+    </label>
+    <input
+      className="custom-form-control"
+      id="password2"
+      name="password2"
+      onChange={[Function]}
+      placeholder="Password"
+      type="password"
+      value=""
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="email"
+    >
+      Email
+    </label>
+    <input
+      className="custom-form-control"
+      id="email"
+      name="email"
+      onChange={[Function]}
+      placeholder="Email"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="firstname"
+    >
+      Your name
+    </label>
+    <input
+      className="custom-form-control"
+      id="firstname"
+      name="first_name"
+      onChange={[Function]}
+      placeholder="Your name"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="home_language"
+    >
+      Your language
+    </label>
+    <select
+      className="custom-form-control"
+      id="home_language"
+      name="home_language"
+      onChange={[Function]}
+    />
+  </div>
+  <div
+    className="m-2 form-group"
+  >
+    <label
+      htmlFor="current_language"
+    >
+      Learn language
+    </label>
+    <select
+      className="custom-form-control"
+      id="current_language"
+      name="current_language"
+      onChange={[Function]}
+    />
+  </div>
+  <button
+    className="custom-btn theme-primary align-self-center px-3"
+    onClick={[Function]}
+  >
+    SignUp
+  </button>
+</form>
+`;

@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppComponent should render correctly 1`] = `
+<Container
+  className="bg-first"
+  fluid={true}
+  tag="div"
+>
+  <Row
+    className="d-flex flex-column"
+    tag="div"
+  >
+    <Col
+      className="px-0"
+      style={
+        Object {
+          "zIndex": 1,
+        }
+      }
+      tag="div"
+      widths={
+        Array [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+        ]
+      }
+      xs="12"
+    >
+      <header
+        className="theme-dark px-4 py-2"
+      >
+        <img
+          alt="logo"
+          src="logo.png"
+          style={
+            Object {
+              "height": "2rem",
+              "width": "auto",
+            }
+          }
+        />
+      </header>
+    </Col>
+    <Col
+      tag="div"
+      widths={
+        Array [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+        ]
+      }
+      xs="12"
+    >
+      <Row
+        className="flex-column flex-lg-row"
+        tag="div"
+      >
+        <Col
+          className="px-0"
+          lg="3"
+          style={
+            Object {
+              "zIndex": 1,
+            }
+          }
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+          xs="12"
+        >
+          <section
+            className="theme-primary shadow-sm full-screen h-100"
+          >
+            <Connect(NavBar) />
+          </section>
+        </Col>
+        <Col
+          className="px-0"
+          lg="9"
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+          xs="12"
+        >
+          <main
+            className="d-flex flex-column full-screen"
+          >
+            <Connect(Alerts) />
+            <section
+              className="d-flex justify-content-center align-items-center"
+            >
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                  path="/news"
+                />
+                <Route
+                  component={[Function]}
+                  path="/login"
+                />
+                <Route
+                  component={[Function]}
+                  path="/logout"
+                />
+                <Route
+                  component={[Function]}
+                  path="/signup"
+                />
+                <Route
+                  component={[Function]}
+                  path="/settings"
+                />
+                <Route
+                  component={[Function]}
+                  path="/addwords"
+                />
+                <Route
+                  component={[Function]}
+                  path="/mywords"
+                />
+                <Route
+                  component={[Function]}
+                  path="/learnwords"
+                />
+                <Route
+                  component={[Function]}
+                  path="/wordstrainer"
+                />
+                <Route
+                  component={[Function]}
+                  path="/about"
+                />
+                <Route
+                  component={[Function]}
+                  path="/getstarted"
+                />
+              </Switch>
+            </section>
+          </main>
+        </Col>
+      </Row>
+    </Col>
+  </Row>
+  <Row
+    className="d-flex flex-column"
+    tag="div"
+  >
+    <Col
+      tag="div"
+      widths={
+        Array [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+        ]
+      }
+      xs="12"
+    >
+      <footer />
+    </Col>
+  </Row>
+</Container>
+`;

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddwordsTypeComponent should render correctly 1`] = `
+<Component>
+  <form
+    className="col-lg-8 px-0  d-flex flex-column"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="search"
+      >
+        Type word:
+      </label>
+      <input
+        className="custom-form-control"
+        id="search"
+        name="search_word"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <button
+      className="custom-btn theme-primary mb-2 align-self-center"
+    >
+      Search
+    </button>
+  </form>
+  <div
+    className="col-12 row flex-column flex-lg-row px-0"
+  />
+  <Component
+    add_custom={[Function]}
+    cats={Array []}
+    handleChange={[Function]}
+    modal={false}
+    toggle_modal={[Function]}
+  />
+</Component>
+`;

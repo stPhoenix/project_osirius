@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MywordsComponent should render correctly 1`] = `
+<Component>
+  <img
+    alt="allwords"
+    src="allwords.png"
+    style={
+      Object {
+        "height": "6rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-2 mb-4 mt-0"
+  >
+    All your words on active learn language.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-3 py-1 mb-5 black"
+    replace={false}
+    to="/mywords/all"
+  >
+     Look all words
+  </Link>
+  <img
+    alt="learned"
+    className="mt-3"
+    src="learned.png"
+    style={
+      Object {
+        "height": "6rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-2 mb-4 mt-0"
+  >
+    Your learned words on active learn language.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-3 py-1 mb-3 black"
+    replace={false}
+    to="/mywords/learned"
+  >
+     Look learned
+  </Link>
+</Component>
+`;

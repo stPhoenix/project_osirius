@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WordstrainerTypeComponent should render correctly 1`] = `
+<Component>
+  <h3>
+    No words to play!
+  </h3>
+</Component>
+`;

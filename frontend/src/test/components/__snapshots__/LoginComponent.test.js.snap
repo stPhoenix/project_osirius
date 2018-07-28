@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginComponent should render correctly 1`] = `
+<Component>
+  <form
+    className="col-12 col-md-6 col-lg-4 d-flex flex-column"
+  >
+    <input
+      className="m-2 custom-form-control"
+      id="username"
+      name="username"
+      onChange={[Function]}
+      placeholder="Enter username"
+      type="text"
+    />
+    <input
+      className="m-2 custom-form-control"
+      id="upassword"
+      name="password"
+      onChange={[Function]}
+      placeholder="Enter password"
+      type="password"
+    />
+    <button
+      className="custom-btn theme-primary m-2 px-4 align-self-center"
+      onClick={[Function]}
+    >
+      Login
+    </button>
+  </form>
+</Component>
+`;

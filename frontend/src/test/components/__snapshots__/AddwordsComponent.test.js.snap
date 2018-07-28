@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddwordsComponent should render correctly 1`] = `
+<Component>
+  <section
+    className="d-flex flex-column align-items-center justify-content-center"
+  >
+    <div
+      className="d-flex flex-column align-items-center justify-content-center"
+    >
+      <img
+        alt="typing"
+        src="typing.png"
+        style={
+          Object {
+            "height": "7rem",
+            "width": "auto",
+          }
+        }
+      />
+      <h4
+        className="opacity-50 text-center px-2 mb-4 mt-0"
+      >
+        Type word. System will search word in database or in the internet.
+      </h4>
+      <Link
+        className="custom-btn theme-primary px-3 py-1 mb-5 black"
+        replace={false}
+        to="/addwords/type"
+      >
+         Add words
+      </Link>
+    </div>
+    <div
+      className="d-flex flex-column align-top align-items-center justify-content-center"
+    >
+      <img
+        alt="presets"
+        className=""
+        src="presets.png"
+        style={
+          Object {
+            "height": "6rem",
+            "width": "auto",
+          }
+        }
+      />
+      <h4
+        className="opacity-50 text-center px-2 mb-4 mt-0"
+      >
+        Choose word from preset in database.
+      </h4>
+      <Link
+        className="custom-btn theme-primary px-3 py-1 mb-3 black"
+        replace={false}
+        to="/addwords/presets"
+      >
+         Add words
+      </Link>
+    </div>
+  </section>
+</Component>
+`;

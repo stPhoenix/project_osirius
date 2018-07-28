@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WordsTableComponent should render correctly 1`] = `
+<table
+  className="table"
+>
+  <thead>
+    <tr
+      className="text-center"
+    >
+      <th
+        scope="col"
+      >
+        Word
+      </th>
+      <th
+        scope="col"
+      >
+        Check
+      </th>
+    </tr>
+  </thead>
+  <tbody />
+</table>
+`;

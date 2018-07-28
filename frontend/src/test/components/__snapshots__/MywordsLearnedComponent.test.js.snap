@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MywordsLearnedComponent should render correctly 1`] = `
+<Component>
+  <div
+    className="d-flex align-self-end px-0"
+  >
+    <button
+      className="btn btn-link "
+      onClick={[Function]}
+    >
+      Learn again selected
+    </button>
+    <button
+      className="btn btn-link pr-0"
+      onClick={[Function]}
+    >
+      Learn all
+    </button>
+  </div>
+  <Component
+    handleCheck={[Function]}
+  />
+</Component>
+`;

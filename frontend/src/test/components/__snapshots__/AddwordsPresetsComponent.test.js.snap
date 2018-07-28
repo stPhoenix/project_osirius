@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddwordsPresetsComponent should render correctly 1`] = `
+<Component>
+  <form
+    className="col-12 col-lg-8 px-0"
+  >
+    <label
+      htmlFor="categories"
+    >
+      Choose category:
+    </label>
+    <select
+      className="custom-form-control"
+      id="categories"
+      name="category"
+      onChange={[Function]}
+    />
+  </form>
+  <div
+    className="d-flex align-self-end mt-3 px-0"
+  >
+    <button
+      className="btn btn-link "
+      onClick={[Function]}
+    >
+      Add selected
+    </button>
+    <button
+      className="btn btn-link pr-0"
+      onClick={[Function]}
+    >
+      Add all
+    </button>
+  </div>
+  <Component
+    handleCheck={[Function]}
+    words={Array []}
+  />
+</Component>
+`;

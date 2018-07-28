@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsComponent should render correctly 1`] = `
+<Component>
+  <div
+    className="row flex-column flex-lg-row px-0"
+  >
+    <CardColumns
+      tag="div"
+    />
+  </div>
+</Component>
+`;

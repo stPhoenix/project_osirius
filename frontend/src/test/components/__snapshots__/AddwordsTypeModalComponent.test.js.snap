@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddwordsTypeModalComponent should render correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  centered={false}
+  className="p-0 align-self-center"
+  fade={true}
+  isOpen={true}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[Function]}
+  zIndex={1050}
+>
+  <ModalBody
+    className="p-0"
+    tag="div"
+  >
+    <Card
+      className="rounded-0"
+      tag="div"
+    >
+      <CardBody
+        className="d-flex flex-column"
+        tag="div"
+      >
+        <CardTitle
+          tag="h5"
+        >
+          Choose category
+        </CardTitle>
+        <form>
+          <select
+            className="custom-form-control"
+            id="learn_language"
+            name="category"
+            onChange={[Function]}
+          />
+        </form>
+        <button
+          className="btn btn-link align-self-end"
+          onClick={[Function]}
+        >
+          Add
+        </button>
+      </CardBody>
+    </Card>
+  </ModalBody>
+</Modal>
+`;

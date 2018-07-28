@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomAlertComponent should render correctly 1`] = `
+<Alert
+  className="w-100 d-flex justify-content-center py-2 rounded-0"
+  closeAriaLabel="Close"
+  color="success"
+  isOpen={true}
+  tag="div"
+  toggle={[Function]}
+  transition={
+    Object {
+      "baseClass": "alert-anim",
+      "onExited": [Function],
+      "timeout": 300,
+    }
+  }
+>
+  test
+</Alert>
+`;

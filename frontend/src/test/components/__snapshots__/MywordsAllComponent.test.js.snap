@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyWordsAllComponent should render correctly 1`] = `
+<Component>
+  <div
+    className="d-flex align-self-end px-0"
+  >
+    <button
+      className="btn btn-link "
+      onClick={[Function]}
+    >
+      Delete selected
+    </button>
+    <button
+      className="btn btn-link pr-0"
+      onClick={[Function]}
+    >
+      Delete all
+    </button>
+  </div>
+  <Component
+    handleCheck={[Function]}
+    words={Array []}
+  />
+</Component>
+`;

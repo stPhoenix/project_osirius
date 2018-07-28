@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsModalComponent should render correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  centered={false}
+  className="p-0 align-self-center"
+  fade={true}
+  isOpen={true}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[Function]}
+  zIndex={1050}
+>
+  <ModalBody
+    className="p-0"
+    tag="div"
+  >
+    <Card
+      className="rounded-0"
+      tag="div"
+    >
+      <CardBody
+        className="d-flex flex-column"
+        tag="div"
+      >
+        <CardTitle
+          tag="h5"
+        >
+          Change password
+        </CardTitle>
+        <form>
+          <div
+            className="m-2 form-group"
+          >
+            <label
+              htmlFor="password1"
+            >
+              New password
+            </label>
+            <input
+              className="custom-form-control"
+              id="password1"
+              name="password1"
+              onChange={[Function]}
+              placeholder="New password"
+              type="password"
+              value=""
+            />
+          </div>
+          <div
+            className="m-2 form-group"
+          >
+            <label
+              htmlFor="password2"
+            >
+              Repeat password
+            </label>
+            <input
+              className="custom-form-control"
+              id="password2"
+              name="password2"
+              onChange={[Function]}
+              placeholder="Password"
+              type="password"
+              value=""
+            />
+          </div>
+          <div
+            className="m-2 form-group"
+          >
+            <label
+              htmlFor="password"
+            >
+              Old password
+            </label>
+            <input
+              className="custom-form-control"
+              id="password"
+              name="password"
+              onChange={[Function]}
+              placeholder="Password"
+              type="password"
+              value=""
+            />
+          </div>
+        </form>
+        <button
+          className="btn btn-link align-self-end"
+          onClick={[Function]}
+        >
+          Change
+        </button>
+      </CardBody>
+    </Card>
+  </ModalBody>
+</Modal>
+`;

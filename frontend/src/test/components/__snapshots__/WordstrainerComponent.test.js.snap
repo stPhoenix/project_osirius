@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WordstrainerComponent should render correctly 1`] = `
+<Component>
+  <img
+    alt="matching"
+    src="matching.png"
+    style={
+      Object {
+        "height": "6rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-3 mb-4 mt-0"
+  >
+    Match word with translation.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    replace={false}
+    to="/wordstrainer/match"
+  >
+     Play
+  </Link>
+  <img
+    alt="matching"
+    className="mt-3"
+    src="matching.png"
+    style={
+      Object {
+        "height": "6rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-3 mb-4 mt-0"
+  >
+    Match translation with word.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    replace={false}
+    to="/wordstrainer/match/reverse"
+  >
+     Play
+  </Link>
+  <img
+    alt="typing"
+    className="mt-3"
+    src="typing.png"
+    style={
+      Object {
+        "height": "7rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-2 mb-4 mt-0"
+  >
+    Look at word and type translation.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    replace={false}
+    to="/wordstrainer/type"
+  >
+     Play
+  </Link>
+  <img
+    alt="typing"
+    className="mt-3"
+    src="typing.png"
+    style={
+      Object {
+        "height": "7rem",
+        "width": "auto",
+      }
+    }
+  />
+  <h4
+    className="opacity-50 text-center px-2 mb-4 mt-0"
+  >
+    Look at translation and type word.
+  </h4>
+  <Link
+    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    replace={false}
+    to="/wordstrainer/type/reverse"
+  >
+     Play
+  </Link>
+</Component>
+`;
