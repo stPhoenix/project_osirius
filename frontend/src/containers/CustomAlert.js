@@ -17,18 +17,11 @@ class CustomAlert extends Component {
         this.dispatch = this.props.dispatch;
         this.key = this.props.pk;
         this.onDismiss = this.onDismiss.bind(this);
-        this.onEntered = this.onEntered.bind(this);
         this.onExited = this.onExited.bind(this);
     };
     
     onDismiss() {
         this.dispatch(toggle_alert());
-    };
-    
-    onEntered() {
-      if (this.props.color){
-            setTimeout(this.onDismiss, 700);  
-        };  
     };
     
     onExited() {
