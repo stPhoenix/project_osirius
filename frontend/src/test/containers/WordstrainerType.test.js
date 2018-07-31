@@ -25,11 +25,4 @@ describe('WordstrainerType Container', () => {
         expect(container.instance().check_answer("Thank you", "Thank you")).toEqual(true);
     });
     
-    it('Should make api call for result play typing', () => {
-        container.setState({answer: play.answer.name});
-        container.instance().proceed_answer(eventData);
-        container.update();
-        expect(result_play_typing).toHaveBeenCalled();
-    });
-    
 });

@@ -2,11 +2,11 @@ import React from 'react';
 import WordstrainerMatch from '../../containers/WordstrainerMatch';
 import {shallow} from 'enzyme';
 import configureStore from 'redux-mock-store';
-import {play_matching, result_play_matching} from '../../api';
+import {play_matching, result_play_matching} from '../../api/0';
 import {api_call, classProps, play, eventData} from '../utils';
 
 
-jest.mock('../../api');
+jest.mock('../../api/0');
 
 describe('WordstrainerMatch Container', () => {
     const mockStore = configureStore();
@@ -22,6 +22,7 @@ describe('WordstrainerMatch Container', () => {
     });
     
     it('Should make api call for result play matching', () => {
+        container.setState({answer: {id: 1}});
         container.instance().proceed_answer(eventData);
         container.update();
         expect(result_play_matching).toHaveBeenCalled();
