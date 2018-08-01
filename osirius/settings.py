@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'web.apps.WebConfig',
     'corsheaders',
+    'telegram_bot.apps.Telegram_botConfig',
 ]
 
 SITE_ID = 1
