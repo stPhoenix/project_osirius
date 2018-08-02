@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class Bot:
-    def __init__(self):
+    def __init__(self, test=False):
         """Set LinguistHQ and destinations vars for message forwarding."""
         self.users = Student.objects.all()
         self.students = {}
@@ -44,9 +44,9 @@ class Bot:
 
         dp.add_error_handler(self.error)
 
-        updater.start_polling(poll_interval=1)
-
-        updater.idle()
+        if not test:
+            updater.start_polling(poll_interval=1)
+            updater.idle()
 
     def setup_destinations(self):
         """
@@ -71,13 +71,13 @@ class Bot:
             'global_words': self.global_words,
             'users': self.users,
         }
-        self.register = Register(**class_args)
+        self.registration = Register(**class_args)
         self.addwords = AddWords(**class_args)
         self.viewwords = ViewWords(**class_args)
         self.learnwords = LearnWords(**class_args)
         self.telegramlinker = TelegramLinker(**class_args)
         self.DESTINATIONS = dict(**self.DESTINATIONS,
-                                 **self.register.get_destinations(),
+                                 **self.registration.get_destinations(),
                                  **self.addwords.get_destinations(),
                                  **self.viewwords.get_destinations(),
                                  **self.learnwords.get_destinations(),
@@ -133,7 +133,8 @@ class Bot:
         try:
             student = self.students[str(update.effective_user.id)]
         except KeyError:
-            self.start()
+            self.start(bot, update)
+            return
         try:
             self.DESTINATIONS[student.destination](bot, update, student)
         except KeyError:
