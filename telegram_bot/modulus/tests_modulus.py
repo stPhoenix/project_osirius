@@ -1,5 +1,4 @@
 from django.test import TestCase
-from news.models import Article
 from linguist.models import Category, Language, GlobalWord, Word
 from users.models import Student
 from linguist.core import LinguistHQ
@@ -18,11 +17,6 @@ def get_user_word_pk():
 
 
 class Preparations():
-    def create_news(self):
-        for i in range(5):
-            article = Article.objects.create(title="test title", text="Article text")
-            article.save()
-
     def create_cats(self):
         Category.objects.create().save()
 
@@ -69,12 +63,19 @@ class MockData:
     test_text = ''
     message = None
     data = '0'
+    message_text = 'Thank you'
 
     def reply_text(self, text, **kwargs):
         self.test_text = text
+        print(self.test_text)
 
     def edit_text(self, text, **kwargs):
         self.test_text = text
+        print(self.test_text)
+
+    @property
+    def text(self):
+        return self.message_text
 
 
 class Update:
@@ -85,3 +86,49 @@ class Update:
         self.message = self.mock_data
         self.effective_user = self.mock_data
         self.callback_query = self.mock_data
+
+
+class TestAddwords(TestCase):
+    def setUp(self):
+        self.prep = Preparations()
+        self.prep.create_cats()
+        self.prep.create_langs()
+        self.prep.create_global_words()
+        self.prep.create_user()
+        self.update = Update()
+        self.bot = Bot(test=True)
+        self.bot.start(bot, self.update)
+        self.student = self.bot.students['42']
+
+    def test_add_words(self):
+        self.student.destination = 'Add words'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'How do you want to add word?[You can always go back to /menu]')
+        # self.assertEqual(self.update.message.test_text, '[You can always go back to /menu]')
+
+    def test_add_words_option(self):
+        self.student.destination = 'Add words option'
+        self.student.callback_data = ['Add word by typing']
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Enter foreign word[You can always go back to /menu]')
+
+        self.student.destination = 'Add words option'
+        self.student.callback_data = ['Choose word from presets']
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Choose category[You can always go back to /menu]')
+
+    def test_add_custom_word(self):
+        self.student.destination = 'Add custom word'
+        self.student.temp_data = {'word_name': 'おはよう', 'translation': 'good morning', 'pronunciation': 'ohayo'}
+        self.student.callback_data = ['Default']
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Word has been added[You can always go back to /menu]')
+
+    def test_add_word_translation(self):
+        self.student.destination = 'Add word translation'
+        self.bot.echo(bot, self.update)
+
+        self.assertEqual(self.student.temp_data['translation'], self.update.message.text)
+        self.assertEqual(self.update.message.test_text, 'Now choose category.[You can always go back to /menu]')
