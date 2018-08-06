@@ -63,7 +63,7 @@ class MockData:
     test_text = ''
     message = None
     data = '0'
-    message_text = 'Thank you'
+    text = 'Thank you'
 
     def reply_text(self, text, **kwargs):
         self.test_text = text
@@ -73,9 +73,8 @@ class MockData:
         self.test_text = text
         print(self.test_text)
 
-    @property
-    def text(self):
-        return self.message_text
+    def delete(self):
+        return
 
 
 class Update:
@@ -132,3 +131,37 @@ class TestAddwords(TestCase):
 
         self.assertEqual(self.student.temp_data['translation'], self.update.message.text)
         self.assertEqual(self.update.message.test_text, 'Now choose category.[You can always go back to /menu]')
+
+    def test_search_word(self):
+        self.update.message.text = 'ありがとう'
+        self.student.destination = 'Search word'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
+
+    def test_translation_option(self):
+        self.student.destination = 'Translation option'
+        self.student.callback_data = ['Yes', 'No']
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Enter your translation:[You can always go back to /menu]')
+
+        self.student.destination = 'Translation option'
+        self.update.callback_query.data = '1'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Now choose category.[You can always go back to /menu]')
+
+    def test_show_category_words(self):
+        self.student.destination = 'Show category words'
+        self.student.callback_data = ['Default']
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
+                                                        '\nPronunciation [No pronunciation]'
+                                                        '\nTranslation [Thank you]')
+
+    def test_add_from_global_word(self):
+        self.student.destination = 'Add from global word'
+        self.update.callback_query.data = '0'
+        self.student.temp_data = {'words': GlobalWord.objects.all()}
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Word(s) added[You can always go back to /menu]')
