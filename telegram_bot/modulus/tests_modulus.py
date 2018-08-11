@@ -54,8 +54,14 @@ class Preparations():
         user = Student.objects.get(username='test_user')
         hq = LinguistHQ(user)
         word = GlobalWord.objects.filter(name='ありがとう')[1]
-        for i in range(10):
-            hq.add_from_global_word(word)
+        hq.add_from_global_word(word)
+
+    def get_user_word(self):
+        return Word.objects.filter(name='ありがとう')[0]
+
+    def delete_user_words(self):
+        for word in Word.objects.all():
+            word.delete()
 
 
 class MockData:
@@ -165,3 +171,100 @@ class TestAddwords(TestCase):
         self.student.temp_data = {'words': GlobalWord.objects.all()}
         self.bot.echo(bot, self.update)
         self.assertEqual(self.update.message.test_text, 'Word(s) added[You can always go back to /menu]')
+
+
+class TestLearnwords(TestCase):
+    def setUp(self):
+        self.prep = Preparations()
+        self.prep.create_cats()
+        self.prep.create_langs()
+        self.prep.create_global_words()
+        self.prep.create_user()
+        self.update = Update()
+        self.bot = Bot(test=True)
+        self.bot.start(bot, self.update)
+        self.student = self.bot.students['42']
+
+    def test_learn_words(self):
+        self.student.destination = 'Learn words'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'No words to learn')
+
+        self.prep.create_user_words()
+        self.student.destination = 'Learn words'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
+                                                        '\nPronunciation [No pronunciation]'
+                                                        '\nTranslation [Thank you]\n[You can always go back to /menu]')
+
+    def test_learn_word_status(self):
+        self.prep.create_user_words()
+        self.student.destination = 'Learn word status'
+        self.student.temp_data = {'word': self.prep.get_user_word()}
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
+                                                        '\nPronunciation [No pronunciation]'
+                                                        '\nTranslation [Thank you]\n[You can always go back to /menu]')
+
+    def test_play_matching(self):
+        self.prep.delete_user_words()
+        self.student.destination = 'Play matching'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
+
+        self.student.destination = 'Play reversed matching'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
+
+        self.prep.create_user_words()
+        self.student.destination = 'Play matching'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'ありがとう[You can always go back to /menu]')
+
+        self.student.destination = 'Play reversed matching'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Thank you[You can always go back to /menu]')
+
+    def test_play_matching_result(self):
+        self.prep.delete_user_words()
+        self.prep.create_user_words()
+        self.student.destination = 'Play matching result'
+        self.student.temp_data = {'answer': self.prep.get_user_word()}
+        self.student.callback_data = ['Thank you']
+        self.update.callback_query.data = 0
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Right[You can always go back to /menu]')
+
+        self.student.destination = 'Play matching result'
+        self.student.temp_data = {'answer': self.prep.get_user_word()}
+        self.student.callback_data = ['sdgdrfgdsf']
+        self.update.callback_query.data = 0
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Wrong: Thank you[You can always go back to /menu]')
+
+    def test_typing(self):
+        self.prep.delete_user_words()
+        self.prep.create_user_words()
+        self.student.destination = 'Play typing'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'ありがとう[You can always go back to /menu]')
+
+        self.student.destination = 'Play reversed typing'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Thank you[You can always go back to /menu]')
+
+    def test_play_typing_result(self):
+        self.prep.delete_user_words()
+        self.prep.create_user_words()
+        self.student.destination = 'Play typing result'
+        self.student.temp_data = {'answer': self.prep.get_user_word()}
+        self.update.message.text = 'Thank you'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Right[You can always go back to /menu]')
+
+        self.student.destination = 'Play matching result'
+        self.student.temp_data = {'answer': self.prep.get_user_word()}
+        self.update.message.text = 'kjkdjf'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Wrong: Thank you[You can always go back to /menu]')
