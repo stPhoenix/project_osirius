@@ -2,7 +2,7 @@ from telegram_bot.utils import BotUserHandler, restricted, make_button_list, bui
 from users.models import Student
 from telegram import InlineKeyboardMarkup
 from telegram_bot.modulus.base import BaseModule
-
+from linguist.core import LinguistHQ
 
 class Register(BaseModule):
     def setup_destinations(self):
@@ -42,11 +42,11 @@ class Register(BaseModule):
                                            telegram=student.temp_data['username'])
         learn_language = self.langs.get(name=student.temp_data['current_language'])
         learn_language.students.add(user)
-        self.users = Student.objects.all()
-        self.students[str(student.temp_data['username'])] = BotUserHandler(student=user)
+        student.HQ = LinguistHQ(student=student)
+        student.student = user
         update.message.edit_text('Your username: %s \n'
                                  'Your password: %s \n'
                                  'You will need it in future web version. So write it somewhere in safe place. \n'
                                  'And DELETE this message for security purposes.'
                                  % (user.username, password), reply_markup=None)
-        self.dispatch_destination(bot, update, self.students[str(student.temp_data['username'])], 'Menu')
+        self.dispatch_destination(bot, update, student, 'Menu')

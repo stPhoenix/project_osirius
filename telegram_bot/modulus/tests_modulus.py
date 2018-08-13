@@ -73,11 +73,11 @@ class MockData:
 
     def reply_text(self, text, **kwargs):
         self.test_text = text
-        print(self.test_text)
+        #print(self.test_text)
 
     def edit_text(self, text, **kwargs):
         self.test_text = text
-        print(self.test_text)
+        #print(self.test_text)
 
     def delete(self):
         return
@@ -268,3 +268,36 @@ class TestLearnwords(TestCase):
         self.update.message.text = 'kjkdjf'
         self.bot.echo(bot, self.update)
         self.assertEqual(self.update.message.test_text, 'Wrong: Thank you[You can always go back to /menu]')
+
+
+class TestRegister(TestCase):
+    def setUp(self):
+        self.bot = Bot(test=True)
+        self.bot.students = {'42': BotUserHandler()}
+        self.student = self.bot.students['42']
+        self.update = Update()
+        self.prep = Preparations()
+        self.prep.create_langs()
+
+    def test_register_first_name(self):
+        self.student.destination = 'Register first name'
+        self.update.message.text = 'User'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Okay User. Now choose your home language')
+
+    def test_register_home_language(self):
+        self.student.destination = 'Register home language'
+        self.student.callback_data = ['English']
+        self.update.callback_query.data = '0'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.callback_query.message.test_text, ' -:- ')
+
+    def test_register_current_language(self):
+        self.student.destination = 'Register current language'
+        self.student.callback_data = ['Japanese']
+        self.update.callback_query.data = '0'
+        self.student.temp_data = {'username': 42,
+                                  'first_name': 'User',
+                                  'home_language': 'English'}
+        self.bot.dispatch_destination(bot, self.update, self.student, 'Register current language')
+        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
