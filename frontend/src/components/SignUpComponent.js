@@ -48,6 +48,13 @@ export const SignUpComponent = (props) => {
                      {props.langs.map((lang) => (<option key={lang.name+"1"}>{lang.name}</option>))}
                 </select>
             </div>
+            <div className="m-2 form-group">
+                <label className="m-checkbox-container d-flex align-items-center">
+                    <input name="terms_check" onChange={props.handleCheck} type="checkbox" />
+                    <span className="m-checkbox"></span>
+			        <h6 className="ml-4 mb-0 pl-1">I agree terms of use</h6>
+                </label>
+            </div>
 			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.click}>SignUp</button>
 		</form>
     );

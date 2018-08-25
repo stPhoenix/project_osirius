@@ -24,11 +24,13 @@ class SignUp extends Component {
 			first_name:"Noname",
 			home_language:"",
 			current_language:"",
-			langs:[]
+			langs:[],
+			terms_check: false,
 		};
 		this.dispatch = this.props.dispatch;
 		this.handleChange = this.handleChange.bind(this);
 		this.register = this.register.bind(this);
+		this.handleCheck = this.handleCheck.bind(this);
 	};
 	
 	componentDidMount(){
@@ -45,9 +47,17 @@ class SignUp extends Component {
 	handleChange(e){
 		this.setState({[e.target.name]:e.target.value});
 	};
+
+	handleCheck(e) {
+        this.setState({terms_check: e.target.checked});
+    };
 	
 	register(e){
 		e.preventDefault();
+		if (!this.state.terms_check) {
+		    this.dispatch(add_alert({color:"danger", text:"Please agree with terms of use."}));
+		    return;
+		}
 		this.dispatch(add_alert());
 		sign_up(this.state)
             .then(api_response => {
@@ -69,7 +79,7 @@ class SignUp extends Component {
 			return (<Redirect to="/news" />);
 		}	
 		return (
-			<SignUpComponent {...this.state} handleChange={this.handleChange} click={this.register}  />
+			<SignUpComponent {...this.state} handleChange={this.handleChange} click={this.register} handleCheck={this.handleCheck}  />
 		);
 	};
 };

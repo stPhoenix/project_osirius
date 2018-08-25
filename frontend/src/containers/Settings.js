@@ -113,7 +113,7 @@ class Settings extends Component {
       const modal = !this.state.modal;
       this.setState({modal});  
     };
-    
+
 	render(){
 		if(!this.props.auth.isAuthenticated){
 			return (<Redirect to="/news" />);

@@ -31,6 +31,7 @@ describe('Settings Container', () => {
     });
     
     it('Should make api call for sign up', () => {
+        container.instance().setState({terms_check: true});
         container.instance().register(eventData);
         container.update();
         expect(sign_up).toHaveBeenCalled();

@@ -9,21 +9,20 @@ import {rootReducers} from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ScrollMain from './containers/ScrollMain';
 
-
-
-const logger = store => next => action => {
-  console.group(action.type)
-  console.info('dispatching', action)
-  let result = next(action)
-  console.log('next state', store.getState())
-  console.groupEnd(action.type)
-  return result
+let logger;
+if (process.env.NODE_ENV === 'development') {
+    console.log("Test env "+process.env.REACT_APP_TEST_ENV);
+    logger = store => next => action => {
+        console.group(action.type)
+        console.info('dispatching', action)
+        let result = next(action)
+        console.log('next state', store.getState())
+        console.groupEnd(action.type)
+        return result
+    }
 }
 
 const store = createStore(rootReducers, applyMiddleware(logger));
-
-console.log(store.getState());
-console.log("Test env "+process.env.REACT_APP_TEST_ENV);
 
 ReactDOM.render(<Provider store={store}>
                     <BrowserRouter>

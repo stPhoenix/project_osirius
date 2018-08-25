@@ -56,9 +56,10 @@ export const AppComponent = () => {
                 </Row>
             </Col>
         </Row>
-        <Row className="d-flex flex-column">
+        <Row className="d-flex theme-dark">
             <Col xs="12">
-                <footer>
+                <footer className="d-flex justify-content-end align-items-end mt-1">
+                    <p className="mb-0">Copyright 2018 Linguint.pro</p>
                 </footer>
             </Col>
         </Row>
