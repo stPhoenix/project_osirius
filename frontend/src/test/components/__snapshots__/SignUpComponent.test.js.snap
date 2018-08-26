@@ -140,7 +140,13 @@ exports[`SignUpComponent should render correctly 1`] = `
       <h6
         className="ml-4 mb-0 pl-1"
       >
-        I agree terms of use
+        I agree with 
+        <Link
+          replace={false}
+          to="/privacy_policy"
+        >
+          Privacy policy
+        </Link>
       </h6>
     </label>
   </div>

@@ -13,6 +13,7 @@ def get_user_word_pk():
     pk = str(Word.objects.filter(student=user)[0].pk)
     return pk
 
+
 class Preparations():
     def create_news(self):
         for i in range(5):
@@ -235,3 +236,18 @@ class TestSearchWord(TestCase):
         response = self.client.post(api_url+'/search/word/', {'word': 'ありがとう'})
         self.assertTrue(response.status_code == 200)
         self.assertContains(response, 'Thank you')
+
+
+class TestDeleteUser(TestCase):
+    def setUp(self):
+        global token
+        prep = Preparations()
+        prep.create_langs()
+        prep.create_user(self.client)
+        self.client = Client(**{'HTTP_AUTHORIZATION': token})
+
+    def test_delete_user(self):
+        user = Student.objects.get(username='test_user')
+        response = self.client.delete(api_url+'/user/delete/'+str(user.pk)+'/')
+        self.assertTrue(response.status_code == 204, response.status_code)
+        self.assertTrue(len(Student.objects.all()) == 0)

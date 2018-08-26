@@ -223,3 +223,12 @@ export const get_learned_words = async (token) => {
         .catch((error) => (error_handler(api_response, error)));
     return api_response;
 };
+
+export const delete_user = async (pk, token) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.delete(`/user/delete/${pk}`, {"pk": pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
+
+};

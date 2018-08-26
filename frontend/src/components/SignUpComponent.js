@@ -1,6 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const componentProps = {
     handleChange: PropTypes.func,
@@ -52,7 +53,7 @@ export const SignUpComponent = (props) => {
                 <label className="m-checkbox-container d-flex align-items-center">
                     <input name="terms_check" onChange={props.handleCheck} type="checkbox" />
                     <span className="m-checkbox"></span>
-			        <h6 className="ml-4 mb-0 pl-1">I agree terms of use</h6>
+			        <h6 className="ml-4 mb-0 pl-1">I agree with <Link to="/privacy_policy">Privacy policy</Link></h6>
                 </label>
             </div>
 			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.click}>SignUp</button>

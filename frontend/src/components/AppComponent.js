@@ -10,13 +10,15 @@ import News from '../containers/News';
 import Logout from '../containers/Logout';
 import SignUp from '../containers/SignUp';
 import Settings from '../containers/Settings';
-import {AddwordsComponent, MywordsComponent, WordstrainerComponent, AboutComponent, GetStartedComponent} from '../components';
+import {AddwordsComponent, MywordsComponent, WordstrainerComponent, AboutComponent, GetStartedComponent, PrivacyPolicyComponent, CookiePolicyComponent, DataCollectionComponent, FooterComponent} from '../components';
 import Learnwords from '../containers/Learnwords';
+import Policy from '../containers/Policy';
 
 
 export const AppComponent = () => {
         return (
       <Container fluid className="bg-first">
+        <Policy />
         <Row className="d-flex flex-column">
             <Col xs="12" className="px-0" style={{zIndex:1}}>
                 <header className="theme-dark px-4 py-2">
@@ -47,6 +49,10 @@ export const AppComponent = () => {
 				                <Route path="/wordstrainer" component={WordstrainerComponent} />
                                 <Route path="/about" component={AboutComponent} />
                                 <Route path="/getstarted" component={GetStartedComponent} />
+                                <Route path="/privacy_policy" component={PrivacyPolicyComponent} />
+                                <Route path="/cookie_policy" component={CookiePolicyComponent} />
+                                <Route path="/data_collection" component={DataCollectionComponent} />
+
 
                             </Switch>
                             </section>
@@ -58,9 +64,7 @@ export const AppComponent = () => {
         </Row>
         <Row className="d-flex theme-dark">
             <Col xs="12">
-                <footer className="d-flex justify-content-end align-items-end mt-1">
-                    <p className="mb-0">Copyright 2018 Linguint.pro</p>
-                </footer>
+                <FooterComponent />
             </Col>
         </Row>
       </Container>

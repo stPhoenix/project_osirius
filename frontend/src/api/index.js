@@ -22,6 +22,7 @@ import {
     learn_again_word,
     get_learned_words,
     delete_word,
+    delete_user,
 } from './0';
 
 export {
@@ -48,4 +49,5 @@ export {
     learn_again_word,
     get_learned_words,
     delete_word,
+    delete_user,
 };

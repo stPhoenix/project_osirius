@@ -3,6 +3,7 @@ import './AppComponent.css';
 import { UncontrolledTooltip } from 'reactstrap';
 import {SettingsModalComponent, ContentComponent} from '../components';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const componentProps = {
     handleChange: PropTypes.func,
@@ -59,7 +60,14 @@ export const SettingsComponent = (props) => {
                 </select>
             </div>
 			<button className="custom-btn theme-primary px-3 mb-2 mr-2 align-self-end" onClick={props.add_learn_language}>Add</button>
-			
+            <div className="m-2 form-group">
+                <label className="m-checkbox-container d-flex align-items-center">
+                    <input name="terms_check" onChange={props.handleCheck} type="checkbox" checked={props.terms_check} />
+                    <span className="m-checkbox"></span>
+			        <h6 className="ml-4 mb-0 pl-1">I agree with <Link to="/privacy_policy">Privacy policy</Link></h6>
+                </label>
+            </div>
+            <button className="btn-danger custom-btn align-self-start px-3 mb-2 ml-2" onClick={props.delete_user}>Delete user</button>
 			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.click}>Save</button>
             <SettingsModalComponent change_password={props.change_password}
                                     toggle_modal={props.toggle_modal}

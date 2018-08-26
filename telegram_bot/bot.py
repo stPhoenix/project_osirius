@@ -36,7 +36,7 @@ class Bot:
         dp.add_handler(CommandHandler("menu", self.menu))
         dp.add_handler(CommandHandler("delete", self.delete))
         dp.add_handler(CommandHandler("link", self.link_telegram))
-        dp.add_handler(CommandHandler("regiter", self.register))
+        dp.add_handler(CommandHandler("register", self.register))
 
         dp.add_handler(MessageHandler(Filters.text, self.echo))
 
@@ -61,6 +61,7 @@ class Bot:
             'Change learn language': self.change_learn_language,
             'Add more learn language': self.add_more_learn_language,
             'Change language': self.change_language,
+            'Start': self.start,
         }
         class_args = {
             'langs': self.langs,

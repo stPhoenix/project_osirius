@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {add_alert} from '../actions/alert';
-import {update_user, get_langs, change_password} from '../api';
-import {login} from '../actions/auth';
+import {update_user, get_langs, change_password, delete_user as api_delete_user} from '../api';
+import {login, logout} from '../actions/auth';
 import {SettingsComponent} from '../components';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router';
@@ -28,6 +28,7 @@ class Settings extends Component {
             password1: "",
             password2: "",
             password: "",
+            terms_check: this.props.auth.user.terms_check,
 		};
 		this.dispatch = this.props.dispatch;
         this.token = this.props.auth.token;
@@ -38,6 +39,8 @@ class Settings extends Component {
         this.set_active = this.set_active.bind(this);
         this.add_learn_language = this.add_learn_language.bind(this);
         this.toggle_modal = this.toggle_modal.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.delete_user = this.delete_user.bind(this);
 	};
 	
 	componentDidMount(){
@@ -58,7 +61,11 @@ class Settings extends Component {
 	save(e){
 		e.preventDefault();
 		this.dispatch(add_alert());
-		update_user({username: this.state.username,
+        if(!this.state.terms_check) {
+            this.delete_user(e);
+        }
+        else {
+          update_user({username: this.state.username,
                      email: this.state.email,
                      first_name: this.state.first_name,
                      language_set: this.state.language_set,
@@ -73,7 +80,8 @@ class Settings extends Component {
                 color = "danger";
             }
             this.dispatch(add_alert({color:color, text:api_response.message}));  
-        });
+        });  
+        };
 	};
     
     change_password(e) {
@@ -113,6 +121,30 @@ class Settings extends Component {
       const modal = !this.state.modal;
       this.setState({modal});  
     };
+    
+    handleCheck(e){
+        const old_state = this.state.terms_check;
+        this.setState({terms_check: !old_state});    
+        if(!old_state === false) {
+            this.dispatch(add_alert({color:"warning", text:"If you don't agree with Privacy Policy your account will be deleted"}));
+        };
+    };
+    
+    delete_user(e){
+        e.preventDefault();
+        api_delete_user(this.props.auth.user.pk, this.token, this.dispatch)
+                .then(api_response => {
+                    let color = "primary";
+                    if (api_response.result === true){
+                        color = "success";
+                        this.dispatch(logout());
+                    } else {
+                        color = "danger";
+                    };
+                    this.dispatch(add_alert({color:color, text:api_response.message}));  
+                });  
+        
+    }
 
 	render(){
 		if(!this.props.auth.isAuthenticated){
@@ -125,7 +157,9 @@ class Settings extends Component {
                                                add_learn_language={this.add_learn_language}
                                                delete_language={this.delete_language}
                                                set_active={this.set_active}
-                                               toggle_modal={this.toggle_modal}/>
+                                               toggle_modal={this.toggle_modal}
+                                               handleCheck={this.handleCheck}
+                                               delete_user={this.delete_user}/>
 		);
 	};
 };

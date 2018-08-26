@@ -8,3 +8,4 @@ class Student(AbstractUser):
     home_language = models.CharField(max_length=10, default='English')
     current_language = models.CharField(max_length=10, default='English')
     telegram = models.IntegerField(default=0)
+    terms_check = models.BooleanField(default=True)

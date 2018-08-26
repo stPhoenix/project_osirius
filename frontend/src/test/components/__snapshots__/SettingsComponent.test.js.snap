@@ -99,6 +99,37 @@ exports[`SettingsComponent should render correctly 1`] = `
     >
       Add
     </button>
+    <div
+      className="m-2 form-group"
+    >
+      <label
+        className="m-checkbox-container d-flex align-items-center"
+      >
+        <input
+          name="terms_check"
+          type="checkbox"
+        />
+        <span
+          className="m-checkbox"
+        />
+        <h6
+          className="ml-4 mb-0 pl-1"
+        >
+          I agree with 
+          <Link
+            replace={false}
+            to="/privacy_policy"
+          >
+            Privacy policy
+          </Link>
+        </h6>
+      </label>
+    </div>
+    <button
+      className="btn-danger custom-btn align-self-start px-3 mb-2 ml-2"
+    >
+      Delete user
+    </button>
     <button
       className="custom-btn theme-primary align-self-center px-3"
       onClick={[Function]}

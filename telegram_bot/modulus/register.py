@@ -4,6 +4,7 @@ from telegram import InlineKeyboardMarkup
 from telegram_bot.modulus.base import BaseModule
 from linguist.core import LinguistHQ
 
+
 class Register(BaseModule):
     def setup_destinations(self):
         self.DESTINATIONS = {
@@ -11,6 +12,7 @@ class Register(BaseModule):
             'Register home language': self.register_home_language,
             'Register current language': self.register_current_language,
             'Create user': self.create_user,
+            'Accept privacy policy': self.accept_privacy_policy,
         }
 
     def register_first_name(self, bot, update, student):
@@ -29,8 +31,21 @@ class Register(BaseModule):
         update.callback_query.message.reply_text(text=' -:- ',reply_markup=reply_markup)
 
     def register_current_language(self, bot, update, student):
+        student.destination = 'Accept privacy policy'
         student.temp_data['current_language'] = student.callback_data[int(update.callback_query.data)]
-        self.create_user(bot, update, student)
+        student.callback_data = ['Yes', 'No']
+        reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
+        update.callback_query.message.edit_text(text='To use our service you need to accept Privacy Policy.'
+                                                     ' You can read it at https://linguint.pro/privacy_policy . '
+                                                     'Do you accept Privacy Policy?', reply_markup=reply_markup)
+
+    def accept_privacy_policy(self, bot, update, student):
+        choice = student.callback_data[int(update.callback_query.data)]
+        if choice == 'Yes':
+            student.temp_data['terms_check'] = True
+            self.create_user(bot, update, student)
+        else:
+            update.callback_query.message.edit_text(text='Registration aborted. Write /start for other options.')
 
     def create_user(self, bot, update, student):
         password = Student.objects.make_random_password()
@@ -39,14 +54,15 @@ class Register(BaseModule):
                                            first_name=student.temp_data['first_name'],
                                            home_language=student.temp_data['home_language'],
                                            current_language=student.temp_data['current_language'],
-                                           telegram=student.temp_data['username'])
+                                           telegram=student.temp_data['username'],
+                                           terms_check=student.temp_data['terms_check'])
         learn_language = self.langs.get(name=student.temp_data['current_language'])
         learn_language.students.add(user)
         student.HQ = LinguistHQ(student=student)
         student.student = user
         update.message.edit_text('Your username: %s \n'
                                  'Your password: %s \n'
-                                 'You will need it in future web version. So write it somewhere in safe place. \n'
+                                 'You will need it to use at https://linguint.pro . So write it somewhere in safe place. \n'
                                  'And DELETE this message for security purposes.'
                                  % (user.username, password), reply_markup=None)
         self.dispatch_destination(bot, update, student, 'Menu')

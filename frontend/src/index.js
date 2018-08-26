@@ -9,7 +9,7 @@ import {rootReducers} from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ScrollMain from './containers/ScrollMain';
 
-let logger;
+let logger = null;
 if (process.env.NODE_ENV === 'development') {
     console.log("Test env "+process.env.REACT_APP_TEST_ENV);
     logger = store => next => action => {
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
     }
 }
 
-const store = createStore(rootReducers, applyMiddleware(logger));
+const store = logger === null ? createStore(rootReducers) : createStore(rootReducers, applyMiddleware(logger));
 
 ReactDOM.render(<Provider store={store}>
                     <BrowserRouter>

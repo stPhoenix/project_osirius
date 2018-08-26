@@ -296,8 +296,24 @@ class TestRegister(TestCase):
         self.student.destination = 'Register current language'
         self.student.callback_data = ['Japanese']
         self.update.callback_query.data = '0'
+        self.bot.dispatch_destination(bot, self.update, self.student, 'Register current language')
+        self.assertEqual(self.update.callback_query.message.test_text, 'To use our service you need to accept Privacy Policy.'
+                                                        ' You can read it at https://linguint.pro/privacy_policy . '
+                                                         'Do you accept Privacy Policy?')
+
+    def test_accept_privacy_policy(self):
+        self.student.destination = 'Accept privacy policy'
+        self.student.callback_data = ['Yes', 'No']
+        self.update.callback_query.data = '0'
         self.student.temp_data = {'username': 42,
                                   'first_name': 'User',
                                   'home_language': 'English'}
-        self.bot.dispatch_destination(bot, self.update, self.student, 'Register current language')
-        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.message.test_text, 'Sorry! To access this command you need to be registered.Print /start')
+
+        self.student.destination = 'Accept privacy policy'
+        self.student.callback_data = ['Yes', 'No']
+        self.update.callback_query.data = '1'
+        self.bot.echo(bot, self.update)
+        self.assertEqual(self.update.callback_query.message.test_text, 'Registration aborted. Write /start for other'
+                                                                       ' options.')

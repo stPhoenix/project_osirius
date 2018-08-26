@@ -22,6 +22,10 @@ import {WordstrainerTypeComponent} from './WordstrainerTypeComponent';
 import {WordstrainerMatchComponent} from './WordstrainerMatchComponent';
 import {AboutComponent} from './AboutComponent';
 import {GetStartedComponent} from './GetStartedComponent';
+import {PrivacyPolicyComponent} from './PrivacyPolicyComponent.js';
+import {CookiePolicyComponent} from './CookiePolicyComponent.js';
+import {DataCollectionComponent} from './DataCollectionComponent.js';
+import {FooterComponent} from './FooterComponent.js';
 
 
 export {
@@ -48,5 +52,9 @@ export {
 	WordstrainerTypeComponent,
     WordstrainerMatchComponent,
     AboutComponent,
-    GetStartedComponent
+    GetStartedComponent,
+    PrivacyPolicyComponent,
+    CookiePolicyComponent,
+    DataCollectionComponent,
+    FooterComponent,
 };

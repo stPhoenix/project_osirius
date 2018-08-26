@@ -1,20 +1,20 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet, ViewSet
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
 from news.models import Article
 from linguist.models import Category, GlobalWord, Language, Word
 from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
-                            CustomWordSerializer, SearchWordResultSerializer, WordSerializer, PlaySerializer
-from linguist.core import LinguistHQ
+                            CustomWordSerializer, SearchWordResultSerializer, WordSerializer, PlaySerializer,\
+                            UserDetailsSerializer
 from api.utils import SearchWordResult, LinguistInitializer, Play
-from api.permissions import IsOwnerOrReadOnly
+from api.permissions import IsOwnerOrReadOnly, IsCanDeleteSelf
 from random import randint
+from users.models import Student
 
 
 class News(ReadOnlyModelViewSet):
@@ -198,3 +198,9 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         name = word.name if bool(request.data['reverse']) is True else word.translation
         self.linguist.update_typing_field(word, self.check_answer(name, answer), bool(request.data['reverse']))
         return Response(status=status.HTTP_200_OK)
+
+
+class DeleteUser(DestroyAPIView):
+    serializer_class = UserDetailsSerializer
+    permission_classes = (IsAuthenticated, IsCanDeleteSelf)
+    queryset = Student.objects.all()

@@ -6,6 +6,7 @@ exports[`AppComponent should render correctly 1`] = `
   fluid={true}
   tag="div"
 >
+  <Policy />
   <Row
     className="d-flex flex-column"
     tag="div"
@@ -159,6 +160,18 @@ exports[`AppComponent should render correctly 1`] = `
                   component={[Function]}
                   path="/getstarted"
                 />
+                <Route
+                  component={[Function]}
+                  path="/privacy_policy"
+                />
+                <Route
+                  component={[Function]}
+                  path="/cookie_policy"
+                />
+                <Route
+                  component={[Function]}
+                  path="/data_collection"
+                />
               </Switch>
             </section>
           </main>
@@ -183,15 +196,7 @@ exports[`AppComponent should render correctly 1`] = `
       }
       xs="12"
     >
-      <footer
-        className="d-flex justify-content-end align-items-end mt-1"
-      >
-        <p
-          className="mb-0"
-        >
-          Copyright 2018 Linguint.pro
-        </p>
-      </footer>
+      <Component />
     </Col>
   </Row>
 </Container>

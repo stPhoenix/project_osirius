@@ -19,7 +19,9 @@ export const classProps = {
                                                                                email: "test@mail.com",
                                                                                language_set: langs,
                                                                                first_name: "user",
-                                                                               current_language: "Japanese",         }},
+                                                                               current_language: "Japanese",
+                                                                               terms_check: true,
+                                                                              }},
                           };
 
 export const play = {answer: {name: "ありがとう",

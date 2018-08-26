@@ -55,7 +55,7 @@ class SignUp extends Component {
 	register(e){
 		e.preventDefault();
 		if (!this.state.terms_check) {
-		    this.dispatch(add_alert({color:"danger", text:"Please agree with terms of use."}));
+		    this.dispatch(add_alert({color:"danger", text:"Please agree with privacy policy."}));
 		    return;
 		}
 		this.dispatch(add_alert());

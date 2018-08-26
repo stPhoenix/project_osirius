@@ -31,6 +31,7 @@ urlpatterns = [
     path('langs/', Langs.as_view(), name='langs'),
     path('add/global/', GlobalWordAdd.as_view(),name='add_global'),
     path('add/custom/', CustomWordAdd.as_view(), name='add_custom'),
-    path('search/word/', SearchWord.as_view(), name='search_word')
+    path('search/word/', SearchWord.as_view(), name='search_word'),
+    path('user/delete/<int:pk>/', DeleteUser.as_view(), name='delete_user'),
 ]
 urlpatterns += router.urls

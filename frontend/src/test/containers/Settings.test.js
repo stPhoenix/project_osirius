@@ -2,7 +2,7 @@ import React from 'react';
 import Settings from '../../containers/Settings';
 import {shallow} from 'enzyme';
 import configureStore from 'redux-mock-store';
-import {update_user, get_langs, change_password} from '../../api';
+import {update_user, get_langs, change_password, delete_user} from '../../api';
 import {api_call, classProps, eventData, langs} from '../utils';
 
 
@@ -12,6 +12,7 @@ describe('Settings Container', () => {
     const mockStore = configureStore();
     let store =  mockStore(classProps);
     update_user.mockReturnValue(api_call("Ok"));
+    delete_user.mockReturnValue(api_call("Ok"));
     change_password.mockReturnValue(api_call("Ok"));
     get_langs.mockReturnValue(api_call(langs));
     const container = shallow(<Settings store={store} />).dive();
@@ -34,6 +35,20 @@ describe('Settings Container', () => {
         container.instance().save(eventData);
         container.update();
         expect(update_user).toHaveBeenCalled();
+    });
+    
+    it('Should make api call for delete user', () => {
+        container.instance().delete_user(eventData);
+        container.update();
+        expect(delete_user).toHaveBeenCalled();
+    });
+    
+    it('Should make api call for delete user if save called with terms_check false', () => {
+        container.setState({terms_check: false});
+        container.update();
+        container.instance().save(eventData);
+        container.update();
+        expect(delete_user).toHaveBeenCalled();
     });
     
     it('Should make api call for change password', () => {

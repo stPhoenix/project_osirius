@@ -13,3 +13,9 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         return obj.student == request.user
+
+
+class IsCanDeleteSelf(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return obj == request.user
