@@ -69,6 +69,25 @@ exports[`SettingsComponent should render correctly 1`] = `
       className="m-2 form-group"
     >
       <label
+        htmlFor="home_language"
+      >
+        Your language
+      </label>
+      <select
+        className="custom-form-control"
+        id="home_language"
+        name="home_language"
+        onChange={[Function]}
+      >
+        <option
+          key="undefined21"
+        />
+      </select>
+    </div>
+    <div
+      className="m-2 form-group"
+    >
+      <label
         htmlFor="language_set"
       >
         Learn languages
