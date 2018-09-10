@@ -23,6 +23,7 @@ const componentProps = {
     password2: PropTypes.string,
     password: PropTypes.string,
     modal: PropTypes.bool,
+    home_language: PropTypes.string
 };
 
 export const SettingsComponent = (props) => {
@@ -41,6 +42,13 @@ export const SettingsComponent = (props) => {
             <div className="m-2 form-group">
                 <label htmlFor="firstname">Change your name</label>
                 <input className="custom-form-control" type="text" name="first_name" id="firstname" placeholder="Your name" onChange={props.handleChange} value={props.first_name} />
+            </div>
+            <div className="m-2 form-group">
+                <label htmlFor="home_language">Your language</label>
+                <select className="custom-form-control" id="home_language" onChange={props.handleChange} name="home_language">
+                    <option key={props.home_language+"21"}>{props.home_language}</option>
+                    {props.langs.map((lang) => (<option key={lang.name+"2"}>{lang.name}</option>))}
+                </select>
             </div>
             <div className="m-2 form-group">
                 <label htmlFor="language_set">Learn languages</label>

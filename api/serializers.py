@@ -128,7 +128,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        fields = ('pk', 'username', 'email', 'first_name', 'language_set', 'current_language', 'terms_check')
+        fields = ('pk', 'username', 'email', 'first_name', 'language_set', 'current_language', 'terms_check', 'home_language')
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)

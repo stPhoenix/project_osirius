@@ -80,7 +80,7 @@ export const change_password = async (password1, password2, password, token) => 
 
 export const get_user = async (token) => {
     let user;
-    await axios.get("/auth/user", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get("/auth/user/", {headers:{AUTHORIZATION:`TOKEN ${token}`}})
         .then(response => (user=response.data))
         .catch(error => (user=undefined));
     return user;
@@ -120,7 +120,7 @@ export const get_cats = async (token) => {
 
 export const get_words_by_cat = async (cat_id, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get(`/cats/${cat_id}/words`, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get(`/cats/${cat_id}/words/`, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response; 
@@ -201,7 +201,7 @@ export const get_user_words = async (token) => {
 
 export const delete_word = async (word_pk, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.delete(`/user/words/${word_pk}`, {"pk": word_pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.delete(`/user/words/${word_pk}/`, {"pk": word_pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response;
@@ -218,7 +218,7 @@ export const learn_again_word = async (pk, token) => {
 
 export const get_learned_words = async (token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get("/user/words/learned", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get("/user/words/learned/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response;
@@ -226,7 +226,7 @@ export const get_learned_words = async (token) => {
 
 export const delete_user = async (pk, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.delete(`/user/delete/${pk}`, {"pk": pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.delete(`/user/delete/${pk}/`, {"pk": pk, headers: {AUTHORIZATION:`TOKEN ${token}`}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response;

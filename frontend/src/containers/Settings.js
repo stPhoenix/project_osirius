@@ -29,6 +29,7 @@ class Settings extends Component {
             password2: "",
             password: "",
             terms_check: this.props.auth.user.terms_check,
+            home_language: this.props.auth.user.home_language,
 		};
 		this.dispatch = this.props.dispatch;
         this.token = this.props.auth.token;
@@ -75,7 +76,7 @@ class Settings extends Component {
             let color = "primary";
             if (api_response.result === true){
                 color = "success";
-                this.dispatch(login(api_response.data.token, api_response.data.user));
+                this.dispatch(login(this.token, api_response.data));
             } else {
                 color = "danger";
             }
