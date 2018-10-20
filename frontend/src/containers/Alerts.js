@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import CustomAlert from './CustomAlert';
 import {connect} from 'react-redux';
-import {Alert} from 'reactstrap';
+import {UncontrolledAlert} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 
@@ -12,13 +11,13 @@ const classProps = {
 class Alerts extends Component {
     render(){
         const {alerts} = this.props;
-        if (alerts.length === 0){
-            return <Alert color="primary" style={{top:"-50px", opacity:"0"}} className="w-100 d-flex justify-content-center py-2 rounded-0"> Placeholder </Alert>;
-        }
-        else{
-            const {color, text, key} = this.props.alerts[0]; 
-            return (<CustomAlert color={color} text={text} key={key} pk={key} />);
-        }
+        return(
+            <div className="d-flex flex-column align-self-center fixed-bottom">
+                {alerts.map(alert => {
+                                        return (<UncontrolledAlert className="d-flex align-self-center justify-content-center py-2 my-1 rounded-0" key={alert.key} color={alert.color}>{alert.text}</UncontrolledAlert>)
+                                    })}
+            </div>
+        );
     }
 }
 

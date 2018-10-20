@@ -20,12 +20,13 @@ class CustomAlert extends Component {
         this.onExited = this.onExited.bind(this);
     };
     
-    onDismiss() {
-        this.dispatch(toggle_alert());
+    onDismiss(e) {
+        //this.dispatch(toggle_alert());
+        this.dispatch(delete_alert(this.key));
     };
     
     onExited() {
-        this.dispatch(delete_alert(this.key));
+        //this.dispatch(delete_alert(this.key));
         this.dispatch(toggle_alert());
     }
     
