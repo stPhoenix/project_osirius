@@ -2,6 +2,9 @@
 
 exports[`WordstrainerTypeComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Type
+  </h2>
   <h3>
     No words to play!
   </h3>

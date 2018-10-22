@@ -2,8 +2,11 @@
 
 exports[`LoginComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Login
+  </h2>
   <form
-    className="col-12 col-md-6 col-lg-4 d-flex flex-column"
+    className="d-flex flex-column"
   >
     <input
       className="m-2 custom-form-control"

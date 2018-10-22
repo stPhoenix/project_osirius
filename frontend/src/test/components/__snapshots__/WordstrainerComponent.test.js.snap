@@ -2,6 +2,9 @@
 
 exports[`WordstrainerComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Train words
+  </h2>
   <img
     alt="matching"
     src="matching.png"
@@ -18,7 +21,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     Match word with translation.
   </h4>
   <Link
-    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black"
     replace={false}
     to="/wordstrainer/match"
   >
@@ -41,7 +44,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     Match translation with word.
   </h4>
   <Link
-    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black"
     replace={false}
     to="/wordstrainer/match/reverse"
   >
@@ -53,7 +56,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     src="typing.png"
     style={
       Object {
-        "height": "7rem",
+        "height": "6rem",
         "width": "auto",
       }
     }
@@ -64,7 +67,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     Look at word and type translation.
   </h4>
   <Link
-    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black"
     replace={false}
     to="/wordstrainer/type"
   >
@@ -76,7 +79,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     src="typing.png"
     style={
       Object {
-        "height": "7rem",
+        "height": "6rem",
         "width": "auto",
       }
     }
@@ -87,7 +90,7 @@ exports[`WordstrainerComponent should render correctly 1`] = `
     Look at translation and type word.
   </h4>
   <Link
-    className="custom-btn theme-primary px-4 py-1 mb-3 black"
+    className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black"
     replace={false}
     to="/wordstrainer/type/reverse"
   >

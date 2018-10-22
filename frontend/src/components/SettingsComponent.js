@@ -29,7 +29,8 @@ const componentProps = {
 export const SettingsComponent = (props) => {
 	return	(
         <ContentComponent>
-	        <form className="col-12 col-md-8 col-lg-6 d-flex flex-column h-100 mb-4" >
+            <h2>Settings</h2>
+	        <form className="d-flex flex-column mb-4" >
             <div className="m-2 form-group">
                 <label htmlFor="username">Change username</label>
                 <input className="custom-form-control" type="text" name="username" id="username" placeholder="Username" onChange={props.handleChange} value={props.username} />

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackComponent should render correctly 1`] = `
+<section
+  className="row d-flex justify-content-center"
+>
+  <div
+    className="col-12 col-md-11 col-xl-7 d-flex flex-column my-4"
+  >
+    <h2
+      className="text-center"
+    >
+      Have something to say?
+    </h2>
+    <form>
+      <input
+        className="custom-form-control"
+        name="p_name"
+        onChange={[Function]}
+        placeholder="Your name"
+        type="text"
+      />
+      <input
+        className="custom-form-control my-2"
+        name="email"
+        onChange={[Function]}
+        placeholder="Your email"
+        type="email"
+      />
+      <textarea
+        className="custom-form-control"
+        name="p_text"
+        onChange={[Function]}
+        placeholder="Text"
+        rows="3"
+      />
+    </form>
+    <button
+      className="custom-btn btn-primary mx-auto mt-2 px-4 rounded-0"
+      onClick={[Function]}
+    >
+      Send
+    </button>
+  </div>
+</section>
+`;

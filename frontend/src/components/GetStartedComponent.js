@@ -6,7 +6,7 @@ import { Card, CardTitle, CardText, CardHeader, CardBody, CardColumns} from 'rea
 export const GetStartedComponent = () => {
     return (
     <ContentComponent>
-            <div className="row flex-column flex-lg-row px-0">
+            <h2>Get started</h2>
                 <CardColumns>
           <Card>
             <CardHeader>1. Sign Up</CardHeader>
@@ -50,7 +50,6 @@ export const GetStartedComponent = () => {
           </CardBody>
       </Card>
                 </CardColumns>
-            </div>
     </ContentComponent>
         );
 };

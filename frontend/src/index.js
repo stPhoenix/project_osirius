@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {AppComponent} from './components';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {rootReducers} from './reducers';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ScrollMain from './containers/ScrollMain';
 
 let logger = null;

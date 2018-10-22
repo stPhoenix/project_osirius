@@ -2,6 +2,7 @@ import React from 'react';
 import './AppComponent.css';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {ContentComponent} from '../components';
 
 const componentProps = {
     handleChange: PropTypes.func,
@@ -16,7 +17,9 @@ const componentProps = {
 
 export const SignUpComponent = (props) => {
     return (
-        <form className="col-10 d-flex flex-column h-100 mb-4" >
+    <ContentComponent>
+            <h2>Sign Up</h2>
+        <form className="d-flex flex-column mb-4" >
             <div className="m-2 form-group">
                 <label htmlFor="username">Username</label>
                 <input className="custom-form-control" type="text" name="username" id="username" placeholder="Username" onChange={props.handleChange} value={props.username} />
@@ -58,6 +61,7 @@ export const SignUpComponent = (props) => {
             </div>
 			<button className="custom-btn theme-primary align-self-center px-3" onClick={props.click}>SignUp</button>
 		</form>
+    </ContentComponent>
     );
 };
 

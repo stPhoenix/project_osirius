@@ -2,202 +2,203 @@
 
 exports[`AppComponent should render correctly 1`] = `
 <Container
-  className="bg-first"
+  className="bg-first px-0"
   fluid={true}
   tag="div"
 >
-  <Policy />
-  <Row
-    className="d-flex flex-column"
-    tag="div"
+  <div
+    className="fixed-bottom m-3 justify-content-end mb-5"
+    id="scrollToTop"
+    style={
+      Object {
+        "display": "flex",
+      }
+    }
   >
-    <Col
-      className="px-0"
-      style={
-        Object {
-          "zIndex": 1,
-        }
-      }
-      tag="div"
-      widths={
-        Array [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-        ]
-      }
-      xs="12"
+    <img
+      alt="Scroll To Top"
+      className="theme-dark p-2"
+      onClick={[Function]}
+      src="scroll-to-top.png"
+    />
+  </div>
+  <Policy />
+  <header
+    className="container-fluid sticky-top"
+  >
+    <section
+      className="row justify-content-center"
     >
-      <header
-        className="theme-dark px-4 py-2"
+      <div
+        className="col-12 col-lg-11 col-xl-7 theme-dark d-lg-flex shadow-sm"
       >
-        <img
-          alt="logo"
-          src="logo.png"
-          style={
-            Object {
-              "height": "2rem",
-              "width": "auto",
-            }
+        <Connect(NavBar) />
+      </div>
+    </section>
+  </header>
+  <section
+    className="container-fluid"
+  >
+    <div
+      className="row d-none d-lg-flex bg-banner mb-5"
+    >
+      <div
+        className="col-12 bg-overlay d-flex flex-column align-items-center font-exo-2bold text-white py-5"
+      >
+        <h1
+          className="display-4 mt-5"
+        >
+          HOW TO LEARN FOREIGN WORDS EASILY
+        </h1>
+        <h4
+          className="mb-5 mt-4"
+        >
+          1. Sign Up  2. Add words  3. Learn words  4. Train words  5. Repeat step 2
+        </h4>
+      </div>
+    </div>
+  </section>
+  <section
+    className="container-fluid"
+  >
+    <section
+      className="row d-flex d-lg-none"
+    >
+      <div
+        className="col-12 px-0"
+      >
+        <UncontrolledCarousel
+          autoPlay={true}
+          controls={true}
+          indicators={true}
+          items={
+            Array [
+              Object {
+                "altText": "",
+                "caption": "",
+                "src": "slide1.png",
+              },
+              Object {
+                "altText": "",
+                "caption": "",
+                "src": "slide2.png",
+              },
+              Object {
+                "altText": "",
+                "caption": "",
+                "src": "slide3.png",
+              },
+              Object {
+                "altText": "",
+                "caption": "",
+                "src": "slide4.png",
+              },
+            ]
           }
         />
-      </header>
-    </Col>
-    <Col
-      tag="div"
-      widths={
-        Array [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-        ]
-      }
-      xs="12"
+      </div>
+    </section>
+    <section
+      className="row parallax-bg-1 font-exo-2bold"
     >
-      <Row
-        className="flex-column flex-lg-row"
-        tag="div"
+      <div
+        className="col-12 bg-overlay d-flex justify-content-center px-0"
       >
-        <Col
-          className="px-0"
-          lg="3"
-          style={
-            Object {
-              "zIndex": 1,
-            }
-          }
-          tag="div"
-          widths={
-            Array [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl",
-            ]
-          }
-          xs="12"
+        <div
+          className="col-12 col-lg-3 col-xl-2 d-flex flex-column my-5"
         >
-          <section
-            className="theme-primary shadow-sm full-screen h-100"
+          <Link
+            className="btn btn-outline-white mb-2"
+            replace={false}
+            to="/addwords"
           >
-            <Connect(NavBar) />
-          </section>
-        </Col>
-        <Col
-          className="px-0"
-          lg="9"
-          tag="div"
-          widths={
-            Array [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl",
-            ]
-          }
-          xs="12"
-        >
-          <main
-            className="d-flex flex-column full-screen"
+            Add words
+          </Link>
+          <Link
+            className="btn btn-outline-white my-2"
+            replace={false}
+            to="/learnwords"
           >
-            <Connect(Alerts) />
-            <section
-              className="d-flex justify-content-center align-items-center"
-            >
-              <Switch>
-                <Route
-                  component={[Function]}
-                  exact={true}
-                  path="/"
-                />
-                <Route
-                  component={[Function]}
-                  path="/news"
-                />
-                <Route
-                  component={[Function]}
-                  path="/login"
-                />
-                <Route
-                  component={[Function]}
-                  path="/logout"
-                />
-                <Route
-                  component={[Function]}
-                  path="/signup"
-                />
-                <Route
-                  component={[Function]}
-                  path="/settings"
-                />
-                <Route
-                  component={[Function]}
-                  path="/addwords"
-                />
-                <Route
-                  component={[Function]}
-                  path="/mywords"
-                />
-                <Route
-                  component={[Function]}
-                  path="/learnwords"
-                />
-                <Route
-                  component={[Function]}
-                  path="/wordstrainer"
-                />
-                <Route
-                  component={[Function]}
-                  path="/about"
-                />
-                <Route
-                  component={[Function]}
-                  path="/getstarted"
-                />
-                <Route
-                  component={[Function]}
-                  path="/privacy_policy"
-                />
-                <Route
-                  component={[Function]}
-                  path="/cookie_policy"
-                />
-                <Route
-                  component={[Function]}
-                  path="/data_collection"
-                />
-              </Switch>
-            </section>
-          </main>
-        </Col>
-      </Row>
-    </Col>
-  </Row>
-  <Row
-    className="d-flex theme-dark"
-    tag="div"
+            Learn words
+          </Link>
+          <Link
+            className="btn btn-outline-white my-2"
+            replace={false}
+            to="/mywords"
+          >
+            My words
+          </Link>
+          <Link
+            className="btn btn-outline-white mt-2"
+            replace={false}
+            to="/wordstrainer"
+          >
+            Train words
+          </Link>
+        </div>
+      </div>
+    </section>
+  </section>
+  <main
+    className="container-fluid"
   >
-    <Col
-      tag="div"
-      widths={
-        Array [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-        ]
-      }
-      xs="12"
-    >
-      <Component />
-    </Col>
-  </Row>
+    <Connect(Alerts) />
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        path="/login"
+      />
+      <Route
+        component={[Function]}
+        path="/logout"
+      />
+      <Route
+        component={[Function]}
+        path="/signup"
+      />
+      <Route
+        component={[Function]}
+        path="/settings"
+      />
+      <Route
+        component={[Function]}
+        path="/addwords"
+      />
+      <Route
+        component={[Function]}
+        path="/mywords"
+      />
+      <Route
+        component={[Function]}
+        path="/learnwords"
+      />
+      <Route
+        component={[Function]}
+        path="/wordstrainer"
+      />
+      <Route
+        component={[Function]}
+        path="/getstarted"
+      />
+      <Route
+        component={[Function]}
+        path="/privacy_policy"
+      />
+      <Route
+        component={[Function]}
+        path="/cookie_policy"
+      />
+      <Route
+        component={[Function]}
+        path="/data_collection"
+      />
+    </Switch>
+  </main>
+  <Component />
 </Container>
 `;

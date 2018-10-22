@@ -26,6 +26,8 @@ import {PrivacyPolicyComponent} from './PrivacyPolicyComponent.js';
 import {CookiePolicyComponent} from './CookiePolicyComponent.js';
 import {DataCollectionComponent} from './DataCollectionComponent.js';
 import {FooterComponent} from './FooterComponent.js';
+import {HomeComponent} from './HomeComponent.js';
+import {FeedbackComponent} from './FeedbackComponent.js';
 
 
 export {
@@ -57,4 +59,6 @@ export {
     CookiePolicyComponent,
     DataCollectionComponent,
     FooterComponent,
+    HomeComponent,
+    FeedbackComponent,
 };

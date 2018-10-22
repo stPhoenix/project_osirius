@@ -12,6 +12,7 @@ const componentProps = {
 
 export const MywordsAllComponent = (props) => {
     return (<ContentComponent>
+            <h2>All my words</h2>
                 <div className="d-flex align-self-end px-0" >
 					<button className="btn btn-link " onClick={props.delete_selected}>Delete selected</button>
 					<button className="btn btn-link pr-0" onClick={props.delete_all}>Delete all</button>

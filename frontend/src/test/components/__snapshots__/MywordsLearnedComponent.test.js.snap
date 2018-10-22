@@ -2,6 +2,9 @@
 
 exports[`MywordsLearnedComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    My learned words
+  </h2>
   <div
     className="d-flex align-self-end px-0"
   >

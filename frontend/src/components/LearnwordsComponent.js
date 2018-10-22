@@ -25,6 +25,7 @@ export const LearnwordsComponent = (props) => {
     }
     return(
         <ContentComponent>
+            <h2>Learn words</h2>
             {data}
         </ContentComponent>
     );

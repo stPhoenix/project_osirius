@@ -3,6 +3,8 @@ from news.models import Article
 from linguist.models import Category, Language, GlobalWord, Word
 from users.models import Student
 from linguist.core import LinguistHQ
+from web.models import Feedback
+
 
 api_url = '/api/v0'
 token = ''
@@ -251,3 +253,9 @@ class TestDeleteUser(TestCase):
         response = self.client.delete(api_url+'/user/delete/'+str(user.pk)+'/')
         self.assertTrue(response.status_code == 204, response.status_code)
         self.assertTrue(len(Student.objects.all()) == 0)
+
+
+class TestSendFeedback:
+    def test_send_feedback(self):
+        response = self.client.post(api_url + '/feedback/', {'name': 'John', 'email': 'john@mail.com', 'text':'Hello'})
+        self.assertTrue(response.status_code == 201)

@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import ListAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet, ViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -10,11 +10,12 @@ from news.models import Article
 from linguist.models import Category, GlobalWord, Language, Word
 from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
                             CustomWordSerializer, SearchWordResultSerializer, WordSerializer, PlaySerializer,\
-                            UserDetailsSerializer
+                            UserDetailsSerializer, FeedbackSerializer
 from api.utils import SearchWordResult, LinguistInitializer, Play
 from api.permissions import IsOwnerOrReadOnly, IsCanDeleteSelf
 from random import randint
 from users.models import Student
+from web.models import Feedback
 
 
 class News(ReadOnlyModelViewSet):
@@ -204,3 +205,8 @@ class DeleteUser(DestroyAPIView):
     serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated, IsCanDeleteSelf)
     queryset = Student.objects.all()
+
+
+class SendFeedback(CreateAPIView):
+    serializer_class = FeedbackSerializer
+    queryset = Feedback.objects.all()

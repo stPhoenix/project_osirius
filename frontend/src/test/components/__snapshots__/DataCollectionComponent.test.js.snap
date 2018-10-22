@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataCollectionComponent should render correctly 1`] = `
+<Component>
+  <h3>
+    <strong>
+      Data Collection for linguint.pro
+    </strong>
+  </h3>
+  <p>
+    Registered User freely give following personal data:
+  </p>
+  <ul>
+    <li>
+      Email – for recover and|or activating user account, recover password or get service news;
+    </li>
+    <li>
+      Native language – for service work;
+    </li>
+    <li>
+      Learn language – for service work;
+    </li>
+    <li>
+      First name – for service work;
+    </li>
+  </ul>
+  <p>
+    Additional, using telegram bot service User can freely give his telegram id for service work.
+  </p>
+  <p>
+    Also, service generate next data:
+  </p>
+  <ul>
+    <li>
+      Unical key for User identification – for service work;
+    </li>
+  </ul>
+</Component>
+`;

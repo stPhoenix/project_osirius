@@ -2,8 +2,11 @@
 
 exports[`AddwordsTypeComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Add words by typying
+  </h2>
   <form
-    className="col-lg-8 px-0  d-flex flex-column"
+    className="d-flex flex-column"
   >
     <div
       className="form-group"
@@ -29,7 +32,7 @@ exports[`AddwordsTypeComponent should render correctly 1`] = `
     </button>
   </form>
   <div
-    className="col-12 row flex-column flex-lg-row px-0"
+    className="row flex-column flex-lg-row px-0"
   />
   <Component
     add_custom={[Function]}

@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeComponent should render correctly 1`] = `
+<div>
+  <section
+    className="row d-flex justify-content-center"
+  >
+    <div
+      className="col-12 col-md-11 col-xl-7 my-4"
+    >
+      <div
+        className="row d-flex flex-column flex-lg-row"
+      >
+        <div
+          className="col-12 col-lg-6 col-xl-5"
+        >
+          <img
+            alt="Story"
+            className="img-fluid"
+            src="story1.png"
+          />
+        </div>
+        <div
+          className="col-12 col-lg-6 col-xl-7 my-lg-auto"
+        >
+          <h2
+            className="text-center"
+          >
+            Hello everyone!
+          </h2>
+          <p
+            className="text-center text-lg-left"
+          >
+            I've been trying to learn Japanese by myself from textbooks and manuals. When I started I had faced one big problem: how to learn words? The popular solution is to make cards and learn by them. But honestly, for me it was too inconvenient - I'm too lazy to do such things. So I'd found another solution - to write a program that helps in studing Japanese words. And not only Japanese, other languages, too. Don't know why I wasn't lazy to code it)) I keep telling myself that laziness is the engine of progress. Have you already guessed that you're using it right now?
+            <br />
+            It's all for 
+            <strong>
+              FREE
+            </strong>
+            !
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    className="row bg-second"
+  >
+    <div
+      className="col-12 d-flex mt-2"
+    >
+      <h2
+        className="mx-auto"
+      >
+        News
+      </h2>
+    </div>
+    <div
+      className="col-12 col-md-11 col-xl-7 mx-auto my-3"
+    >
+      <News />
+    </div>
+  </section>
+  <section
+    className="row parallax-bg-2"
+  >
+    <div
+      className="col-12 bg-overlay py-5"
+    >
+      <div
+        className="row d-flex flex-column align-items-center"
+      >
+        <div
+          className="col-12"
+        >
+          <h2
+            className="text-center text-white"
+          >
+            What app can do for you:
+          </h2>
+        </div>
+        <div
+          className="col-12 col-md-11 col-xl-7 my-md-3"
+        >
+          <div
+            className="card-deck"
+          >
+            <div
+              className="card"
+            >
+              <img
+                alt="Learn foreign words"
+                className="mx-auto"
+                height="auto"
+                src="translate_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Help to learn words in different languages (main idea)
+                </p>
+              </div>
+            </div>
+            <div
+              className="card"
+            >
+              <img
+                alt="Switch languages feature"
+                className="mx-auto"
+                height="auto"
+                src="switch_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Switch between different learnt languages
+                </p>
+              </div>
+            </div>
+            <div
+              className="card"
+            >
+              <img
+                alt="Add words for learning from presets"
+                className="mx-auto"
+                height="auto"
+                src="presets_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Add words for learning from presets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="col-12 col-md-11 col-xl-7 my-md-3"
+        >
+          <div
+            className="card-deck"
+          >
+            <div
+              className="card"
+            >
+              <img
+                alt="Keyboard image"
+                className="mx-auto"
+                height="auto"
+                src="keyboard_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Add words for learning by typing (in this case app will search translation over internet)
+                </p>
+              </div>
+            </div>
+            <div
+              className="card"
+            >
+              <img
+                alt="Matching image"
+                className="mx-auto"
+                height="auto"
+                src="match_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Study words by matching word with its translation (and reverse)
+                </p>
+              </div>
+            </div>
+            <div
+              className="card"
+            >
+              <img
+                alt="Book image"
+                className="mx-auto"
+                height="auto"
+                src="play_feature.png"
+                width="130rem"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="text-center"
+                >
+                  Study words by looking at word and typing translation(and reverse)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Connect(Feedback) />
+</div>
+`;

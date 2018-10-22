@@ -1,16 +1,11 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [dev-packages]
 
-
-
 [packages]
-
 python-decouple = "*"
 django = "==2.*"
 dj-database-url = "*"
@@ -26,3 +21,4 @@ gunicorn = "*"
 whitenoise = "*"
 django-cors-headers = "*"
 requests = "*"
+coverage = "*"

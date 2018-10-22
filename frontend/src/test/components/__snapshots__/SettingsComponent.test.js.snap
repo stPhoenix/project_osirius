@@ -2,8 +2,11 @@
 
 exports[`SettingsComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Settings
+  </h2>
   <form
-    className="col-12 col-md-8 col-lg-6 d-flex flex-column h-100 mb-4"
+    className="d-flex flex-column mb-4"
   >
     <div
       className="m-2 form-group"

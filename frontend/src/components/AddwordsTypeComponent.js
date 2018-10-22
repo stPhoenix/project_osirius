@@ -23,7 +23,7 @@ export const AddwordsTypeComponent = (props) => {
 	let data = [];
 	if (props.global_word_search === true){
 		data = (props.words.map(word => {
-			return (<div key={word.id+"words"} className="col-12 col-lg-3 p-1">
+			return (<div key={word.id+"words"} className="p-1">
                     <Card className="shadow-sm rounded-0">
                         <CardBody className="d-flex flex-column">
                             <CardText className="text-center">
@@ -39,7 +39,7 @@ export const AddwordsTypeComponent = (props) => {
 		}));
 	} else if(props.google_translate_search === true){
 		data = (props.words.map(word => {
-			return (<div key={word.id+"words"} className="col-12 col-lg-3 p-1">
+			return (<div key={word.id+"words"} className="p-1">
                     <Card className="shadow-sm rounded-0">
                         <CardBody className="d-flex flex-column">
                             <CardText className="text-center">
@@ -54,14 +54,15 @@ export const AddwordsTypeComponent = (props) => {
 		}));
 	}
 	return(<ContentComponent>
-				<form className="col-lg-8 px-0  d-flex flex-column">
+            <h2>Add words by typying</h2>
+				<form className="d-flex flex-column">
 					<div className="form-group">
 						<label htmlFor="search">Type word:</label>
 						<input id="search" type="text" className="custom-form-control" value={props.search_word} name="search_word" onChange={props.handleChange}/>
 					</div>
                     <button className="custom-btn theme-primary mb-2 align-self-center" onClick={props.search}>Search</button>
 				</form>
-                <div className="col-12 row flex-column flex-lg-row px-0">
+                <div className="row flex-column flex-lg-row px-0">
                     {data}
                 </div>
                 <AddwordsTypeModalComponent add_custom={props.add_custom}

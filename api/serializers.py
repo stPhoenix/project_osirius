@@ -5,6 +5,7 @@ from linguist.models import Language, GlobalWord, Word, Category
 from django.contrib.auth import get_user_model
 from news.models import Article
 from api.utils import CustomWord
+from web.models import Feedback
 
 # Get the UserModel
 UserModel = get_user_model()
@@ -29,6 +30,12 @@ class CustomWordSerializer(serializers.Serializer):
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
+        fields = '__all__'
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
         fields = '__all__'
 
 

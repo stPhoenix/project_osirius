@@ -1,7 +1,19 @@
 {
-  "main.css": "static/css/main.ab205522.css",
-  "main.css.map": "static/css/main.ab205522.css.map",
-  "main.js": "static/js/main.ceed7d99.js",
-  "main.js.map": "static/js/main.ceed7d99.js.map",
-  "static\\media\\logo.png": "static/media/logo.863c3baa.png"
+  "main.css": "static/css/main.706ed02d.css",
+  "main.css.map": "static/css/main.706ed02d.css.map",
+  "main.js": "static/js/main.39e669c4.js",
+  "main.js.map": "static/js/main.39e669c4.js.map",
+  "static\\media\\bg1.jpg": "static/media/bg1.d2669337.jpg",
+  "static\\media\\bg2.jpg": "static/media/bg2.562c9958.jpg",
+  "static\\media\\bg3.jpg": "static/media/bg3.109f8545.jpg",
+  "static\\media\\exo2-webfont.woff": "static/media/exo2-webfont.0fc64c39.woff",
+  "static\\media\\exo2-webfont.woff2": "static/media/exo2-webfont.025dc925.woff2",
+  "static\\media\\github.png": "static/media/github.4dd23623.png",
+  "static\\media\\logo.png": "static/media/logo.863c3baa.png",
+  "static\\media\\slide1.png": "static/media/slide1.adf5427b.png",
+  "static\\media\\slide2.png": "static/media/slide2.3812ce49.png",
+  "static\\media\\slide3.png": "static/media/slide3.f7283705.png",
+  "static\\media\\slide4.png": "static/media/slide4.2bb9d7c4.png",
+  "static\\media\\story1.png": "static/media/story1.e2d70db2.png",
+  "static\\media\\telegram.png": "static/media/telegram.1ef14102.png"
 }

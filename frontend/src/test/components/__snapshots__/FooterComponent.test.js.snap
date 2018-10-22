@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FooterComponent should render correctly 1`] = `
+<footer
+  className="theme-dark text-white d-flex flex-row py-3 px-3 justify-content-end"
+>
+  <UncontrolledDropdown
+    className="mx-1 d-md-none text-white"
+  >
+    <DropdownToggle
+      aria-haspopup={true}
+      color="secondary"
+      tag="span"
+    >
+      Documents
+    </DropdownToggle>
+    <DropdownMenu
+      className="theme-dark border-0 text-whie"
+      flip={true}
+      tag="div"
+    >
+      <DropdownItem
+        tag="button"
+        toggle={true}
+      >
+        <Link
+          className="text-white link-unstyled"
+          replace={false}
+          to="/privacy_policy"
+        >
+          Privacy Policy
+        </Link>
+      </DropdownItem>
+      <DropdownItem
+        tag="button"
+        toggle={true}
+      >
+        <Link
+          className="text-white link-unstyled"
+          replace={false}
+          to="/cookie_policy"
+        >
+          Cookie Policy
+        </Link>
+      </DropdownItem>
+      <DropdownItem
+        tag="button"
+        toggle={true}
+      >
+        <Link
+          className="text-white link-unstyled"
+          replace={false}
+          to="/data_collection"
+        >
+          Data Collection
+        </Link>
+      </DropdownItem>
+    </DropdownMenu>
+  </UncontrolledDropdown>
+  <div
+    className="d-none d-md-flex"
+  >
+    <p
+      className="mb-0 mx-1"
+    >
+      <Link
+        className="text-white link-unstyled"
+        replace={false}
+        to="/privacy_policy"
+      >
+        Privacy Policy
+      </Link>
+    </p>
+    <p
+      className="mb-0 mx-1"
+    >
+      <Link
+        className="text-white link-unstyled"
+        replace={false}
+        to="/cookie_policy"
+      >
+        Cookie Policy
+      </Link>
+    </p>
+    <p
+      className="mb-0 mx-1"
+    >
+      <Link
+        className="text-white link-unstyled"
+        replace={false}
+        to="/data_collection"
+      >
+        Data Collection
+      </Link>
+    </p>
+  </div>
+  <p
+    className="mb-0"
+  >
+    Copyright 2018 Linguint.pro
+  </p>
+</footer>
+`;

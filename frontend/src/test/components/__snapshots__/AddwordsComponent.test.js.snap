@@ -2,6 +2,9 @@
 
 exports[`AddwordsComponent should render correctly 1`] = `
 <Component>
+  <h2>
+    Add words
+  </h2>
   <section
     className="d-flex flex-column align-items-center justify-content-center"
   >
@@ -13,7 +16,7 @@ exports[`AddwordsComponent should render correctly 1`] = `
         src="typing.png"
         style={
           Object {
-            "height": "7rem",
+            "height": "6rem",
             "width": "auto",
           }
         }
@@ -24,7 +27,7 @@ exports[`AddwordsComponent should render correctly 1`] = `
         Type word. System will search word in database or in the internet.
       </h4>
       <Link
-        className="custom-btn theme-primary px-3 py-1 mb-5 black"
+        className="link-unstyled custom-btn theme-primary px-3 py-1 mb-5"
         replace={false}
         to="/addwords/type"
       >
@@ -51,7 +54,7 @@ exports[`AddwordsComponent should render correctly 1`] = `
         Choose word from preset in database.
       </h4>
       <Link
-        className="custom-btn theme-primary px-3 py-1 mb-3 black"
+        className="link-unstyled custom-btn theme-primary px-3 py-1 mb-3"
         replace={false}
         to="/addwords/presets"
       >

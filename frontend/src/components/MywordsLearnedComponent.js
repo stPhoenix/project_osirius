@@ -11,6 +11,7 @@ const componentProps = {
 
 export const MywordsLearnedComponent = (props) => {
     return (<ContentComponent>
+            <h2>My learned words</h2>
                 <div className="d-flex align-self-end px-0" >
 					<button className="btn btn-link " onClick={props.learn_selected}>Learn again selected</button>
 					<button className="btn btn-link pr-0" onClick={props.learn_all}>Learn all</button>

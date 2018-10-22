@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'exo_2bold';
+    src: url('../assets/fonts/exo2-webfont.woff2') format('woff2'),
+         url('../assets/fonts/exo2-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.font-exo-2bold {
+        font-family: 'exo_2bold';
+}
+
 .theme-primary{
     background-color: #009be5 !important;
 }
@@ -45,6 +58,7 @@ html {
   display: inline-block;
   font-weight: 400;
   text-align: center;
+  color: white;
   white-space: nowrap;
   vertical-align: middle;
   -webkit-user-select: none;
@@ -59,7 +73,6 @@ html {
 
 .custom-btn:focus, .custom-btn.focus {
   text-decoration: none;
-  color: #000000;
   outline: 0;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
 }
@@ -124,4 +137,50 @@ html {
   display: block;
   content: "";
 
+}
+
+.link-unstyled, .link-unstyled:visited, .link-unstyled:hover, .link-unstyled:active, .link-unstyled:focus, .link-unstyled:active:hover {
+   text-decoration: none;
+   color: white;
+  }
+
+.bg-overlay {
+    background-color: rgba(0, 109, 180, 0.55);
+}
+
+.parallax-bg-1{
+    background-image: url(../assets/bg2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 0 0;
+}
+
+.parallax-bg-2{
+    background-image: url(../assets/bg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 0 0;
+}
+
+.bg-banner{
+    background-image: url(../assets/bg3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.btn-outline-white {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 0;
+    border-color: rgba(255, 255, 255, 1);
+    background-color: transparent;
+    color: rgba(255, 255, 255, 1);
+}
+
+.btn-outline-white:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 109, 180, 1);
+    transition: background-color 0.2s linear color 0.2s linear;
 }

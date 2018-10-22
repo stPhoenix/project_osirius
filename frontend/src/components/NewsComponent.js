@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, CardTitle, CardText, CardSubtitle, CardBody, CardColumns} from 'reactstrap';
-import {ContentComponent} from '../components';
 import PropTypes from 'prop-types';
 
 const componentProps = {
@@ -8,7 +7,7 @@ const componentProps = {
 };
 
 export const NewsComponent = (props) => {
-    return(<ContentComponent><div className="row flex-column flex-lg-row px-0">
+    return(
             <CardColumns>
                 {props.articles.map((article, index) => {
                 return (
@@ -22,8 +21,7 @@ export const NewsComponent = (props) => {
                         )
             })}
                 </CardColumns>
-            </div>
-           </ContentComponent>);
+);
 };
 
 NewsComponent.propTypes = componentProps;

@@ -23,6 +23,7 @@ import {
     get_learned_words,
     delete_word,
     delete_user,
+    send_feedback,
 } from './0';
 
 export {
@@ -50,4 +51,5 @@ export {
     get_learned_words,
     delete_word,
     delete_user,
+    send_feedback,
 };

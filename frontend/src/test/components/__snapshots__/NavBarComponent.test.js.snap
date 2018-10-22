@@ -1,89 +1,117 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavBarComponent should render correctly 1`] = `
-<nav
-  className="px-4 py-1 h-100"
+<Navbar
+  className="px-0 font-exo-2bold w-100"
+  dark={true}
+  expand="lg"
+  tag="nav"
 >
-  <Nav
-    className="my-3"
-    tag="ul"
-    vertical={true}
+  <NavbarBrand
+    className="mr-auto"
+    href="#"
+    tag="a"
   >
-    <Component
-      link="/signup"
-      src="user.png"
-      text="Sign Up"
-      visible={false}
+    <img
+      alt="Linguint logo"
+      height="auto"
+      src="logo.png"
+      width="120rem"
     />
-    <Component
-      link="/login"
-      src="user.png"
-      text="Log in"
-      visible={false}
-    />
-    <Component
-      link="/logout"
-      src="user.png"
-      text="Log out"
-      visible={true}
-    />
-    <Component
-      link="/getstarted"
-      src="getstarted.png"
-      text="Get started"
-    />
-    <Component
-      link="/settings"
-      src="settings.png"
-      text="Settings"
-      visible={true}
-    />
-  </Nav>
-  <Nav
-    className="my-5"
-    tag="ul"
-    vertical={true}
+  </NavbarBrand>
+  <NavbarToggler
+    className="btn btn-link border-0"
+    tag="button"
+    type="button"
+  />
+  <Collapse
+    appear={false}
+    className="w-100"
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    navbar={true}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
   >
-    <Component
-      link="/addwords"
-      src="addwords.png"
-      text="Add words"
-      visible={true}
-    />
-    <Component
-      link="/learnwords"
-      src="learnwords.png"
-      text="Learn words"
-      visible={true}
-    />
-    <Component
-      link="/mywords"
-      src="mywords.png"
-      text="My words"
-      visible={true}
-    />
-    <Component
-      link="/wordstrainer"
-      src="wordstrainer.png"
-      text="Words trainer"
-      visible={true}
-    />
-  </Nav>
-  <Nav
-    className="my-3"
-    tag="ul"
-    vertical={true}
-  >
-    <Component
-      link="/news"
-      src="news.png"
-      text="News"
-    />
-    <Component
-      link="/about"
-      src="about.png"
-      text="About"
-    />
-  </Nav>
-</nav>
+    <Nav
+      className="w-100 justify-content-center"
+      navbar={true}
+      tag="ul"
+      vertical={false}
+    >
+      <Component
+        link="/"
+        text="Home"
+        visible={true}
+      />
+      <Component
+        link="/login"
+        text="Log in"
+        visible={false}
+      />
+      <Component
+        link="/logout"
+        text="Log out"
+        visible={true}
+      />
+      <Component
+        link="/signup"
+        text="Sign Up"
+        visible={false}
+      />
+      <Component
+        link="/settings"
+        text="Settings"
+        visible={true}
+      />
+      <Component
+        link="/getstarted"
+        text="Get started"
+        visible={true}
+      />
+    </Nav>
+    <div
+      className="d-none d-lg-flex d-lg-flex-row align-items-center ml-auto"
+    >
+      <a
+        href="https://github.com/stPhoenix/project_osirius"
+        target="blank"
+      >
+        <img
+          alt="Github link"
+          height="auto"
+          src="github.png"
+          width="40rem"
+        />
+      </a>
+      <a
+        className="link-unstyled"
+        href="#"
+      >
+        <img
+          alt="Telegram bot link"
+          height="auto"
+          src="telegram.png"
+          width="31rem"
+        />
+      </a>
+      <a
+        className="h5 mb-0 text-white link-unstyled"
+        href="#"
+      >
+        @LinguintBot
+      </a>
+    </div>
+  </Collapse>
+</Navbar>
 `;

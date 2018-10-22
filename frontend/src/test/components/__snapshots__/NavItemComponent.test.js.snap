@@ -2,26 +2,12 @@
 
 exports[`NavItemComponent should render correctly 1`] = `
 <NavItem
-  className="media item"
+  className="active"
   tag="li"
 >
-  <img
-    alt="img"
-    className="align-self-center link-img"
-    src="#"
+  <NavLink
+    tag={[Function]}
+    to=""
   />
-  <div
-    className="media-body align-self-center"
-  >
-    <NavLink
-      className="link p-1"
-      tag={[Function]}
-      to=""
-    >
-      <h5
-        className="m-0 p-0"
-      />
-    </NavLink>
-  </div>
 </NavItem>
 `;

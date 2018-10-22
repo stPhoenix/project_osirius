@@ -1,43 +1,47 @@
 import React from 'react';
-import {Nav} from 'reactstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,} from 'reactstrap';
 import {NavItemComponent} from './NavItemComponent';
-import usericon from '../assets/user.png';
-import abouticon from '../assets/about.png';
-import getstartedicon from '../assets/getstarted.png';
-import learnwordsicon from '../assets/learnwords.png';
-import mywordsicon from '../assets/mywords.png';
-import newsicon from '../assets/news.png';
-import settingsicon from '../assets/settings.png';
-import wordstrainericon from '../assets/wordstrainer.png';
-import addwordsicon from '../assets/addwords.png';
+import logo from '../assets/logo.png';
+import github from '../assets/github.png';
+import telegram from '../assets/telegram.png';
 import './AppComponent.css';
 import PropTypes from 'prop-types';
 
+
 const componentProps = {
     isAuthenticated: PropTypes.bool.isRequired,
+    toggle: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
 };
 
-export const NavBarComponent = ({isAuthenticated}) => {
+export const NavBarComponent = ({isAuthenticated, toggle, isOpen}) => {
 	return (
-				<nav className="px-4 py-1 h-100">
-                	<Nav className="my-3" vertical>
-						<NavItemComponent visible={!isAuthenticated} src={usericon} text="Sign Up" link="/signup" />
-				        <NavItemComponent visible={!isAuthenticated} src={usericon} text="Log in" link="/login" />
-						<NavItemComponent visible={isAuthenticated} src={usericon} text="Log out" link="/logout" />
-						<NavItemComponent src={getstartedicon} text="Get started" link="/getstarted" />
-						<NavItemComponent visible={isAuthenticated} src={settingsicon} text="Settings" link="/settings" />
-					</Nav>
-					<Nav className="my-5" vertical>
-						<NavItemComponent visible={isAuthenticated} src={addwordsicon} text="Add words" link="/addwords"/>
-						<NavItemComponent visible={isAuthenticated} src={learnwordsicon} text="Learn words" link="/learnwords" />
-						<NavItemComponent visible={isAuthenticated} src={mywordsicon} text="My words" link="/mywords" />
-						<NavItemComponent visible={isAuthenticated} src={wordstrainericon} text="Words trainer" link="/wordstrainer" />
-					</Nav>
-					<Nav className="my-3" vertical>
-						<NavItemComponent src={newsicon} text="News" link="/news" />
-						<NavItemComponent src={abouticon} text="About" link="/about" />
-					</Nav>
-				</nav>
+				<Navbar dark expand="lg" className="px-0 font-exo-2bold w-100">
+                    <NavbarBrand className="mr-auto" href="#">
+                        <img src={logo} width="120rem" height="auto" alt="Linguint logo" />
+                    </NavbarBrand>
+                    <NavbarToggler className="btn btn-link border-0" onClick={toggle} />
+                    <Collapse className="w-100" isOpen={isOpen} navbar>
+                        <Nav className="w-100 justify-content-center" navbar>
+                            <NavItemComponent visible={true} text="Home" link="/" />
+                            <NavItemComponent visible={!isAuthenticated} text="Log in" link="/login" />
+                            <NavItemComponent visible={isAuthenticated} text="Log out" link="/logout" />
+                            <NavItemComponent visible={!isAuthenticated} text="Sign Up" link="/signup" />
+                            <NavItemComponent visible={isAuthenticated} text="Settings" link="/settings" />
+                            <NavItemComponent visible={true} text="Get started" link="/getstarted" />
+                        </Nav>
+                        <div className="d-none d-lg-flex d-lg-flex-row align-items-center ml-auto">
+                            <a target="blank" href="https://github.com/stPhoenix/project_osirius"><img src={github} width="40rem" height="auto" alt="Github link" /></a>
+                            <a href="telegram:@LinguintBot" className="link-unstyled"><img src={telegram} width="31rem" height="auto" alt="Telegram bot link" /></a>
+                            <a href="telegram:@LinguintBot" className="h5 mb-0 text-white link-unstyled">@LinguintBot</a>
+                        </div>
+                    </Collapse>
+                </Navbar>
 	);
 }
 

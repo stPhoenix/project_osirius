@@ -14,7 +14,8 @@ const componentProps = {
 
 export const AddwordsPresetsComponent = (props) => {
     return (<ContentComponent>
-                <form className="col-12 col-lg-8 px-0">
+            <h2>Add words from presets</h2>
+                <form>
                     <label htmlFor="categories" >Choose category:</label>
                     <select className="custom-form-control" id="categories" onChange={props.handleChange} name="category">
                                         {props.cats.map((category) => (<option key={category.name}>{category.name}</option>))}

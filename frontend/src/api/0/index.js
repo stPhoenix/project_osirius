@@ -232,3 +232,12 @@ export const delete_user = async (pk, token) => {
     return api_response;
 
 };
+
+export const send_feedback = async (p_name, email, p_text) => {
+    let api_response = {result: false, message: "Bad", data: []};
+    await axios.post(`/feedback/`, {name: p_name, email, text: p_text})
+        .then((response) => (response_handler(api_response, response)))
+        .catch((error) => (error_handler(api_response, error)));
+    return api_response;
+
+};

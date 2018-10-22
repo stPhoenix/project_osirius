@@ -11,9 +11,11 @@ const componentProps = {
 
 export const ContentComponent = (props) => {
     return(
-        <div className="col-10 d-flex flex-column align-self-center align-items-center justify-content-center p-0">
-            {props.children}
-        </div>
+            <section className="row d-flex justify-content-center">
+                <div className="col-12 col-md-11 col-xl-7 d-flex flex-column my-4 align-items-center">            
+                    {props.children}
+                </div>
+            </section>
     );
 };
 

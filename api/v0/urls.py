@@ -33,5 +33,6 @@ urlpatterns = [
     path('add/custom/', CustomWordAdd.as_view(), name='add_custom'),
     path('search/word/', SearchWord.as_view(), name='search_word'),
     path('user/delete/<int:pk>/', DeleteUser.as_view(), name='delete_user'),
+    path('feedback/', SendFeedback.as_view(), name='feedback'),
 ]
 urlpatterns += router.urls

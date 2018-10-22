@@ -11,12 +11,25 @@ const classProps = {
 };
 
 class NavBar extends Component{
+    constructor(props) {
+        super(props);
+    
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+        isOpen: false
+        };
+  }
+    toggle() {
+        this.setState({
+        isOpen: !this.state.isOpen
+    });
+  }
     componentDidMount(){
         check_token(this.props.dispatch, this.props.auth.isAuthenticated);
     };
     render(){
         const {isAuthenticated} = this.props.auth;
-        return (<NavBarComponent isAuthenticated={isAuthenticated} />)
+        return (<NavBarComponent isAuthenticated={isAuthenticated} toggle={this.toggle} isOpen={this.state.isOpen} />)
     }
 }
 

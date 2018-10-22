@@ -22,21 +22,22 @@ export const WordstrainerComponent = ({location}) => {
 				</Switch>);	
 	};
 	return(<ContentComponent>
+            <h2>Train words</h2>
 			<img src={matching} alt="matching" style={{height:'6rem', width:'auto'}} />
 			<h4 className="opacity-50 text-center px-3 mb-4 mt-0">Match word with translation.</h4>
-			<Link className="custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/match" > Play</Link>
+			<Link className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/match" > Play</Link>
 			
 			<img src={matching} alt="matching" className="mt-3" style={{height:'6rem', width:'auto'}} />
 			<h4 className="opacity-50 text-center px-3 mb-4 mt-0">Match translation with word.</h4>
-			<Link className="custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/match/reverse" > Play</Link>
+			<Link className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/match/reverse" > Play</Link>
             
-        	<img src={typing} alt="typing" className="mt-3" style={{height:'7rem', width:'auto'}} />
+        	<img src={typing} alt="typing" className="mt-3" style={{height:'6rem', width:'auto'}} />
 			<h4 className="opacity-50 text-center px-2 mb-4 mt-0">Look at word and type translation.</h4>
-			<Link className="custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/type" > Play</Link>
+			<Link className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/type" > Play</Link>
 			
-			<img src={typing} alt="typing" className="mt-3" style={{height:'7rem', width:'auto'}} />
+			<img src={typing} alt="typing" className="mt-3" style={{height:'6rem', width:'auto'}} />
 			<h4 className="opacity-50 text-center px-2 mb-4 mt-0">Look at translation and type word.</h4>
-			<Link className="custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/type/reverse" > Play</Link>
+			<Link className="link-unstyled custom-btn theme-primary px-4 py-1 mb-3 black" to="/wordstrainer/type/reverse" > Play</Link>
 		</ContentComponent>
 		);
 };

@@ -20,13 +20,14 @@ export const MywordsComponent = ({location}) => {
 				</Switch>);	
 	};
 	return(<ContentComponent>
+            <h2>My words</h2>
 		<img src={allwords} alt="allwords" style={{height:'6rem', width:'auto'}} />
 		<h4 className="opacity-50 text-center px-2 mb-4 mt-0">All your words on active learn language.</h4>
-		<Link className="custom-btn theme-primary px-3 py-1 mb-5 black" to="/mywords/all" > Look all words</Link>
+		<Link className="link-unstyled custom-btn theme-primary px-3 py-1 mb-5 black" to="/mywords/all" > Look all words</Link>
             
         <img src={learned} alt="learned" className="mt-3" style={{height:'6rem', width:'auto'}} />
 		<h4 className="opacity-50 text-center px-2 mb-4 mt-0">Your learned words on active learn language.</h4>
-		<Link className="custom-btn theme-primary px-3 py-1 mb-3 black" to="/mywords/learned" > Look learned</Link>
+		<Link className="link-unstyled custom-btn theme-primary px-3 py-1 mb-3 black" to="/mywords/learned" > Look learned</Link>
 	</ContentComponent>
 		);
 };
