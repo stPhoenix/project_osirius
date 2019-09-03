@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LearnwordsComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     Learn words
   </h2>
   <h4>
     No words to learn.
   </h4>
-</Component>
+</ContentComponent>
 `;

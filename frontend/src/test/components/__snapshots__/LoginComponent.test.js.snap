@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     Login
   </h2>
@@ -12,7 +12,7 @@ exports[`LoginComponent should render correctly 1`] = `
       className="m-2 custom-form-control"
       id="username"
       name="username"
-      onChange={[Function]}
+      onChange={[MockFunction]}
       placeholder="Enter username"
       type="text"
     />
@@ -20,16 +20,16 @@ exports[`LoginComponent should render correctly 1`] = `
       className="m-2 custom-form-control"
       id="upassword"
       name="password"
-      onChange={[Function]}
+      onChange={[MockFunction]}
       placeholder="Enter password"
       type="password"
     />
     <button
       className="custom-btn theme-primary m-2 px-4 align-self-center"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Login
     </button>
   </form>
-</Component>
+</ContentComponent>
 `;

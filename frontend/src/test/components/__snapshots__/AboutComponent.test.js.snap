@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AboutComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2
     className="align-self-start"
   >
@@ -113,5 +113,5 @@ exports[`AboutComponent should render correctly 1`] = `
       Github!
     </a>
   </p>
-</Component>
+</ContentComponent>
 `;

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MyWordsAllComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     All my words
   </h2>
@@ -10,20 +10,20 @@ exports[`MyWordsAllComponent should render correctly 1`] = `
   >
     <button
       className="btn btn-link "
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Delete selected
     </button>
     <button
       className="btn btn-link pr-0"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Delete all
     </button>
   </div>
-  <Component
-    handleCheck={[Function]}
+  <WordsTableComponent
+    handleCheck={[MockFunction]}
     words={Array []}
   />
-</Component>
+</ContentComponent>
 `;

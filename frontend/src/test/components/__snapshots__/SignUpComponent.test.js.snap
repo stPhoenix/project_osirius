@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SignUpComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     Sign Up
   </h2>
@@ -20,7 +20,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="username"
         name="username"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Username"
         type="text"
         value=""
@@ -38,7 +38,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="password1"
         name="password1"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Password"
         type="password"
         value=""
@@ -56,7 +56,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="password2"
         name="password2"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Password"
         type="password"
         value=""
@@ -74,7 +74,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="email"
         name="email"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Email"
         type="text"
         value=""
@@ -92,7 +92,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="firstname"
         name="first_name"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Your name"
         type="text"
         value=""
@@ -110,7 +110,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="home_language"
         name="home_language"
-        onChange={[Function]}
+        onChange={[MockFunction]}
       />
     </div>
     <div
@@ -125,7 +125,7 @@ exports[`SignUpComponent should render correctly 1`] = `
         className="custom-form-control"
         id="current_language"
         name="current_language"
-        onChange={[Function]}
+        onChange={[MockFunction]}
       />
     </div>
     <div
@@ -156,10 +156,10 @@ exports[`SignUpComponent should render correctly 1`] = `
     </div>
     <button
       className="custom-btn theme-primary align-self-center px-3"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       SignUp
     </button>
   </form>
-</Component>
+</ContentComponent>
 `;

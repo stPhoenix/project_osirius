@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MywordsLearnedComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     My learned words
   </h2>
@@ -10,19 +10,19 @@ exports[`MywordsLearnedComponent should render correctly 1`] = `
   >
     <button
       className="btn btn-link "
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Learn again selected
     </button>
     <button
       className="btn btn-link pr-0"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Learn all
     </button>
   </div>
-  <Component
-    handleCheck={[Function]}
+  <WordsTableComponent
+    handleCheck={[MockFunction]}
   />
-</Component>
+</ContentComponent>
 `;

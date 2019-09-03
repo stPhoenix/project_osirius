@@ -16,28 +16,28 @@ exports[`FeedbackComponent should render correctly 1`] = `
       <input
         className="custom-form-control"
         name="p_name"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Your name"
         type="text"
       />
       <input
         className="custom-form-control my-2"
         name="email"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Your email"
         type="email"
       />
       <textarea
         className="custom-form-control"
         name="p_text"
-        onChange={[Function]}
+        onChange={[MockFunction]}
         placeholder="Text"
         rows="3"
       />
     </form>
     <button
       className="custom-btn btn-primary mx-auto mt-2 px-4 rounded-0"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Send
     </button>

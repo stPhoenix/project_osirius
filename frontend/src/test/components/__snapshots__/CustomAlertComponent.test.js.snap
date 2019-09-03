@@ -5,13 +5,14 @@ exports[`CustomAlertComponent should render correctly 1`] = `
   className="w-100 d-flex justify-content-center py-2 rounded-0"
   closeAriaLabel="Close"
   color="success"
+  fade={true}
   isOpen={true}
   tag="div"
-  toggle={[Function]}
+  toggle={[MockFunction]}
   transition={
     Object {
       "baseClass": "alert-anim",
-      "onExited": [Function],
+      "onExited": [MockFunction],
       "timeout": 300,
     }
   }

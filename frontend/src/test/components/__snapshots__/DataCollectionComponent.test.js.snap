@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataCollectionComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h3>
     <strong>
       Data Collection for linguint.pro
@@ -35,5 +35,5 @@ exports[`DataCollectionComponent should render correctly 1`] = `
       Unical key for User identification – for service work;
     </li>
   </ul>
-</Component>
+</ContentComponent>
 `;

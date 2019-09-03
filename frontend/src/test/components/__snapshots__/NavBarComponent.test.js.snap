@@ -49,32 +49,32 @@ exports[`NavBarComponent should render correctly 1`] = `
       tag="ul"
       vertical={false}
     >
-      <Component
+      <NavItemComponent
         link="/"
         text="Home"
         visible={true}
       />
-      <Component
+      <NavItemComponent
         link="/login"
         text="Log in"
         visible={false}
       />
-      <Component
+      <NavItemComponent
         link="/logout"
         text="Log out"
         visible={true}
       />
-      <Component
+      <NavItemComponent
         link="/signup"
         text="Sign Up"
         visible={false}
       />
-      <Component
+      <NavItemComponent
         link="/settings"
         text="Settings"
         visible={true}
       />
-      <Component
+      <NavItemComponent
         link="/getstarted"
         text="Get started"
         visible={true}
@@ -96,7 +96,7 @@ exports[`NavBarComponent should render correctly 1`] = `
       </a>
       <a
         className="link-unstyled"
-        href="#"
+        href="telegram:@LinguintBot"
       >
         <img
           alt="Telegram bot link"
@@ -107,7 +107,7 @@ exports[`NavBarComponent should render correctly 1`] = `
       </a>
       <a
         className="h5 mb-0 text-white link-unstyled"
-        href="#"
+        href="telegram:@LinguintBot"
       >
         @LinguintBot
       </a>

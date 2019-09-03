@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddwordsPresetsComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     Add words from presets
   </h2>
@@ -15,7 +15,7 @@ exports[`AddwordsPresetsComponent should render correctly 1`] = `
       className="custom-form-control"
       id="categories"
       name="category"
-      onChange={[Function]}
+      onChange={[MockFunction]}
     />
   </form>
   <div
@@ -23,20 +23,20 @@ exports[`AddwordsPresetsComponent should render correctly 1`] = `
   >
     <button
       className="btn btn-link "
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Add selected
     </button>
     <button
       className="btn btn-link pr-0"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Add all
     </button>
   </div>
-  <Component
-    handleCheck={[Function]}
+  <WordsTableComponent
+    handleCheck={[MockFunction]}
     words={Array []}
   />
-</Component>
+</ContentComponent>
 `;

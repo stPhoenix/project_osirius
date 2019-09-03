@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WordstrainerMatchComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     Match
   </h2>
   No words to play!
-</Component>
+</ContentComponent>
 `;

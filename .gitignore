@@ -2,4 +2,6 @@
 .idea
 .coverage
 htmlcov/
-.log
+*.log
+*.sqlite3
+__pycache__/

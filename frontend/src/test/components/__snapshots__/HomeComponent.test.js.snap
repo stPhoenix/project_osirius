@@ -157,7 +157,7 @@ exports[`HomeComponent should render correctly 1`] = `
               className="card"
             >
               <img
-                alt="Keyboard image"
+                alt="Keyboard"
                 className="mx-auto"
                 height="auto"
                 src="keyboard_feature.png"
@@ -177,7 +177,7 @@ exports[`HomeComponent should render correctly 1`] = `
               className="card"
             >
               <img
-                alt="Matching image"
+                alt="Matching"
                 className="mx-auto"
                 height="auto"
                 src="match_feature.png"
@@ -197,7 +197,7 @@ exports[`HomeComponent should render correctly 1`] = `
               className="card"
             >
               <img
-                alt="Book image"
+                alt="Book"
                 className="mx-auto"
                 height="auto"
                 src="play_feature.png"

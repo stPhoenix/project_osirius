@@ -23,7 +23,7 @@ exports[`AddwordsTypeModalComponent should render correctly 1`] = `
   onClosed={[Function]}
   onOpened={[Function]}
   role="dialog"
-  toggle={[Function]}
+  toggle={[MockFunction]}
   zIndex={1050}
 >
   <ModalBody
@@ -48,12 +48,12 @@ exports[`AddwordsTypeModalComponent should render correctly 1`] = `
             className="custom-form-control"
             id="learn_language"
             name="category"
-            onChange={[Function]}
+            onChange={[MockFunction]}
           />
         </form>
         <button
           className="btn btn-link align-self-end"
-          onClick={[Function]}
+          onClick={[MockFunction]}
         >
           Add
         </button>

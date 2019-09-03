@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MywordsComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h2>
     My words
   </h2>
@@ -50,5 +50,5 @@ exports[`MywordsComponent should render correctly 1`] = `
   >
      Look learned
   </Link>
-</Component>
+</ContentComponent>
 `;

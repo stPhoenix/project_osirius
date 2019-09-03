@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PrivacyPolicyComponent should render correctly 1`] = `
-<Component>
+<ContentComponent>
   <h3>
     Privacy Policy of 
     <strong>
@@ -424,5 +424,5 @@ exports[`PrivacyPolicyComponent should render correctly 1`] = `
   <p>
     Latest update: August 26, 2018
   </p>
-</Component>
+</ContentComponent>
 `;

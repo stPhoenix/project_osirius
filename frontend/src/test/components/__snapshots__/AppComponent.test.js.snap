@@ -199,6 +199,6 @@ exports[`AppComponent should render correctly 1`] = `
       />
     </Switch>
   </main>
-  <Component />
+  <FooterComponent />
 </Container>
 `;

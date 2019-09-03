@@ -70,19 +70,19 @@ export const HomeComponent = () => {
                     <div className="col-12 col-md-11 col-xl-7 my-md-3">
                         <div className="card-deck">
                             <div className="card">
-                                <img className="mx-auto" width="130rem" height="auto" src={keyboard_feature} alt="Keyboard image" />
+                                <img className="mx-auto" width="130rem" height="auto" src={keyboard_feature} alt="Keyboard" />
                                 <div className="card-body">
                                     <p className="text-center">Add words for learning by typing (in this case app will search translation over internet)</p>
                                 </div>
                             </div>
                             <div className="card">
-                                <img className="mx-auto" width="130rem" height="auto" src={match_feature} alt="Matching image" />
+                                <img className="mx-auto" width="130rem" height="auto" src={match_feature} alt="Matching" />
                                 <div className="card-body">
                                     <p className="text-center">Study words by matching word with its translation (and reverse)</p>
                                 </div>
                             </div>
                             <div className="card">
-                                <img className="mx-auto" width="130rem" height="auto" src={play_feature} alt="Book image" />
+                                <img className="mx-auto" width="130rem" height="auto" src={play_feature} alt="Book" />
                                 <div className="card-body">
                                     <p className="text-center">Study words by looking at word and typing translation(and reverse)</p>
                                 </div>

@@ -23,7 +23,7 @@ exports[`SettingsModalComponent should render correctly 1`] = `
   onClosed={[Function]}
   onOpened={[Function]}
   role="dialog"
-  toggle={[Function]}
+  toggle={[MockFunction]}
   zIndex={1050}
 >
   <ModalBody
@@ -56,7 +56,7 @@ exports[`SettingsModalComponent should render correctly 1`] = `
               className="custom-form-control"
               id="password1"
               name="password1"
-              onChange={[Function]}
+              onChange={[MockFunction]}
               placeholder="New password"
               type="password"
               value=""
@@ -74,7 +74,7 @@ exports[`SettingsModalComponent should render correctly 1`] = `
               className="custom-form-control"
               id="password2"
               name="password2"
-              onChange={[Function]}
+              onChange={[MockFunction]}
               placeholder="Password"
               type="password"
               value=""
@@ -92,7 +92,7 @@ exports[`SettingsModalComponent should render correctly 1`] = `
               className="custom-form-control"
               id="password"
               name="password"
-              onChange={[Function]}
+              onChange={[MockFunction]}
               placeholder="Password"
               type="password"
               value=""
@@ -101,7 +101,7 @@ exports[`SettingsModalComponent should render correctly 1`] = `
         </form>
         <button
           className="btn btn-link align-self-end"
-          onClick={[Function]}
+          onClick={[MockFunction]}
         >
           Change
         </button>
