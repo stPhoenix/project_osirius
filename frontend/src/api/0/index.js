@@ -10,6 +10,8 @@ import axios from 'axios';
 //};
 //axios.defaults.baseURL =  "http://127.0.0.1:8000/api/v0";
 axios.defaults.baseURL =  process.env.REACT_APP_BACKEND_URL;
+console.log(process.env.REACT_APP_BACKEND_URL);
+console.log(axios.defaults.baseURL);
 
 const error_handler = (api_response, error) => {
         api_response.result = false;
