@@ -15,12 +15,12 @@ class TelegramLinker(BaseModule):
             'Take password': self.take_password,
         }
 
-    def take_username(self, bot, update, student):
+    def take_username(self, update, context, student):
         student.destination = 'Take password'
         student.temp_data['username'] = update.message.text
         update.message.reply_text('Enter your password:')
 
-    def take_password(self, bot, update, student):
+    def take_password(self, update, context, student):
         user = authenticate(username=student.temp_data['username'], password=update.message.text)
         if user is not None:
             user.telegram = update.effective_user.id

@@ -26,14 +26,14 @@ def restricted(func):
     Helper function to check weather user is registered and have telegram  or not
     """
     @wraps(func)
-    def wrapped(self, bot, update, student=None, *arg, **kwargs):
+    def wrapped(self, update, context, student=None, *arg, **kwargs):
         try:
             s = self.users.get(telegram=update.effective_user.id)
             try:
                 student = self.students[str(update.effective_user.id)]
-                return func(self, bot, update, student, *arg, **kwargs)
+                return func(self, update, context, student, *arg, **kwargs)
             except KeyError:
-                self.start(bot, update, *arg, **kwargs)
+                self.start(update, context, *arg, **kwargs)
         except ObjectDoesNotExist as e:
             update.message.reply_text('Sorry! To access this command you need to be registered.'
                                       'Print /start')

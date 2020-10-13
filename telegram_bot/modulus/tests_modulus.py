@@ -8,7 +8,7 @@ from django.db.models import ObjectDoesNotExist
 
 
 bot = "Bot"
-
+context = None
 
 def get_user_word_pk():
     user = Student.objects.get(username='test_user')
@@ -102,12 +102,12 @@ class TestAddwords(TestCase):
         self.prep.create_user()
         self.update = Update()
         self.bot = Bot(test=True)
-        self.bot.start(bot, self.update)
+        self.bot.start(self.update, context)
         self.student = self.bot.students['42']
 
     def test_add_words(self):
         self.student.destination = 'Add words'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'How do you want to add word?[You can always go back to /menu]')
         # self.assertEqual(self.update.message.test_text, '[You can always go back to /menu]')
 
@@ -115,12 +115,12 @@ class TestAddwords(TestCase):
         self.student.destination = 'Add words option'
         self.student.callback_data = ['Add word by typing']
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Enter foreign word[You can always go back to /menu]')
 
         self.student.destination = 'Add words option'
         self.student.callback_data = ['Choose word from presets']
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Choose category[You can always go back to /menu]')
 
     def test_add_custom_word(self):
@@ -128,12 +128,12 @@ class TestAddwords(TestCase):
         self.student.temp_data = {'word_name': 'おはよう', 'translation': 'good morning', 'pronunciation': 'ohayo'}
         self.student.callback_data = ['Default']
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Word has been added[You can always go back to /menu]')
 
     def test_add_word_translation(self):
         self.student.destination = 'Add word translation'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
 
         self.assertEqual(self.student.temp_data['translation'], self.update.message.text)
         self.assertEqual(self.update.message.test_text, 'Now choose category.[You can always go back to /menu]')
@@ -141,26 +141,26 @@ class TestAddwords(TestCase):
     def test_search_word(self):
         self.update.message.text = 'ありがとう'
         self.student.destination = 'Search word'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
 
     def test_translation_option(self):
         self.student.destination = 'Translation option'
         self.student.callback_data = ['Yes', 'No']
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Enter your translation:[You can always go back to /menu]')
 
         self.student.destination = 'Translation option'
         self.update.callback_query.data = '1'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Now choose category.[You can always go back to /menu]')
 
     def test_show_category_words(self):
         self.student.destination = 'Show category words'
         self.student.callback_data = ['Default']
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
                                                         '\nPronunciation [No pronunciation]'
                                                         '\nTranslation [Thank you]')
@@ -169,7 +169,7 @@ class TestAddwords(TestCase):
         self.student.destination = 'Add from global word'
         self.update.callback_query.data = '0'
         self.student.temp_data = {'words': GlobalWord.objects.all()}
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Word(s) added[You can always go back to /menu]')
 
 
@@ -182,17 +182,17 @@ class TestLearnwords(TestCase):
         self.prep.create_user()
         self.update = Update()
         self.bot = Bot(test=True)
-        self.bot.start(bot, self.update)
+        self.bot.start(self.update, context)
         self.student = self.bot.students['42']
 
     def test_learn_words(self):
         self.student.destination = 'Learn words'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'No words to learn')
 
         self.prep.create_user_words()
         self.student.destination = 'Learn words'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
                                                         '\nPronunciation [No pronunciation]'
                                                         '\nTranslation [Thank you]\n[You can always go back to /menu]')
@@ -202,7 +202,7 @@ class TestLearnwords(TestCase):
         self.student.destination = 'Learn word status'
         self.student.temp_data = {'word': self.prep.get_user_word()}
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Word [ありがとう]'
                                                         '\nPronunciation [No pronunciation]'
                                                         '\nTranslation [Thank you]\n[You can always go back to /menu]')
@@ -210,20 +210,20 @@ class TestLearnwords(TestCase):
     def test_play_matching(self):
         self.prep.delete_user_words()
         self.student.destination = 'Play matching'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
 
         self.student.destination = 'Play reversed matching'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
 
         self.prep.create_user_words()
         self.student.destination = 'Play matching'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'ありがとう[You can always go back to /menu]')
 
         self.student.destination = 'Play reversed matching'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Thank you[You can always go back to /menu]')
 
     def test_play_matching_result(self):
@@ -233,25 +233,25 @@ class TestLearnwords(TestCase):
         self.student.temp_data = {'answer': self.prep.get_user_word()}
         self.student.callback_data = ['Thank you']
         self.update.callback_query.data = 0
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Right[You can always go back to /menu]')
 
         self.student.destination = 'Play matching result'
         self.student.temp_data = {'answer': self.prep.get_user_word()}
         self.student.callback_data = ['sdgdrfgdsf']
         self.update.callback_query.data = 0
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Wrong: Thank you[You can always go back to /menu]')
 
     def test_typing(self):
         self.prep.delete_user_words()
         self.prep.create_user_words()
         self.student.destination = 'Play typing'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'ありがとう[You can always go back to /menu]')
 
         self.student.destination = 'Play reversed typing'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Thank you[You can always go back to /menu]')
 
     def test_play_typing_result(self):
@@ -260,13 +260,13 @@ class TestLearnwords(TestCase):
         self.student.destination = 'Play typing result'
         self.student.temp_data = {'answer': self.prep.get_user_word()}
         self.update.message.text = 'Thank you'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Right[You can always go back to /menu]')
 
         self.student.destination = 'Play matching result'
         self.student.temp_data = {'answer': self.prep.get_user_word()}
         self.update.message.text = 'kjkdjf'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Wrong: Thank you[You can always go back to /menu]')
 
 
@@ -282,21 +282,21 @@ class TestRegister(TestCase):
     def test_register_first_name(self):
         self.student.destination = 'Register first name'
         self.update.message.text = 'User'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Okay User. Now choose your home language')
 
     def test_register_home_language(self):
         self.student.destination = 'Register home language'
         self.student.callback_data = ['English']
         self.update.callback_query.data = '0'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.callback_query.message.test_text, ' -:- ')
 
     def test_register_current_language(self):
         self.student.destination = 'Register current language'
         self.student.callback_data = ['Japanese']
         self.update.callback_query.data = '0'
-        self.bot.dispatch_destination(bot, self.update, self.student, 'Register current language')
+        self.bot.dispatch_destination(self.update, context, self.student, 'Register current language')
         self.assertEqual(self.update.callback_query.message.test_text, 'To use our service you need to accept Privacy Policy.'
                                                         ' You can read it at https://linguint.pro/privacy_policy . '
                                                          'Do you accept Privacy Policy?')
@@ -308,12 +308,12 @@ class TestRegister(TestCase):
         self.student.temp_data = {'username': 42,
                                   'first_name': 'User',
                                   'home_language': 'English'}
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Sorry! To access this command you need to be registered.Print /start')
 
         self.student.destination = 'Accept privacy policy'
         self.student.callback_data = ['Yes', 'No']
         self.update.callback_query.data = '1'
-        self.bot.echo(bot, self.update)
+        self.bot.echo(self.update, context)
         self.assertEqual(self.update.callback_query.message.test_text, 'Registration aborted. Write /start for other'
                                                                        ' options.')

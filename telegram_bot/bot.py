@@ -27,7 +27,7 @@ class Bot:
         self.menu_text = '[You can always go back to /menu]'
         self.setup_destinations()
         """Start the bot."""
-        updater = Updater(token=config('TELEGRAM_TOKEN'), workers=2)
+        updater = Updater(token=config('TELEGRAM_TOKEN'), workers=2, use_context=True)
 
         dp = updater.dispatcher
 
@@ -84,7 +84,7 @@ class Bot:
                                  **self.learnwords.get_destinations(),
                                  **self.telegramlinker.get_destinations())
 
-    def dispatch_destination(self, bot, update, student, destination):
+    def dispatch_destination(self, update, context, student, destination):
         """
         Helper function to forward messages by there destination param
         :param bot: telegram.ext.Dispatcher.bot
@@ -93,9 +93,9 @@ class Bot:
         :param destination: a key in self.DESTINATIONS to forward message
         """
         student.destination = destination
-        self.echo(bot, update)
+        self.echo(update, context)
 
-    def start(self, bot, update):
+    def start(self, update, context):
         """Send a message when the command /start is issued."""
         text = None
         try:
@@ -115,39 +115,39 @@ class Bot:
         finally:
             update.message.reply_text(text)
 
-    def register(self, bot, update):
+    def register(self, update, context):
         text = 'To start learning tell a little bit more about yourself.' \
                'What is your name?'
         self.students[str(update.effective_user.id)].destination = 'Register first name'
         update.message.reply_text(text)
 
-    def link_telegram(self, bot, update):
+    def link_telegram(self, update, context):
         self.students[str(update.effective_user.id)].destination = 'Take username'
         update.message.reply_text('Enter your username:')
 
-    def help(self, bot, update, student):
+    def help(self, update, context, student):
         """Send a message when the command /help is issued."""
         update.message.reply_text('Have any questions? Write it to saintdevs@gmail.com')
 
-    def echo(self, bot, update):
+    def echo(self, update, context):
         """Forward the user message."""
         try:
             student = self.students[str(update.effective_user.id)]
         except KeyError:
-            self.start(bot, update)
+            self.start(update, context)
             return
         try:
-            self.DESTINATIONS[student.destination](bot, update, student)
+            self.DESTINATIONS[student.destination](update, context, student)
         except KeyError:
             update.message.reply_text('Sorry! I can not understand you.')
-            self.dispatch_destination(bot, update, student, 'Menu')
+            self.dispatch_destination(update, context, student, 'Menu')
 
-    def error(self, bot, update, error):
+    def error(self, update, context, error):
         """Log Errors caused by Updates."""
         logger.warning('Update "%s" caused error "%s"', update, error)
 
     @restricted
-    def menu(self, bot, update, student):
+    def menu(self, update, context, student):
         """
          Display bot menu
         :param bot: telegram.ext.Dispatcher.bot
@@ -171,7 +171,7 @@ class Bot:
         student.destination = 'Menu_action'
         update.message.reply_text(text='Menu'+self.menu_text, reply_markup=reply_markup)
 
-    def callback_handler(self, bot, update):
+    def callback_handler(self, update, context):
         """
         Handle buttons click in telegram InlineButton for example
         :param bot: telegram.ext.Dispatcher.bot
@@ -180,31 +180,31 @@ class Bot:
         student = self.students[str(update.effective_user.id)]
         update.message = update.callback_query.message
         try:
-            self.dispatch_destination(bot, update, student, student.destination)
+            self.dispatch_destination(update, context, student, student.destination)
         except KeyError:
             logger.error('KEY ERROR in destinations: %s' % student.destination)
             update.message.reply_text('Sorry! Something went wrong.')
-            self.dispatch_destination(bot, update, student, 'Menu')
+            self.dispatch_destination(update, context, student, 'Menu')
 
     @restricted
-    def delete(self, bot, update, student):
+    def delete(self, update, context, student):
         """ Delete user if exists"""
         student.student.delete()
         update.message.reply_text('User deleted')
 
     @restricted
-    def menu_action(self, bot, update, student):
+    def menu_action(self, update, context, student):
         """Handle selected menu option"""
         choice = student.callback_data[int(update.callback_query.data)]
         try:
-            self.dispatch_destination(bot, update, student, choice)
+            self.dispatch_destination(update, context, student, choice)
         except KeyError:
             update.message.reply_text('Sorry! Something went wrong.'+self.menu_text)
             student.callback_data = []
-            self.dispatch_destination(bot, update, student, 'Menu')
+            self.dispatch_destination(update, context, student, 'Menu')
 
     @restricted
-    def change_learn_language(self, bot, update, student):
+    def change_learn_language(self, update, context, student):
         """
         Change student current learn language from list of all student learn languages
         :param bot: telegram.ext.Dispatcher.bot
@@ -218,7 +218,7 @@ class Bot:
         update.callback_query.message.edit_text('Choose your learn language'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
-    def add_more_learn_language(self, bot, update, student):
+    def add_more_learn_language(self, update, context, student):
         """
         Adding new learn language for student from list
         :param bot: telegram.ext.Dispatcher.bot
@@ -232,7 +232,7 @@ class Bot:
                                                 reply_markup=reply_markup)
 
     @restricted
-    def change_language(self, bot, update, student):
+    def change_language(self, update, context, student):
         """
         Proccessing user selected option from self.change_learn_language and self.add_more_learn_language
         :param bot: telegram.ext.Dispatcher.bot

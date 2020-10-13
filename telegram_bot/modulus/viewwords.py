@@ -21,37 +21,37 @@ class ViewWords(BaseModule):
         }
 
     @restricted
-    def my_words(self, bot, update, student):
+    def my_words(self, update, context, student):
         student.callback_data = ['Look all your words', 'Look learned words']
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=2))
         student.destination = 'My words option'
         update.message.edit_text(text='My words'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
-    def my_words_option(self, bot, update, student):
+    def my_words_option(self, update, context, student):
         choice = student.callback_data[int(update.callback_query.data)]
         student.destination = choice
         student.callback_data = student.HQ.get_student_categories()
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text='Now choose category.'+self.menu_text, reply_markup=reply_markup)
 
-    def look_words(self, bot, update, student, func):
+    def look_words(self, update, context, student, func):
         category_name = student.callback_data[int(update.callback_query.data)]
         category =  self.categories.get(name=category_name)
         student.temp_data = {'words': func(category)}
         update.message.edit_text(text=category.name + self.menu_text)
-        self.dispatch_destination(bot, update, student, 'View category words')
+        self.dispatch_destination(update, context, student, 'View category words')
 
     @restricted
-    def look_all_student_words(self, bot, update, student):
-        self.look_words(bot, update, student, student.HQ.get_all_words)
+    def look_all_student_words(self, update, context, student):
+        self.look_words(update, context, student, student.HQ.get_all_words)
 
     @restricted
-    def look_learned_words(self, bot, update, student):
-        self.look_words(bot, update, student, student.HQ.get_learned_words)
+    def look_learned_words(self, update, context, student):
+        self.look_words(update, context, student, student.HQ.get_learned_words)
 
     @restricted
-    def view_category_words(self, bot, update, student):
+    def view_category_words(self, update, context, student):
         student.destination = 'Manage word'
         student.callback_data = ['Change translation', 'Learn again', 'Delete word']
         for word in student.temp_data['words']:
@@ -66,30 +66,30 @@ class ViewWords(BaseModule):
                                       reply_markup=reply_markup)
 
     @restricted
-    def manage_word(self, bot, update, student):
+    def manage_word(self, update, context, student):
         variants = update.callback_query.data.split(',')
         word = int(variants[1])
         go = student.callback_data[int(variants[0])]
         student.temp_data['word'] = student.temp_data['words'].get(pk=word)
-        self.dispatch_destination(bot, update, student, go)
+        self.dispatch_destination(update, context, student, go)
 
     @restricted
-    def delete_word(self, bot, update, student):
+    def delete_word(self, update, context, student):
         student.HQ.delete_word(student.temp_data['word'])
         update.message.edit_text('Word deleted')
         student.destination = 'Manage word'
 
     @restricted
-    def change_translation(self, bot, update, student):
+    def change_translation(self, update, context, student):
         student.destination = 'Update word translation'
         update.message.edit_text(text='Enter your translation:'+self.menu_text)
 
-    def update_word_translation(self, bot, update, student):
+    def update_word_translation(self, update, context, student):
         student.HQ.update_word_translation(student.temp_data['word'], update.message.text.strip(' '))
         update.message.reply_text('Word translation updated'+self.menu_text)
 
     @restricted
-    def learn_again(self, bot, update, student):
+    def learn_again(self, update, context, student):
         student.destination = 'Manage word'
         student.HQ.learn_again(student.temp_data['word'])
         update.message.edit_text('Word changed state to learn'+self.menu_text)

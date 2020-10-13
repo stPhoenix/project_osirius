@@ -29,19 +29,19 @@ class AddWords(BaseModule):
         }
 
     @restricted
-    def add_words(self, bot, update, student):
+    def add_words(self, update, context, student):
         student.callback_data = ['Add word by typing', 'Choose word from presets']
         student.destination = 'Add words option'
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.edit_text(text='How do you want to add word?'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
-    def add_words_option(self, bot, update, student):
+    def add_words_option(self, update, context, student):
         choice = student.callback_data[int(update.callback_query.data)]
-        self.dispatch_destination(bot, update, student, choice)
+        self.dispatch_destination(update, context, student, choice)
 
     @restricted
-    def add_custom_word(self, bot, update, student):
+    def add_custom_word(self, update, context, student):
         word_name = student.temp_data['word_name']
         translation = student.temp_data['translation']
         pronunciation = student.temp_data['pronunciation']
@@ -58,22 +58,22 @@ class AddWords(BaseModule):
         update.message.edit_text(text=answer+self.menu_text)
 
     @restricted
-    def add_word_by_typing(self, bot, update, student):
+    def add_word_by_typing(self, update, context, student):
         student.destination = 'Search word'
         update.message.edit_text('Enter foreign word'+self.menu_text)
 
-    def add_word_translation(self, bot, update, student):
+    def add_word_translation(self, update, context, student):
         student.temp_data['translation'] = update.message.text.strip()
-        self.dispatch_destination(bot, update, student, 'Add word category')
+        self.dispatch_destination(update, context, student, 'Add word category')
 
-    def add_word_category(self, bot, update, student):
+    def add_word_category(self, update, context, student):
         student.destination = 'Add custom word'
         student.callback_data = [c.name for c in self.categories]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         update.message.reply_text(text='Now choose category.'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
-    def search_word(self, bot, update, student):
+    def search_word(self, update, context, student):
         result = student.HQ.search_word(word_name=update.message.text.strip())
         if result['global_word_search'] is False and result['google_translate_search'] is False:
             student.temp_data['word_name'] = update.message.text.strip()
@@ -100,27 +100,27 @@ class AddWords(BaseModule):
                                             str([cat.name for cat in result['words'][0].category_set.all()])))
             student.HQ.add_from_global_word(global_word=result['words'][0])
             update.message.reply_text('Word(s) added')
-            self.dispatch_destination(bot, update, student, 'Menu')
+            self.dispatch_destination(update, context, student, 'Menu')
 
     @restricted
-    def translation_option(self, bot, update, student):
+    def translation_option(self, update, context, student):
         choice = student.callback_data[int(update.callback_query.data)]
         if choice == 'Yes':
             student.destination = 'Add word translation'
             update.message.edit_text(text='Enter your translation:'+self.menu_text)
         elif choice == 'No':
             update.message.delete()
-            self.dispatch_destination(bot, update, student, 'Add word category')
+            self.dispatch_destination(update, context, student, 'Add word category')
 
     @restricted
-    def choose_from_presets(self, bot, update, student):
+    def choose_from_presets(self, update, context, student):
         student.callback_data = [c.name for c in self.categories]
         reply_markup = InlineKeyboardMarkup(build_menu(make_button_list(self, update, student), n_cols=1))
         student.destination = 'Show category words'
         update.message.edit_text(text='Choose category'+self.menu_text, reply_markup=reply_markup)
 
     @restricted
-    def show_category_words(self, bot, update, student):
+    def show_category_words(self, update, context, student):
         category = student.callback_data[int(update.callback_query.data)]
         category = self.categories.get(name=category)
         category_language = self.langs.get(name=student.student.current_language)
@@ -140,7 +140,7 @@ class AddWords(BaseModule):
         student.temp_data = {'category': category, 'words': category_words}
 
     @restricted
-    def add_from_global_word(self, bot, update, student):
+    def add_from_global_word(self, update, context, student):
         word_name = int(update.callback_query.data)
         if word_name == 0:
             for word in student.temp_data['words']:
