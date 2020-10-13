@@ -9,7 +9,7 @@ class LinguistTranslator(Translator):
         src = src.lower().split('_', 1)[0]
 
         origin = text
-        data = self._translate(text, dest, src)
+        data = self._translate(text, dest, src, None)
 
         # this code will be updated when the format is changed. / Googletrans Author note
         translated = ''.join([d[0] if d[0] else '' for d in data[0]])

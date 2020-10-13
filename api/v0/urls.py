@@ -22,8 +22,8 @@ from rest_framework.schemas import get_schema_view
 schema_view = get_schema_view(title="Server Monitoring API")
 router = SimpleRouter()
 router.register(r'news', News)
-router.register(r'user/words', UserWords, base_name='word')
-router.register(r'play', LearnAndPlay, base_name='word')
+router.register(r'user/words', UserWords, basename='word')
+router.register(r'play', LearnAndPlay, basename='word')
 urlpatterns = [
     path('', schema_view),
     path('cats/', Cats.as_view(), name='cats'),
