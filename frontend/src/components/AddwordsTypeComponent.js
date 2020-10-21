@@ -54,7 +54,7 @@ export const AddwordsTypeComponent = (props) => {
 		}));
 	}
 	return(<ContentComponent>
-            <h2>Add words by typying</h2>
+            <h2>Add words by typing</h2>
 				<form className="d-flex flex-column">
 					<div className="form-group">
 						<label htmlFor="search">Type word:</label>

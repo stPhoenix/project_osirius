@@ -97,7 +97,7 @@ exports[`FooterComponent should render correctly 1`] = `
   <p
     className="mb-0"
   >
-    Copyright 2018 Linguint.pro
+    Copyright 2020 
   </p>
 </footer>
 `;

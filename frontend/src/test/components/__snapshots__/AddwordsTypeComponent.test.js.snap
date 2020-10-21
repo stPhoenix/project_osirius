@@ -3,7 +3,7 @@
 exports[`AddwordsTypeComponent should render correctly 1`] = `
 <ContentComponent>
   <h2>
-    Add words by typying
+    Add words by typing
   </h2>
   <form
     className="d-flex flex-column"

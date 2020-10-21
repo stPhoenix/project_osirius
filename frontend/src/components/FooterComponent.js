@@ -21,6 +21,6 @@ export const FooterComponent = () => {
                         <p className="mb-0 mx-1"><Link to="/cookie_policy" className="text-white link-unstyled">Cookie Policy</Link></p>
                         <p className="mb-0 mx-1"><Link to="/data_collection" className="text-white link-unstyled">Data Collection</Link></p>
                     </div>
-                    <p className="mb-0">Copyright 2018 Linguint.pro</p>
+                    <p className="mb-0">Copyright 2020 </p>
             </footer>);
 };
