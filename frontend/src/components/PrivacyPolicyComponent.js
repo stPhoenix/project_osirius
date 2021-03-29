@@ -8,8 +8,8 @@ export const PrivacyPolicyComponent = () => {
            <h3>Privacy Policy of <strong>linguint.pro</strong></h3>
 <p>This Application collects some Personal Data from its Users.</p>
 <p><strong>Owner and Data Controller</strong></p>
-<p>Bogdan Sapovskyi, <br /> 63707 <br /> m-n Uvileyniy, 10/42, Kupyansk, Kharkiv state, Ukraine</p>
-<p><strong>Owner contact email:</strong> bohdansapovsky@gmail.com</p>
+<p>------------------------------------------------------</p>
+<p><strong>----------------------------------------------</strong></p>
 <p><strong>Types of Data collected</strong></p>
 <p>Among the types of Personal Data that this Application collects, by itself or through third parties, there are: Cookies and Usage Data.</p>
 <p>Complete details on each type of Personal Data collected are provided in the dedicated sections of this privacy policy or by specific explanation texts displayed prior to the Data collection.<br /> Personal Data may be freely provided by the User, or, in case of Usage Data, collected automatically when using this Application.<br /> Unless specified otherwise, all Data requested by this Application is mandatory and failure to provide this Data may make it impossible for this Application to provide its services. In cases where this Application specifically states that some Data is not mandatory, Users are free not to communicate this Data without consequences to the availability or the functioning of the Service.<br /> Users who are uncertain about which Personal Data is mandatory are welcome to contact the Owner.<br /> Any use of Cookies &ndash; or of other tracking tools &ndash; by this Application or by the owners of third-party services used by this Application serves the purpose of providing the Service required by the User, in addition to any other purposes described in the present document and in the Cookie Policy, if available.</p>
