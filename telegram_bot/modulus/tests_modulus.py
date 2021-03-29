@@ -273,26 +273,28 @@ class TestLearnwords(TestCase):
 class TestRegister(TestCase):
     def setUp(self):
         self.bot = Bot(test=True)
-        self.bot.students = {'42': BotUserHandler()}
-        self.student = self.bot.students['42']
+        self.bot.students = {'11': BotUserHandler()}
+        self.student = self.bot.students['11']
         self.update = Update()
         self.prep = Preparations()
         self.prep.create_langs()
+        self.update.effective_user.id = 11
 
-    def test_register_first_name(self):
+
+    def test_1_register_first_name(self):
         self.student.destination = 'Register first name'
         self.update.message.text = 'User'
         self.bot.echo(self.update, context)
         self.assertEqual(self.update.message.test_text, 'Okay User. Now choose your home language')
 
-    def test_register_home_language(self):
+    def test_2_register_home_language(self):
         self.student.destination = 'Register home language'
         self.student.callback_data = ['English']
         self.update.callback_query.data = '0'
         self.bot.echo(self.update, context)
         self.assertEqual(self.update.callback_query.message.test_text, ' -:- ')
 
-    def test_register_current_language(self):
+    def test_3_register_current_language(self):
         self.student.destination = 'Register current language'
         self.student.callback_data = ['Japanese']
         self.update.callback_query.data = '0'
@@ -301,15 +303,17 @@ class TestRegister(TestCase):
                                                         ' You can read it at https://linguint.pro/privacy_policy . '
                                                          'Do you accept Privacy Policy?')
 
-    def test_accept_privacy_policy(self):
+    def test_4_accept_privacy_policy(self):
         self.student.destination = 'Accept privacy policy'
         self.student.callback_data = ['Yes', 'No']
         self.update.callback_query.data = '0'
-        self.student.temp_data = {'username': 42,
+        self.student.temp_data = {'username': 11,
                                   'first_name': 'User',
-                                  'home_language': 'English'}
+                                  'home_language': 'English',
+                                  'current_language': 'Japanese',
+                                  }
         self.bot.echo(self.update, context)
-        self.assertEqual(self.update.message.test_text, 'Sorry! To access this command you need to be registered.Print /start')
+        self.assertEqual(self.update.message.test_text, 'Menu[You can always go back to /menu]')
 
         self.student.destination = 'Accept privacy policy'
         self.student.callback_data = ['Yes', 'No']
