@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    'webpack_loader',
+    # 'webpack_loader',
     'web.apps.WebConfig',
     'corsheaders',
     'telegram_bot.apps.Telegram_botConfig',
@@ -69,7 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'osirius.middleware.SetLastVisitMiddleware',
+    # 'osirius.middleware.SetLastVisitMiddleware',
 ]
 
 ROOT_URLCONF = 'osirius.urls'
@@ -197,17 +197,17 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 # Webpack loader
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'frontend/build'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'frontend/build'),
+# )
 
 # BUNDLE_DIR_NAME is not neccesary because it reads path from public path set in package.json in frontend folder
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': '',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/build/webpack-stats.json'),
-    }
-}
+# WEBPACK_LOADER = {
+#     'DEFAULT': {
+#         'BUNDLE_DIR_NAME': '',
+#         'STATS_FILE': os.path.join(BASE_DIR, 'frontend/build/webpack-stats.json'),
+#     }
+# }
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

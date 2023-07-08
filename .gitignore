@@ -7,3 +7,4 @@ htmlcov/
 __pycache__/
 *.db
 .vscode/
+/frontend/build/
