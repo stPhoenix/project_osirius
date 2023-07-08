@@ -22,12 +22,12 @@
     "webpack-bundle-tracker": "^0.4.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "CHOKIDAR_USEPOLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "/static/",
+  "homepage": "/",
   "browserslist": {
     "production": [
       ">0.2%",

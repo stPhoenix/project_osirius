@@ -11,7 +11,7 @@ const classProps = {
     pk: PropTypes.string.isRequired,
 };
 
-class CustomAlert extends Component {
+export class CustomAlert extends Component {
     constructor(props) {
         super(props);
         this.dispatch = this.props.dispatch;
@@ -32,6 +32,7 @@ class CustomAlert extends Component {
     
     render() {
       const {color, text} = this.props;
+      setTimeout(() => {this.onDismiss(null)}, 3000);
       return (
         <CustomAlertComponent visible={this.props.visible} color={color} text={text} onExited={this.onExited} toggle={this.onDismiss} />
       );  

@@ -11,7 +11,7 @@ COPY package-lock.json /usr/src/app/package-lock.json
 RUN npm install
 COPY . /usr/src/app
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start" ]
 
 FROM development AS builder
 
