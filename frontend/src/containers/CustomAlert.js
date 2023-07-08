@@ -18,21 +18,20 @@ export class CustomAlert extends Component {
         this.key = this.props.pk;
         this.onDismiss = this.onDismiss.bind(this);
         this.onExited = this.onExited.bind(this);
+        this.alert_visible_time_mseconds = 1500;
     };
     
     onDismiss(e) {
-        //this.dispatch(toggle_alert());
         this.dispatch(delete_alert(this.key));
     };
     
     onExited() {
-        //this.dispatch(delete_alert(this.key));
         this.dispatch(toggle_alert());
     }
     
     render() {
       const {color, text} = this.props;
-      setTimeout(() => {this.onDismiss(null)}, 3000);
+      setTimeout(() => {this.onDismiss(null)}, this.alert_visible_time_mseconds);
       return (
         <CustomAlertComponent visible={this.props.visible} color={color} text={text} onExited={this.onExited} toggle={this.onDismiss} />
       );  

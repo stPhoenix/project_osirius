@@ -31,6 +31,7 @@ class WordstrainerType extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
+		this.answer_timeout_ms = 1000;
     };
     
     componentDidMount(){
@@ -61,7 +62,8 @@ class WordstrainerType extends Component {
 			this.dispatch(add_alert({color: "danger", text: "Wrong"}));
 		}
 		this.setState({button_text: "Next", button_click: this.next_word});
-	};
+		setTimeout(() => {this.next_word()}, this.answer_timeout_ms);
+		};
 	
 	check_answer(right_answer, user_answer) {
 		const r = right_answer.toLowerCase().replace(/ /g, "");

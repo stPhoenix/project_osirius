@@ -2,7 +2,7 @@
 
 exports[`CustomAlertComponent should render correctly 1`] = `
 <Alert
-  className="w-100 d-flex justify-content-center py-2 rounded-0"
+  className="d-flex justify-content-center py-2 rounded-0"
   closeAriaLabel="Close"
   color="success"
   fade={true}

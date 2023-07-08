@@ -18,7 +18,7 @@ export const WordstrainerMatchComponent = (props) => {
 				<label htmlFor="answer_set">Choose answer</label>
 				<div className="list-group" id="answer_set">
                     {props.words.map((word) => {
-                                                const classes = "custom-form-control active my-1" + word.color;
+                                                const classes = "custom-form-control active my-1 " + word.color;
                                                 return (<button key={word.id} name={word.id} type="button" className={classes} onClick={props.proceed_answer} >{word.active}</button>);
                     })}
 			     </div>

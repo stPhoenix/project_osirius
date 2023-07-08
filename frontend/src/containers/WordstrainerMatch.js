@@ -27,6 +27,7 @@ class WordstrainerMatch extends Component {
         };
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
+        this.answer_timeout_ms = 1000;
     };
     
     componentDidMount(){
@@ -52,13 +53,14 @@ class WordstrainerMatch extends Component {
 		              }
         const words = this.state.words.map((w) => {
             if (w.id === this.state.answer.id){
-                w.color = "alert-success"; 
+                w.color = "bg-success text-white";
             } else if(w.id !== this.state.answer.id && w.id === user_answer){
-                w.color = "alert-danger";
+                w.color = "bg-danger text-white";
             }
             return w;
         });
         this.setState({words: [...words]});
+        setTimeout(() => {this.next_word()}, this.answer_timeout_ms);
 	};
 	
 	next_word() {
