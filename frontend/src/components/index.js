@@ -28,6 +28,7 @@ import {DataCollectionComponent} from './DataCollectionComponent.js';
 import {FooterComponent} from './FooterComponent.js';
 import {HomeComponent} from './HomeComponent.js';
 import {FeedbackComponent} from './FeedbackComponent.js';
+import {PaginationComponent} from "./PaginationComponent";
 
 
 export {
@@ -61,4 +62,5 @@ export {
     FooterComponent,
     HomeComponent,
     FeedbackComponent,
+    PaginationComponent,
 };

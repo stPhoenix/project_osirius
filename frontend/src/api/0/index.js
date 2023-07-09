@@ -120,9 +120,10 @@ export const get_cats = async (token) => {
     return api_response; 
 };
 
-export const get_words_by_cat = async (cat_id, token) => {
+export const get_words_by_cat = async (cat_id, page, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get(`/cats/${cat_id}/words/`, {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get(`/cats/${cat_id}/words/`, {headers: {AUTHORIZATION:`TOKEN ${token}`},
+                                                        params:{page:page}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response; 
@@ -193,9 +194,10 @@ export const search_word = async (word, token) => {
     return api_response;
 };
 
-export const get_user_words = async (token) => {
+export const get_user_words = async (page, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get("/user/words/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get("/user/words/", {headers: {AUTHORIZATION:`TOKEN ${token}`},
+                                                params:{page:page}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response;   

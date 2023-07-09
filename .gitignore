@@ -8,3 +8,4 @@ __pycache__/
 *.db
 .vscode/
 /frontend/build/
+/.scannerwork/

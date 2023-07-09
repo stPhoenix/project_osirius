@@ -20,24 +20,33 @@ class MywordsAll extends Component {
         this.token = this.props.token;
         this.state = {
             words: [],
-			selected: []
+			selected: [],
+            totalPages: 1,
+            currentPage: 1,
         };
         this.delete_word = this.delete_word.bind(this);
         this.delete_all = this.delete_all.bind(this);
 		this.handleCheck = this.handleCheck.bind(this);
 		this.delete_selected = this.delete_selected.bind(this);
+        this.load_words_page = this.load_words_page.bind(this);
     };
-    
-    componentDidMount(){
-		this.dispatch(add_alert());
-        get_user_words(this.token)
+
+    load_words_page(page=1){
+        this.dispatch(add_alert());
+        get_user_words(page, this.token)
             .then(api_response => {
                 if (api_response.result){
-                    this.setState({words: api_response.data});
+                    this.setState({words: api_response.data.results,
+                                        totalPages: api_response.data.total_pages,
+                                        currentPage: page});
                 }else{
-                    this.dispatch(add_alert({color: "danger", text: api_response.message}));   
-                } 
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                }
         });
+    };
+
+    componentDidMount(){
+		this.load_words_page();
     };
 	
 	handleCheck(e) {
@@ -83,7 +92,9 @@ class MywordsAll extends Component {
         }
         return (<MywordsAllComponent {...this.state} delete_selected={this.delete_selected}
                                                      delete_all={this.delete_all}
-													 handleCheck={this.handleCheck} />);
+													 handleCheck={this.handleCheck}
+                                                     load_words_page={this.load_words_page}
+        />);
     };
 };
 

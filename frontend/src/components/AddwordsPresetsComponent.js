@@ -1,6 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 import {WordsTableComponent, ContentComponent} from '../components';
+import {PaginationComponent} from "../components";
 import PropTypes from 'prop-types';
 
 const componentProps = {
@@ -10,6 +11,9 @@ const componentProps = {
     add_all: PropTypes.func,
     words: PropTypes.array,
     handleCheck: PropTypes.func,
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+    load_words_page: PropTypes.func,
 };
 
 export const AddwordsPresetsComponent = (props) => {
@@ -26,6 +30,7 @@ export const AddwordsPresetsComponent = (props) => {
 					<button className="btn btn-link pr-0" onClick={props.add_all}>Add all</button>
 				</div>
                 <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
+                <PaginationComponent currentPage={props.currentPage} totalPages={props.totalPages} onPageChange={props.load_words_page} />
           </ContentComponent>);  
 };
 

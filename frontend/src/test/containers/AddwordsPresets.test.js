@@ -19,7 +19,7 @@ describe('AddwordsPresets Container', () => {
     it('Should get categories and words by cats', () => {
         container.update();
         expect(container.state().cats).toEqual(cats);
-        expect(container.state().words).toEqual(words);
+        expect(container.state().words).toEqual(words.results);
     });
     
     it('Should load new words when changing cat', () => {

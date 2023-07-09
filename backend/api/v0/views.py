@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 from news.models import Article
 from linguist.models import Category, GlobalWord, Language, Word
 from api.serializers import ArticleSerializer, CategorySerializer, GlobalWordSerializer, LanguageSerializer,\
@@ -18,9 +19,25 @@ from users.models import Student
 from web.models import Feedback
 
 
+class CustomPagination(PageNumberPagination):
+    page_size = 50
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+                'next': self.get_next_link(),
+                'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'total_pages': self.page.paginator.num_pages,
+            'results': data
+        })
+
+
 class News(ReadOnlyModelViewSet):
     queryset = Article.objects.order_by('-pub_date')
     serializer_class = ArticleSerializer
+    pagination_class = CustomPagination
 
 
 class Cats(ListAPIView):
@@ -31,9 +48,10 @@ class Cats(ListAPIView):
 class WordsByCat(ListAPIView):
     serializer_class = GlobalWordSerializer
     permission_classes = (IsAuthenticated, )
+    pagination_class = CustomPagination
 
     def get_queryset(self):
-        student= self.request.user
+        student = self.request.user
         home_language = Language.objects.get(name=student.home_language)
         current_language = Language.objects.get(name=student.current_language)
         category = Category.objects.get(pk=self.kwargs['pk'])
@@ -49,6 +67,7 @@ class Langs(ListAPIView):
 
 class GlobalWordAdd(LinguistInitializer, APIView):
     permission_classes = (IsAuthenticated, )
+    pagination_class = CustomPagination
 
     def post(self, request, format=None):
         global_word = get_object_or_404(GlobalWord.objects.all(), pk=request.data['pk'])
@@ -84,6 +103,7 @@ class SearchWord(LinguistInitializer, APIView):
 class UserWords(LinguistInitializer, ModelViewSet):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = WordSerializer
+    pagination_class = CustomPagination
 
     def create(self, request, *args, **kwargs):
         return Response({'message': 'you can not create words from here'}, status=status.HTTP_403_FORBIDDEN)

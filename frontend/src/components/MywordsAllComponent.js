@@ -1,6 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 import {WordsTableComponent, ContentComponent} from '../components';
+import {PaginationComponent} from "../components";
 import PropTypes from 'prop-types';
 
 const componentProps = {
@@ -8,6 +9,9 @@ const componentProps = {
     delete_selected: PropTypes.func,
     delete_all: PropTypes.func,
     words: PropTypes.array,
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+    load_words_page: PropTypes.func,
 };
 
 export const MywordsAllComponent = (props) => {
@@ -18,6 +22,7 @@ export const MywordsAllComponent = (props) => {
 					<button className="btn btn-link pr-0" onClick={props.delete_all}>Delete all</button>
 				</div>
                 <WordsTableComponent words={props.words} handleCheck={props.handleCheck} />
+                <PaginationComponent currentPage={props.currentPage} totalPages={props.totalPages} onPageChange={props.load_words_page} />
           </ContentComponent>);  
 };
 

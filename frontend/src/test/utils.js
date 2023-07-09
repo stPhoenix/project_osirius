@@ -6,11 +6,13 @@ export const eventData = {preventDefault: jest.fn, target: {name:"1", checked:tr
 
 export const cats = [{name: "Default", pk: "1"}];
 
-export const words = [{name: "ありがとう",
+export const words = {
+    total_pages: 1,
+    results: [{name: "ありがとう",
                        translation: "Thank you",
                        pronunciation: "Arigato",
                        category_set: [{name: "Default", pk: "1"}],
-                       pk: "1"}];
+                       pk: "1"}]};
 
 export const langs = [{name: "English", slug: "en"}, {name: "Japanese", slug: "ja"}];
 

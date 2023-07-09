@@ -15,8 +15,15 @@ CMD [ "npm", "run", "start" ]
 
 FROM development AS builder
 
+WORKDIR /usr/src/app
+
 RUN npm run build
 
 FROM nginx:1.13-alpine
 
-COPY --from=builder /code/build /usr/share/nginx/html
+RUN groupadd -r user && useradd -r -g user osirius
+RUN mkdir /home/osirius && chown osirius:user -R /home/osirius && chmod 777 -R /usr/src/app
+
+USER osirius
+
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html

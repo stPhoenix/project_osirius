@@ -15,7 +15,7 @@ export default class News extends Component{
     
     fetch_news(news){
         if (news.result === true){
-            this.setState({articles: news.data});
+            this.setState({articles: news.data.results});
         }
         
     };

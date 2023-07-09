@@ -25,5 +25,6 @@ exports[`MyWordsAllComponent should render correctly 1`] = `
     handleCheck={[MockFunction]}
     words={Array []}
   />
+  <PaginationComponent />
 </ContentComponent>
 `;

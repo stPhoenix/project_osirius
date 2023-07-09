@@ -18,7 +18,7 @@ describe('MywordsLearned Container', () => {
     it('Should make api call for get learned words', () => {
         container.update();
         expect(get_learned_words).toHaveBeenCalled();
-        expect(container.state().words).toEqual(words);
+        expect(container.state().words).toEqual(words.results);
     });
     
     it('Should handle check for selected words', () => {

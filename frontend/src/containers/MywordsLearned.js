@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {add_alert} from '../actions/alert';
-import {get_learned_words, learn_again_word} from '../api';
+import {get_learned_words, get_user_words, learn_again_word} from '../api';
 import {MywordsLearnedComponent} from '../components';
 import PropTypes from 'prop-types';
 
@@ -20,26 +20,33 @@ class MywordsLearned extends Component {
         this.token = this.props.token;
         this.state = {
             words: [],
-			selected: []
+			selected: [],
+            totalPages: 1,
+            currentPage: 1,
         };
         this.learn_word = this.learn_word.bind(this);
         this.learn_all = this.learn_all.bind(this);
 		this.handleCheck = this.handleCheck.bind(this);
 		this.learn_selected = this.learn_selected.bind(this);
+        this.load_words_page = this.load_words_page.bind(this);
     };
     
     componentDidMount(){
-		this.dispatch(add_alert());
-        get_learned_words(this.token)
+		this.load_words_page(1)
+    };
+    load_words_page(page=1){
+        this.dispatch(add_alert());
+        get_learned_words(page, this.token)
             .then(api_response => {
                 if (api_response.result){
-                    this.setState({words: api_response.data});
+                    this.setState({words: api_response.data.results,
+                                        totalPages: api_response.data.total_pages,
+                                        currentPage: page});
                 }else{
-                    this.dispatch(add_alert({color: "danger", text: api_response.message}));   
-                } 
+                    this.dispatch(add_alert({color: "danger", text: api_response.message}));
+                }
         });
     };
-	
 	handleCheck(e) {
 		let selected;
 		if (e.target.checked){
@@ -84,7 +91,10 @@ class MywordsLearned extends Component {
         }
         return (<MywordsLearnedComponent {...this.state} learn_selected={this.learn_selected}
                                                      learn_all={this.learn_all}
-													 handleCheck={this.handleCheck} />);
+													 handleCheck={this.handleCheck}
+                                                     load_words_page={this.load_words_page}
+
+        />);
     };
 };
 
