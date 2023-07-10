@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1.4
 FROM node:14 AS development
 
-ENV CI=true
 ENV PORT=3000
 
 WORKDIR /usr/src/app
@@ -19,11 +18,13 @@ WORKDIR /usr/src/app
 
 RUN npm run build
 
-FROM nginx:1.13-alpine
+FROM nginx:1.25.1
 
-RUN groupadd -r user && useradd -r -g user osirius
-RUN mkdir /home/osirius && chown osirius:user -R /home/osirius && chmod 777 -R /usr/src/app
-
-USER osirius
+RUN chown -R nginx:nginx /var/cache/nginx && \
+        chown -R nginx:nginx /var/log/nginx && \
+        chown -R nginx:nginx /etc/nginx/conf.d
+RUN touch /var/run/nginx.pid && \
+        chown -R nginx:nginx /var/run/nginx.pid
+USER nginx
 
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
