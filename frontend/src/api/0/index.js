@@ -220,9 +220,10 @@ export const learn_again_word = async (pk, token) => {
 
 };
 
-export const get_learned_words = async (token) => {
+export const get_learned_words = async (page, token) => {
     let api_response = {result: false, message: "Bad", data: []};
-    await axios.get("/user/words/learned/", {headers: {AUTHORIZATION:`TOKEN ${token}`}})
+    await axios.get("/user/words/learned/", {headers: {AUTHORIZATION:`TOKEN ${token}`},
+                                                        params:{page:page}})
         .then((response) => (response_handler(api_response, response)))
         .catch((error) => (error_handler(api_response, error)));
     return api_response;
