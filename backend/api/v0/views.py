@@ -169,14 +169,15 @@ class LearnAndPlay(LinguistInitializer, ViewSet):
         return Response(status=status.HTTP_200_OK)
 
     @action(methods=['get', 'post'], detail=False, permission_classes=(IsAuthenticated, IsOwnerOrReadOnly))
-    def matching(self, request, reverse=False):
+    def matching(self, request):
         if request.method == 'GET':
             return self.get_matching(request, request.query_params['reverse'])
         elif request.method == 'POST':
             return self.post_matching(request)
 
     def get_matching(self, request, reverse):
-        play = self.linguist.play_matching(bool(reverse))
+        reverse = reverse.lower() == 'true'
+        play = self.linguist.play_matching(reverse)
         if play != 'No words to play matching':
             data = Play(**play)
             serializer = PlaySerializer(data)
