@@ -32,6 +32,11 @@ class WordstrainerType extends Component {
 		this.proceed_answer = this.proceed_answer.bind(this);
 		this.next_word = this.next_word.bind(this);
 		this.answer_timeout_ms = 1000;
+
+		const japanesePattern = /[ぁ-んァ-ン一-龯ー]+/g;
+		const englishPattern = /[A-Za-z]+/g;
+		this.combinedPattern = new RegExp(japanesePattern.source + '|' + englishPattern.source, 'g');
+
     };
     
     componentDidMount(){
@@ -50,7 +55,7 @@ class WordstrainerType extends Component {
 		const result = this.check_answer(right_answer, user_answer);
 		if (result) {
 			this.dispatch(add_alert({color: "success", text: "Right"}));
-			result_play_typing(this.reverse, this.state.word.id, user_answer, this.token)
+			result_play_typing(this.reverse, this.state.word.id, right_answer, this.token)
                 .then(api_response => {
                     if (api_response.result === false) {
 				        this.dispatch(add_alert({color: "danger", text: api_response.message}));
@@ -66,8 +71,9 @@ class WordstrainerType extends Component {
 		};
 	
 	check_answer(right_answer, user_answer) {
-		const r = right_answer.toLowerCase().replace(/ /g, "");
-		const u = user_answer.toLowerCase().replace(/ /g, "");
+		const r = right_answer.match(this.combinedPattern).join("").toLowerCase().replace(/ /g, "");
+		const u = user_answer.match(this.combinedPattern).join("").toLowerCase().replace(/ /g, "");
+
 		return r === u;
 	};
 	
@@ -81,7 +87,8 @@ class WordstrainerType extends Component {
 						            question,
 						            button_text: "Check",
 						            button_click: this.proceed_answer,
-						            right_answer: ""
+						            right_answer: "",
+						            answer: ""
 						  });
 		        } else{
 			         this.dispatch(add_alert({color: "danger", text: api_response.message}));

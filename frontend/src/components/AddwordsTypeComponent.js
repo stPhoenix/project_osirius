@@ -1,7 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 import {Card, CardBody, CardText} from 'reactstrap';
-import {AddwordsTypeModalComponent, ContentComponent} from '../components';
+import {ContentComponent} from '../components';
 import PropTypes from 'prop-types';
 
 const componentProps = {
@@ -9,13 +9,10 @@ const componentProps = {
     words: PropTypes.array,
     add_global: PropTypes.func,
     google_translate_search: PropTypes.bool,
-    choose_category: PropTypes.func,
     search_word: PropTypes.string,
     handleChange: PropTypes.func,
     add_custom: PropTypes.func,
     cats: PropTypes.array,
-    modal: PropTypes.bool,
-    toggle_modal: PropTypes.func,
 };
 
 export const AddwordsTypeComponent = (props) => {
@@ -38,20 +35,35 @@ export const AddwordsTypeComponent = (props) => {
                 </div>);
 		}));
 	} else if(props.google_translate_search === true){
-		data = (props.words.map(word => {
-			return (<div key={word.id+"words"} className="p-1">
-                    <Card className="shadow-sm rounded-0">
-                        <CardBody className="d-flex flex-column">
-                            <CardText className="text-center">
-                                <br />{word.name}
-                                <br />{word.pronunciation}
-                                <br />{word.translation}
-                            </CardText>
-                        <button className="btn btn-link align-self-end" onClick={(e) => {props.choose_category(word.name, word.pronunciation, word.translation)}}>Add</button>
+        data = (<div className="p-1">
+            <Card className="shadow-sm rounded-0">
+                <CardBody className="d-flex flex-column">
+                    <CardText className="text-center">
+                        <form action="#">
+                            <label htmlFor="category">Category: </label>
+                            <select id="category" name="category" value={props.category} className="custom-form-control"
+                                    onChange={props.handleChange}>
+                                {props.cats.map(cat => {
+                                    return <option key={cat.id + cat.name} value={cat.name}>{cat.name}</option>
+                                })}
+                            </select>
+                            <label htmlFor="custom-name">Name</label>
+                            <input id="custom-name" type="text" className="custom-form-control" value={props.customName}
+                                   name="customName" onChange={props.handleChange}/>
+                            <label htmlFor="custom-pronunciation"> Pronunciation</label>
+                            <input id="custom-pronunciation" type="text" className="custom-form-control"
+                                   value={props.customPronunciation} name="customPronunciation"
+                                   onChange={props.handleChange}/>
+                            <label htmlFor="custom-translation">Translation</label>
+                            <input id="custom-translation" type="text" className="custom-form-control"
+                                   value={props.customTranslation} name="customTranslation"
+                                   onChange={props.handleChange}/>
+                        </form>
+                    </CardText>
+                    <button className="btn btn-link align-self-end" onClick={props.add_custom}>Add</button>
                         </CardBody>
                     </Card>
                 </div>  );
-		}));
 	}
 	return(<ContentComponent>
             <h2>Add words by typing</h2>
@@ -65,11 +77,6 @@ export const AddwordsTypeComponent = (props) => {
                 <div className="row flex-column flex-lg-row px-0">
                     {data}
                 </div>
-                <AddwordsTypeModalComponent add_custom={props.add_custom}
-                                            handleChange={props.handleChange}
-                                            cats={props.cats}
-                                            modal={props.modal}
-                                            toggle_modal={props.toggle_modal} />
 		</ContentComponent>);
 };
 

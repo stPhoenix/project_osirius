@@ -10,3 +10,4 @@ __pycache__/
 /frontend/build/
 /.scannerwork/
 /db_files/
+/.env_local

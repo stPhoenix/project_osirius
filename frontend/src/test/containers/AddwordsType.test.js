@@ -23,15 +23,6 @@ describe('AddwordsType Container', () => {
         expect(container.state().modal).toEqual(true);    
     });
     
-    it('Should get categories and toggle modal with custom word', () => {
-        container.setState({modal: false});
-        container.instance().choose_category("ありがとう", "Arigato", "Thank you");
-        container.update();
-        expect(get_cats).toHaveBeenCalled();
-        //expect(container.state().modal).toEqual(true);
-        //expect(container.state().custom_word).toEqual({word_name:"ありがとう", pronunciation: "Arigato", translation: "Thank you"});
-    });
-    
     it('Should make api call for add word', () => {
         add_global_word.mockClear();
         container.instance().add_global(eventData);

@@ -34,12 +34,5 @@ exports[`AddwordsTypeComponent should render correctly 1`] = `
   <div
     className="row flex-column flex-lg-row px-0"
   />
-  <AddwordsTypeModalComponent
-    add_custom={[MockFunction]}
-    cats={Array []}
-    handleChange={[MockFunction]}
-    modal={false}
-    toggle_modal={[MockFunction]}
-  />
 </ContentComponent>
 `;

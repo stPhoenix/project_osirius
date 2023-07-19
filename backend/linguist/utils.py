@@ -9,13 +9,14 @@ class LinguistTranslator(Translator):
         src = src.lower().split('_', 1)[0]
 
         origin = text
-        data = self._translate(text, dest, src, None)
-
-        # this code will be updated when the format is changed. / Googletrans Author note
-        translated = ''.join([d[0] if d[0] else '' for d in data[0]])
-
         pron = 'No pronunciation'
-        if data[0][1][-1]is not None:
-            pron = data[0][1][-1]
+        try:
+            data = self._translate(text, dest, src, None)
+            translated = ''.join([d[0] if d[0] else '' for d in data[0]])
+
+            if data[0][1][-1] is not None:
+                pron = data[0][1][-1]
+        except Exception:
+            translated = origin
 
         return Translated(src=src, dest=dest, origin=origin, text=translated, pronunciation=pron)

@@ -23,37 +23,27 @@ class AddwordsType extends Component {
             google_translate_search: false,
             words: [],
             search_word: "",
-            modal: false,
-            custom_word: {},
+            customName: "",
+            customPronunciation: "",
+            customTranslation: "",
             category: "Default",
             cats: [],
         };
         this.search = this.search.bind(this);
         this.add_global = this.add_global.bind(this);
         this.add_custom = this.add_custom.bind(this);
-        this.toggle_modal = this.toggle_modal.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.choose_category = this.choose_category.bind(this);
     };
-    
-    toggle_modal(e) {
-        this.setState({modal:!this.state.modal});
-    };
-    
-    choose_category(name, pronunciation, translation) {
+
+    componentDidMount() {
         get_cats(this.token)
             .then(api_response => {
-                if (api_response.result){
-                    this.setState({cats:api_response.data});
-                }else{
+                if (api_response.result) {
+                    this.setState({cats: api_response.data});
+                } else {
                     this.dispatch(add_alert({color: "danger", text: api_response.message}));
-                }    
-                this.setState({modal:true, custom_word: {
-                                                            word_name: name,
-                                                            pronunciation,
-                                                            translation,
-                }});
-        });
+                }
+            });
     };
     
     handleChange(e) {
@@ -63,7 +53,12 @@ class AddwordsType extends Component {
     add_custom(e) {
         e.preventDefault();
         this.setState({modal: false});
-        const word = {...this.state.custom_word, category:this.state.category};
+        const word = {
+            word_name: this.state.customName,
+            pronunciation: this.state.customPronunciation,
+            translation: this.state.customTranslation,
+            category: this.state.category
+        };
         this.dispatch(add_alert());
         add_custom_word(word, this.token)
             .then(api_response => {
@@ -89,6 +84,15 @@ class AddwordsType extends Component {
             .then(api_response => {
                 if (api_response.result) {
                     this.setState({...api_response.data});
+                    if (api_response.data.google_translate_search && api_response.data.words.length > 0) {
+                        const word = api_response.data.words[0];
+                        this.setState({
+                            customName: word.name,
+                            customPronunciation: word.pronunciation,
+                            customTranslation: word.translation,
+                            category: "Default",
+                        })
+                    }
                 }else{
                     this.dispatch(add_alert({color:"danger", text:api_response.message}));   
                 }
@@ -101,11 +105,16 @@ class AddwordsType extends Component {
         }
         return (
             <AddwordsTypeComponent {...this.state} handleChange={this.handleChange}
-                                                   search={this.search}
-                                                   add_global={this.add_global}
-                                                   add_custom={this.add_custom}
-                                                   toggle_modal={this.toggle_modal}
-                                                   choose_category={this.choose_category} />
+                                   search={this.search}
+                                   add_global={this.add_global}
+                                   add_custom={this.add_custom}
+                                   choose_category={this.choose_category}
+                                   customName={this.state.customName}
+                                   customPronunciation={this.state.customPronunciation}
+                                   customTranslation={this.state.customTranslation}
+                                   category={this.state.category}
+
+            />
         );
     };
 };
