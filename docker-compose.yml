@@ -50,6 +50,19 @@ services:
         condition: service_started
     tty: true
 
+  db-initializer:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - "./backend:/usr/src/app"
+    entrypoint: bash
+    command: ["init_db.sh"]
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   db-data: {}

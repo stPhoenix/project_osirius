@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM node:14 AS development
+FROM node:16 AS development
 
 ENV PORT=3000
 

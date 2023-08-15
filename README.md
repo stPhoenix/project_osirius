@@ -17,9 +17,19 @@ This django project was started to help learn foreign languages
 ### Usage
 
 1. Create .env file from DUMMY.env
-2. In frontend folder create .env file from example.env
+2. In frontend folder create .env file from example.env , where backend - ip of your backend(local ip of pc)
 3. Run 
 ```shell
 docker compose up -d
 ```
 4. Visit http://localhost:8000/
+
+
+### Troubleshoot
+
+If for some reason front end failed to start - navigate to frontend folder and run:
+```shell
+npm install
+```
+
+then restart docker compose
